@@ -11,6 +11,8 @@ Between every arm of the experiment the model, the prompt, the corpus and the 10
 
 Every number below is produced by a script in this repository on a **synthetic, seeded corpus** that we generate. See [Honesty: limitations](#honesty-limitations) before reading anything into them.
 
+`evidence/run_manifest.json` records the commit the evidence came from, the FalkorDB image digest and a SHA-256 of every result file. It was generated at commit `a72b452`; every later commit touches documentation only. Recheck any checkout with `uv run python scripts/manifest.py --check`.
+
 | Measurement | Baseline (BM25 only) | Canister |
 |---|---|---|
 | Superseded documents reaching present-tense context (18 conflict questions, deterministic) | **42** | **0** |
@@ -31,6 +33,7 @@ uv run python scripts/index.py         # SQLite FTS5 index
 uv run python scripts/seed.py          # extract, write the graph, canonize
 uv run python scripts/verify.py        # 9 live checks incl. a database restart
 uv run python scripts/controls.py      # every control below, written to evidence/controls.json
+uv run python corpus/stress.py         # the stress set above, written to corpus/out/stress.json
 uv run uvicorn canister_api.main:app   # API on :8000
 npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3000
 ```
@@ -216,6 +219,8 @@ So the honest reading is not "it always fails safe". It is: **14 cases fail safe
 
 Source: `corpus/out/stress.json` (`results[].decision`, `results[].selected_value`, `results[].value_recovered`, `results[].outcome`, `summary.outcomes`).
 
+**Next step (`not_run`).** Two changes would close this gap and neither is implemented: a fail-safe rule that marks a claim `CONTESTED` whenever a supersession cue is present but no new value was extracted, and a model-assisted extractor for loosely-phrased new values. Both are `not_run`; the deterministic extractor reported here is unchanged.
+
 ## Use it as a component
 
 Put Canister between your retriever and your LLM.
@@ -248,6 +253,8 @@ Example response (abridged):
 | `GET /claims?tenant_id=` | List claim keys and their state. |
 | `GET /grounding/{id}` | Replay a stored grounding record (`/receipt/{id}` is kept as an alias). |
 | `GET /health` | Liveness. |
+
+`receipt_id` identifies a stored grounding record; pass it to `GET /grounding/{id}` to replay the decision.
 
 It fails closed: with FalkorDB down, `/ground` returns `503 TEMPORAL_GRAPH_UNAVAILABLE`.
 
@@ -288,7 +295,7 @@ A Next.js app that reads the live API and `evidence/*.json`. No hardcoded figure
 - **Retrieval is lexical BM25.** Semantic retrieval would change recall, not the temporal argument.
 - **No resurrection handling.** There are no reliable timestamps, so a retired value reasserted later cannot be ordered against its supersession, and Canister does not claim to detect it.
 - **Single-node FalkorDB.** Scale and concurrency were not tested.
-- **`not_run`:** model-assisted extraction, model-judged answer scoring, and any deployment-scale benchmark.
+- **`not_run`:** the fail-safe rule that marks a claim `CONTESTED` when a supersession cue is present but no new value was extracted, model-assisted extraction, model-judged answer scoring, and any deployment-scale benchmark.
 
 ## Tech stack
 
@@ -323,6 +330,7 @@ uv run python scripts/index.py            # SQLite FTS5 index
 uv run python scripts/seed.py             # extract claims, write the graph, canonize
 uv run python scripts/verify.py           # 9 live checks, including a restart
 uv run python scripts/controls.py         # all controls -> evidence/controls.json
+uv run python corpus/stress.py            # stress set -> corpus/out/stress.json
 uv run python scripts/envelope.py         # counts and environment
 uv run python scripts/manifest.py         # fingerprint every artifact
 uv run uvicorn canister_api.main:app      # API on :8000
