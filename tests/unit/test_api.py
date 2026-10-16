@@ -49,14 +49,20 @@ def test_claims_fail_closed_when_graph_unreachable() -> None:
     assert response.json()["detail"]["error"] == "TEMPORAL_GRAPH_UNAVAILABLE"
 
 
-def test_receipt_missing_returns_404() -> None:
+def test_grounding_record_missing_returns_404() -> None:
+    response = client.get("/grounding/doesnotexist")
+    assert response.status_code == 404
+    assert response.json()["detail"]["error"] == "NOT_FOUND"
+
+
+def test_grounding_record_alias_served() -> None:
     response = client.get("/receipt/doesnotexist")
     assert response.status_code == 404
     assert response.json()["detail"]["error"] == "NOT_FOUND"
 
 
-def test_receipt_invalid_id_returns_400() -> None:
-    response = client.get("/receipt/..%2fescape")
+def test_grounding_record_invalid_id_returns_400() -> None:
+    response = client.get("/grounding/..%2fescape")
     assert response.status_code in (400, 404)
 
 

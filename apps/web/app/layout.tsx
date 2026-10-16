@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const NAV: [string, string][] = [
   ["/", "Overview"],
-  ["/cut", "Temporal Cut"],
+  ["/gate", "Temporal Gate"],
   ["/truth", "Truth"],
   ["/ask", "Ask"],
   ["/results", "Results"],
@@ -42,7 +42,7 @@ export default function RootLayout({
         <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
         <footer className="mx-auto max-w-6xl px-6 pb-10 pt-4 text-xs text-slate-500">
           Synthetic, seeded corpus. Every number is read from the API or
-          <span className="font-mono"> var/*.json</span>. No hardcoded figures.
+          <span className="font-mono"> evidence/*.json</span>. No hardcoded figures.
         </footer>
       </body>
     </html>

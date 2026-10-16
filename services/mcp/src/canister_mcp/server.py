@@ -16,7 +16,7 @@ from canister_mcp import tools
 
 GROUND_DESCRIPTION = (
     "Ground a question against the tenant's temporal claim graph. mode is one of "
-    "'current' (default), 'historical' or 'temporal'. Returns a receipt with the "
+    "'current' (default), 'historical' or 'temporal'. Returns a grounding record with the "
     "final context, a sha256 and the Cypher query identifiers used. Fails closed "
     "if FalkorDB is unreachable."
 )

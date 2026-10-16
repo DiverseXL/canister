@@ -56,7 +56,7 @@ export default function Cut() {
   return (
     <div className="space-y-6">
       <section>
-        <h1 className="text-2xl font-semibold text-white">Temporal Cut</h1>
+        <h1 className="text-2xl font-semibold text-white">Temporal Gate</h1>
         <p className="mt-1 text-sm text-slate-400">
           The same BM25 ranking, shown twice. The graph decides which ranked
           evidence may still ground a present-tense answer.

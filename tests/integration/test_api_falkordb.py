@@ -37,7 +37,7 @@ def api_env(db, corpus_dir: Path, gold: dict, tmp_path, monkeypatch):
     db.select_graph(tenant).delete()
 
 
-def test_ground_then_replay_receipt(api_env) -> None:
+def test_ground_then_replay_grounding_record(api_env) -> None:
     tenant, gold = api_env
     question = next(q for q in gold["questions"] if q["kind"] == "answerable")
     response = client.post("/ground", json={"question": question["question"], "mode": "current"})
@@ -48,7 +48,7 @@ def test_ground_then_replay_receipt(api_env) -> None:
     assert set(body["cypher_queries"]) == {"READ_KEY_INFO", "READ_STATE", "READ_DOC_VALUES"}
     assert body["mode_requested"] == "current"
 
-    replay = client.get(f"/receipt/{body['receipt_id']}")
+    replay = client.get(f"/grounding/{body['receipt_id']}")
     assert replay.status_code == 200
     assert replay.json()["sha256"] == body["sha256"]
 

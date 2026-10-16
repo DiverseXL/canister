@@ -121,18 +121,25 @@ def ground_endpoint(request: GroundRequest) -> dict:
     return receipt
 
 
-@app.get("/receipt/{receipt_id}")
-def receipt_endpoint(receipt_id: str) -> dict:
+@app.get("/grounding/{receipt_id}")
+def grounding_record_endpoint(receipt_id: str) -> dict:
     if not receipts.valid_id(receipt_id):
         raise HTTPException(
-            status_code=400, detail={"error": "BAD_REQUEST", "message": "invalid receipt id"}
+            status_code=400,
+            detail={"error": "BAD_REQUEST", "message": "invalid grounding record id"},
         )
     stored = receipts.load(receipt_id)
     if stored is None:
         raise HTTPException(
-            status_code=404, detail={"error": "NOT_FOUND", "message": "no such receipt"}
+            status_code=404, detail={"error": "NOT_FOUND", "message": "no such grounding record"}
         )
     return stored
+
+
+@app.get("/receipt/{receipt_id}", include_in_schema=False)
+def grounding_record_alias(receipt_id: str) -> dict:
+    """Deprecated alias for ``/grounding/{id}``, kept for existing clients."""
+    return grounding_record_endpoint(receipt_id)
 
 
 @app.get("/claims")
