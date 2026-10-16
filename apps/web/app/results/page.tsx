@@ -53,8 +53,8 @@ function Section({
 }
 
 export default async function Results() {
-  const controls = await readJson("var/controls.json");
-  const benchmark = await readJson("var/benchmark.json");
+  const controls = await readJson("evidence/controls.json");
+  const benchmark = await readJson("evidence/benchmark.json");
   const stress = await readJson("corpus/out/stress.json");
 
   return (
@@ -62,7 +62,7 @@ export default async function Results() {
       <section>
         <h1 className="text-2xl font-semibold text-white">Results</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Rendered directly from <span className="font-mono">var/*.json</span> and{" "}
+          Rendered directly from <span className="font-mono">evidence/*.json</span> and{" "}
           <span className="font-mono">corpus/out/stress.json</span> under{" "}
           <span className="font-mono">{repoRoot()}</span>.
         </p>
@@ -70,7 +70,7 @@ export default async function Results() {
 
       {!controls && (
         <div className="card text-contest">
-          var/controls.json is <span className="font-mono">not_run</span>. Run{" "}
+          evidence/controls.json is <span className="font-mono">not_run</span>. Run{" "}
           <span className="font-mono">make controls</span>.
         </div>
       )}
