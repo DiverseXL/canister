@@ -11,14 +11,14 @@
     "platform": "Windows-11-10.0.26100-SP0",
     "python": "3.12.10"
   },
-  "generated_at_utc": "2026-10-16T19:48:47+00:00",
+  "generated_at_utc": "2026-10-16T20:26:26+00:00",
   "git": {
     "branch": "main",
-    "commit": "a72b452f4ea08cf2bd8f78d6fceb631171627f88",
-    "dirty": true
+    "commit": "1fe59694956fa2848abc09a544751d93059d0873",
+    "dirty": false
   },
   "missing": [],
-  "result_file_count": 228,
+  "result_file_count": 226,
   "results": {
     "corpus/out/documents/doc-0001.md": "7456137be3b9213d004405095b3e6829ca63f3f17fcefd2a8f2c0506782ec61f",
     "corpus/out/documents/doc-0002.md": "2c42dfa97c01920c42637762ae5cbba792d671def55e0f81db4823cc2c321c77",
@@ -245,8 +245,6 @@
     "evidence/benchmark.json": "57f1637c44715367b2ed2e878acf98a22149782c6e86b2ab327bc0f9cb4adaec",
     "evidence/controls.json": "1a576c91419882320417b566f37e43002fd6e7299d8f80fa46b25f25b8cb5dbb",
     "evidence/envelope.json": "f80cbdd6ff97157a568e81e912eee9ba861200704e354acccf126bb13ab6393c",
-    "evidence/verify.json": "328ad675a57edbfa9dd0964a1d0e9e275c8791278509b62398591a1f4f2a0b21",
-    "var/index.sqlite3": "beb3f7a6e732aeb72477cbd5d8a0236c99d927b51ff42960682c8a839424dc4b",
-    "var/verify_index.sqlite3": "f19cf9dce72f5039dd62838f614879a0e573873dc6152a17774a5dd0a0d1e637"
+    "evidence/verify.json": "328ad675a57edbfa9dd0964a1d0e9e275c8791278509b62398591a1f4f2a0b21"
   }
 }
