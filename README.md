@@ -1,287 +1,366 @@
 # Canister
 
-A temporal claim graph on FalkorDB that keeps superseded company facts out of an
-AI agent's context.
+**A temporal claim graph on FalkorDB that stops retired company facts from reaching an AI agent as present-tense context.**
+Built for the FalkorDB "Graph Hacks: Context for AI Agents" hackathon, Track 3 (Company Brain).
 
-**Track 3 — Company Brain.** Built for *Graph Hacks: Context for AI Agents* (FalkorDB).
+Search finds what is *relevant*. It cannot tell what is still *true*. Canister puts a graph between the retriever and the model: BM25 proposes documents, FalkorDB decides which of them may still ground a current answer, and every decision ships with a record anyone can replay.
 
-## Thesis
+Between every arm of the experiment the model, the prompt, the corpus and the 10-document budget are identical. The only thing that changes is what the model is allowed to read.
 
-BM25 decides what is *relevant*. FalkorDB decides what is still *allowed to ground
-the answer*. Superseded claims stay answerable as history, but never reach the model
-as present-tense context. Same model, same prompt, same corpus, same 10-document
-budget — only the context topology changes. On our synthetic corpus that moves
-superseded-in-context from **42 to 0** while every other metric holds.
+## Results at a glance
+
+Every number below is produced by a script in this repository on a **synthetic, seeded corpus** that we generate. See [Honesty: limitations](#honesty-limitations) before reading anything into them.
+
+| Measurement | Baseline (BM25 only) | Canister |
+|---|---|---|
+| Superseded documents reaching present-tense context (18 conflict questions, deterministic) | **42** | **0** |
+| Same count with the same number of documents removed *at random* | 27 | n/a |
+| Historical questions that recover the retired evidence | n/a | **18 / 18** |
+| Non-conflict contexts left byte-identical (safety envelope) | n/a | **32 / 32** |
+| Documents removed or pinned outside the conflict set | n/a | **0** |
+| Tenant isolation (two tenants, same claim key, different values) | n/a | **isolated** |
+| Checks passing in `verify`, including a live FalkorDB restart | n/a | **9 / 9** |
+
+No model is in the loop for any row above. They are all deterministic.
+
+```
+uv sync
+docker compose up -d
+uv run python corpus/generator.py      # seeded synthetic corpus + gold labels
+uv run python scripts/index.py         # SQLite FTS5 index
+uv run python scripts/seed.py          # extract, write the graph, canonize
+uv run python scripts/verify.py        # 9 live checks incl. a database restart
+uv run python scripts/controls.py      # every control below, written to evidence/controls.json
+uv run uvicorn canister_api.main:app   # API on :8000
+npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3000
+```
+
+## Table of contents
+
+1. [The problem](#the-problem)
+2. [What I built](#what-i-built)
+3. [Architecture](#architecture)
+4. [How a claim gets resolved](#how-a-claim-gets-resolved)
+5. [How FalkorDB is used](#how-falkordb-is-used)
+6. [Engineering decisions](#engineering-decisions)
+7. [Measured results](#measured-results)
+8. [Stress test: where it breaks](#stress-test-where-it-breaks)
+9. [Use it as a component](#use-it-as-a-component)
+10. [The console](#the-console)
+11. [Honesty: limitations](#honesty-limitations)
+12. [Tech stack](#tech-stack)
+13. [Project layout](#project-layout)
+14. [Run it locally](#run-it-locally)
+15. [Tests](#tests)
+16. [Attribution](#attribution)
+
+## The problem
+
+A company's knowledge is not a pile of facts. It is a pile of *claims with lifetimes*. A price is right on Monday, replaced on Wednesday, historically true on Friday, and harmful if an agent quotes it as current a month later.
+
+Retrieval is built to maximise relevance, and that creates a specific failure. The retired document and the current document were written by the same people, about the same system, in the same vocabulary, so the retired one ranks just as well, and often better because it has had more time to be repeated. On our corpus, plain BM25 leaks **42 superseded documents into the top 10 across 18 conflict questions.** The agent then reads old truth as if it were new.
+
+Canister treats "this used to be true" as a first-class state that sits next to relevance, so that retired truth stays visible as history and unreachable as present.
+
+## What I built
+
+A pipeline in which the graph decides what the model may read:
+
+1. **Index.** Documents go into SQLite FTS5 for cheap global BM25 retrieval.
+2. **Extract.** A deterministic extractor pulls claims from every document: entity, attribute, value, exact evidence span, stance (asserts, corroborates, supersedes) and whether the value came from a structured field or from prose.
+3. **Canonize.** Each claim key is resolved in a fixed priority order (below), and the outcome is written to FalkorDB as an event. History is never overwritten.
+4. **Gate.** At question time the top-10 BM25 candidates are mapped back to their claims. Each document is labelled, superseded ones are removed and replaced with the next candidates from the *same* ranking, and any current document the retriever missed is pinned in by evicting the lowest-ranked candidate. The context is always exactly 10 documents.
+5. **Record.** Every decision returns a *grounding record*: the ranking that came in, the cut set with the reason for each cut, the context that went out, its SHA-256, and the Cypher query identifiers that decided it.
+
+Every current-state answer is exactly one of `CANON`, `CONTESTED` or `UNKNOWN`. When evidence does not establish a winner, Canister shows the fork rather than inventing an order.
+
+On the seeded demo corpus: 200 documents, 200 assertions, 40 claim keys, **38 CANON, 2 CONTESTED, 0 UNKNOWN**, 552 nodes and 538 relationships in the graph.
 
 ## Architecture
 
 ```
- documents ──► extractor ──► Assertions ──► FalkorDB temporal claim graph
- (deterministic)                              Entity ──HAS_CLAIM──► ClaimKey
-                                              ClaimKey ──HAS_VALUE──► Proposition
-                                              Assertion ──ASSERTS──► Proposition
-                                              Assertion ──IN_ARTIFACT──► Artifact
-                                              CanonEvent ──SELECTS──► Proposition
-                                              CanonEvent ──SUPERSEDES──► CanonEvent
-                                                     │
- question ──► BM25 (SQLite FTS5) ──► candidates ─────┤
-                                    graph labels,    │
-                                    filter + backfill┤──► ground(): 10-doc context + receipt
-                                    + pin            │
-                                                     ▼
-                     FastAPI /ground · MCP canister_ground · Next.js console
+Entity --HAS_CLAIM--> ClaimKey --HAS_VALUE--> Proposition <--ASSERTS-- Assertion --IN_ARTIFACT--> Artifact
+                                                   ^
+                                                   | SELECTS
+                                              CanonEvent --SUPERSEDES--> CanonEvent
 ```
 
-## How it works
+| Node | Role |
+|---|---|
+| `Entity` | A real-world thing (a product, a team, a vendor). |
+| `ClaimKey` | One mutable property of an entity, such as *Hooli / integration owner*. |
+| `Proposition` | One possible value. Ten documents repeating the same value still make one node. |
+| `Assertion` | One document asserting that value, with exact span, stance and source kind. |
+| `Artifact` | The source document. Text itself lives in SQLite; the graph holds identity and relationships. |
+| `CanonEvent` | The event that selects a value as current and may `SUPERSEDES` an earlier event. |
 
-1. **Extract** — a deterministic extractor turns company documents into assertions
-   with exact evidence spans, a stance marker (`assert` / `supersede` / `corroborate`)
-   and a structured-vs-prose flag.
-2. **Store** — assertions, propositions, claim keys and artifacts are written to a
-   FalkorDB graph with deterministic ids and idempotent `MERGE`s. Re-ingesting the
-   same corpus adds zero nodes.
-3. **Canonize** — a fixed-priority resolver decides, per claim key, exactly one of
-   `CANON`, `CONTESTED` or `UNKNOWN`, and records a `CanonEvent` that `SUPERSEDES`
-   the previous one. History is never overwritten.
-4. **Ground** — BM25 proposes candidates; the graph labels each one `current`,
-   `superseded`, `historical`, `contested` or `not_in_claim_graph`, filters
-   superseded, backfills from the same ranking, pins any missed current evidence by
-   **evicting** the lowest-ranked candidate (never an 11th slot), and returns a
-   receipt with a `sha256` of the final context and the Cypher query identifiers used.
+Document text lives in SQLite FTS5. The *truth topology* (what supersedes what, and which evidence may ground a present-tense answer) lives entirely in FalkorDB. Each tenant gets its own graph via `select_graph(tenant_id)`.
 
-### Canonization priority (enforced by tests)
+## How a claim gets resolved
 
-1. Explicit supersession language beats everything.
-2. Reliable temporal ordering, only when metadata and semantics agree.
-3. Corroboration is a tie-break only. Majority never overrides supersession.
-4. No signal → `CONTESTED`. Never invent an ordering.
+Canonization runs in a fixed order, and the order is the whole point. It is enforced by unit tests.
 
-Every current-state answer is exactly `CANON`, `CONTESTED` or `UNKNOWN`.
+1. **Explicit supersession.** Language such as "changed from X to Y" or "the old figure is retired". It is the only signal allowed to beat corroboration.
+2. **Reliable temporal ordering.** Used only when metadata and semantics agree.
+3. **Corroboration.** A tie-break and nothing more. Majority never overrides supersession. Test: eight documents asserting `$0.08` against one later document stating the price changed to `$0.06` must resolve to `$0.06`. This is re-proven live by every `verify` run.
+4. **No signal.** The claim is `CONTESTED`. Canister never manufactures an ordering.
 
-### Fail closed
+At question time, `ground()` maps the question to claim keys (entity must appear in the question and every token of the attribute label must be present), looks up the claim neighbourhood, labels each retrieved document, then filters, backfills and pins.
 
-If FalkorDB is unreachable the API returns **503 `TEMPORAL_GRAPH_UNAVAILABLE`** and
-the MCP tools error. Neither ever silently falls back to plain retrieval.
+Document labels, in precedence order: `current`, `contested`, `historical`, `superseded`, `not_in_claim_graph`.
 
-## How to run (4 commands)
+## How FalkorDB is used
 
-```sh
-uv sync
-docker compose up -d
-make corpus index seed
-make verify
+Remove FalkorDB and the system loses the ability to decide current context. It is not a visualisation layer. Three traversals decide every answer:
+
+```cypher
+// Claim neighbourhood
+MATCH (ck:ClaimKey {id: $ckid})-[:HAS_VALUE]->(p:Proposition)
+RETURN p.value, p.status
+
+// Supersession lineage
+MATCH (ev:CanonEvent {id: $evid})-[:SUPERSEDES*1..10]->(old)-[:SELECTS]->(p)
+RETURN p.value
+
+// Residue: which documents still assert a retired value
+MATCH (ck:ClaimKey {id: $ckid})-[:HAS_VALUE]->(p:Proposition)<-[:ASSERTS]-(a:Assertion)-[:IN_ARTIFACT]->(art:Artifact)
+RETURN a.evidence_span, art.doc_id
 ```
 
-Then, optionally: `make controls`, `make benchmark`, `make stress`, `make envelope`,
-`make manifest`, `make api` (FastAPI), `make mcp` (MCP server), `make web` (console).
+Writes use parameterised `MERGE` with deterministic SHA-256 identifiers, so re-ingesting the corpus creates exactly zero new nodes.
 
-`make test` runs ruff plus unit tests (no network, no API key) and integration tests
-(marker `falkordb`, needs `docker compose up -d`).
+Things learned the hard way, now built into the code:
+
+- **Reversed arrows fail silently.** An early version of the assertion read had the `ASSERTS` arrow backwards and returned nothing. The integration test that round-trips a write now catches this.
+- **Query timeouts.** Removing the `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` overrides from `docker-compose.yml` fixed spurious "Query timed out" errors.
+- **Client edges.** `graph.delete()` errors on an empty key, so it is guarded with `list_graphs()`. Re-creating an index raises "already indexed", which `ensure_schema` tolerates.
+- **Restart persistence** is verified, not assumed: `verify` restarts the container and compares node counts before and after (552 and 552).
+
+## Engineering decisions
+
+- **Structured state or nothing.** The graph returns states and typed records, never prose. That is what makes an honest `UNKNOWN` possible.
+- **Fail closed.** If FalkorDB is unreachable, the API returns `503 TEMPORAL_GRAPH_UNAVAILABLE`. It never degrades to plain retrieval, because a silent fallback would reintroduce exactly the failure the system exists to prevent.
+- **Exact document-count parity.** Every arm sees exactly 10 documents. Removing a superseded document backfills from the same ranking, and pinning a missed current document evicts the lowest-ranked candidate. This is asserted in code, not assumed.
+- **Controls against our own result.** A random-removal arm, a cut-only arm and a pin-only arm exist specifically to attack the headline claim.
+- **Claim-key matching is deliberately strict.** The first version matched on any token overlap and wrongly attached one unanswerable question to a claim. Requiring the entity plus the full attribute label removed that false match.
+- **Sentence splitting must not break on decimals.** A naive splitter cut `$0.08` in half and corrupted values. The extractor now splits only on terminal punctuation followed by whitespace.
+- **Never score an infrastructure failure as a wrong answer.** Any failed model or judge call is recorded as `error`, never as incorrect. Anything not run is recorded as `not_run`.
+- **Original work, reproducible.** The corpus is generated from a fixed seed (1337), and `scripts/manifest.py` fingerprints the git commit, the FalkorDB image digest and the SHA-256 of every result file.
 
 ## Measured results
 
-The corpus is **synthetic and seeded** (`corpus/generator.py`, seed 1337): 200
-documents, 40 claim keys, 18 conflicts (one 8-vs-1 majority-adversarial), 2 contested
-and 10 unanswerable questions. Every metric below is **deterministic** — no model is
-called, and nothing is compared to any other project's numbers. Regenerate with
-`make benchmark controls stress`; the raw JSON is written to `var/` and
-`corpus/out/stress.json`.
+Corpus: 200 documents, 40 claim keys, 18 planted conflicts (index 0 is the 8-versus-1 majority case), 2 contested claims, 10 unanswerable questions, 50 questions in total. Seed 1337. All rows are deterministic.
 
-### Flat vs temporal (50 questions)
+### Does the graph remove the right documents?
 
-| metric | flat | temporal |
-| --- | ---: | ---: |
-| superseded-in-context (total) | 42 | 0 |
-| questions with a leak | 18 | 0 |
-| context size (mean) | 10.0 | 10.0 |
-| every arm exactly 10 docs | true | true |
-| current recall (mean) | 1.0 | 1.0 |
-| answer correct rate | 1.0 | 1.0 |
+| Arm | Superseded docs in context | Context size |
+|---|---|---|
+| Baseline (BM25 top 10) | 42 across 18 questions | 10 |
+| Random removal (same count removed, seeded per question) | 27 | 10 |
+| Temporal gate | 0 | 10 |
 
-### a) Random-removal control (18 conflicts)
+Random removal helps on 10 of the 18 conflict questions, and the gate helps on all 18. A random cut sometimes lands on a retired document by chance; the gate cuts the right one every time, because the graph tells it which one that is.
 
-Removes the same number of documents the temporal arm removes, chosen uniformly at
-random from the baseline, backfilled from the same ranking.
+### Which half of the gate does the work?
 
-| arm | superseded-in-context |
-| --- | ---: |
-| baseline | 42 |
-| random removal (seeded per question) | 27 |
-| temporal (graph) | 0 |
+| Arm | Superseded in context | Current gold in context | Context size |
+|---|---|---|---|
+| Baseline | 42 | 18 | 10 |
+| Cut only | 0 | 18 | 10 |
+| Pin only | 42 | 18 | 10 |
+| Full gate | 0 | 18 | 10 |
 
-Random removal helps on 10/18 conflicts; the temporal arm helps on 18/18. Removing
-*the superseded* documents, not merely removing documents, is the mechanism.
+Over the 18 conflict questions, every arm keeps all 18 current-gold documents and exactly 10 documents. Suppression is what stops retired evidence from reaching the model; pinning recovers current evidence the retriever ranked out. Source: `evidence/controls.json` (`mechanism_split.arms.*.superseded_in_context`, `mechanism_split.arms.*.current_gold_in_context`, `mechanism_split.arms.*.context_size_mean`).
 
-### b) Mechanism split (over conflict questions)
+### Stability across retrieval depth
 
-| arm | superseded in context | current gold in context | size mean | all 10 |
-| --- | ---: | ---: | ---: | --- |
-| baseline | 42 | 18 | 10.0 | true |
-| cut-only | 0 | 18 | 10.0 | true |
-| pin-only | 42 | 18 | 10.0 | true |
-| full | 0 | 18 | 10.0 | true |
+Superseded documents reaching context, by retrieval depth. Both arms saw exactly `top-k` documents for every question at every depth.
 
-Cutting does the leak work; pinning keeps the budget fixed at 10 in every arm.
-
-### c) top-k sweep (baseline vs temporal leak)
-
-| k | baseline leak | temporal leak |
-| ---: | ---: | ---: |
+| top-k | Baseline superseded in context | Temporal gate superseded in context |
+|---|---|---|
 | 5 | 39 | 0 |
 | 10 | 42 | 0 |
 | 20 | 42 | 0 |
 
-### d) Historical mode
+The baseline leak rises from 39 at top-k 5 to 42 at top-k 10 and stays at 42 at top-k 20; the gate holds at 0 at every depth. Source: `evidence/controls.json` (`top_k_sweep."5"/"10"/"20".baseline.leak_total`, `top_k_sweep."5"/"10"/"20".temporal.leak_total`, `top_k_sweep."5"/"10"/"20".*.size_all_k`).
 
-| metric | value |
-| --- | ---: |
-| conflicts | 18 |
-| all recover retired evidence | true |
-| any retired doc cut | false |
+### Historical mode
 
-### e) Safety envelope (all 50 questions)
+For all 18 conflicts, asking in historical mode recovers the retired evidence (18 / 18) and the retired document is not cut (0 removed).
 
-| metric | value |
-| --- | ---: |
-| non-conflict questions | 32 |
-| non-conflict byte-identical to flat | 32 |
-| docs removed outside conflicts | 0 |
-| pins outside conflicts | 0 |
+### Safety envelope
 
-Every intervention is one of the 18 conflicts, and each is justified by an
-explicit-supersession `CanonEvent`. The full per-question list is in
-`var/controls.json` (`safety_envelope.interventions`).
+The deterministic gate runs over all 50 questions. Of the 32 non-conflict questions, **32 contexts are byte-identical** to plain retrieval. No expected document is removed outside the conflict set, and nothing is pinned outside it. The gate changes retrieval only where the graph can prove supersession.
 
-### f) Tenant isolation
+### Tenant isolation
 
-Two tenants share a claim key with different values (`Hooli` integration owner):
+Two tenants hold different values for the same claim key (`omar haddad` and `zara sentinel`). `ground()` returns each tenant's own value and never the other's.
 
-| tenant | value |
-| --- | --- |
-| A | `omar haddad` |
-| B | `zara sentinel` |
+## Stress test: where it breaks
 
-`ground()` returns each tenant only its own canonical value.
+A separate set of 20 documents contains supersession phrased in ways the deterministic extractor was not designed to parse ("we have since retired the old figure", "as of last quarter this changed"). The extractor was not tuned to this set.
 
-### Stress set (paraphrased supersession)
+| Metric | Result |
+|---|---|
+| Value recall | 0.70 (14 / 20 recovered the new value) |
+| Supersession recall | 0.00 (0 / 20 flagged a supersession) |
+| Current-state recall | 0.00 (0 / 20 served the correct current value) |
+| Resulting claim states | 14 CONTESTED, 6 CANON_stale |
 
-20 documents that express supersession with paraphrases the extractor is not
-designed to parse ("we have since retired the old figure"):
+What "6 stale" actually means, stated plainly:
 
-| metric | value |
-| --- | ---: |
-| documents | 20 |
-| current value recovered by the extractor | 14/20 (0.70) |
-| supersession flagged | 0/20 (0.00) |
-| pipeline returns the current value | 0/20 (0.00) |
+- **6 of the 20 documents were served as `CANON` with a retired value** — false confidence. They are exactly the six whose new value was written loosely ("a fortnight", "sometime in Q3", "about three weeks") and from which the extractor recovered *nothing*: only the old value is in the graph, so canonization has nothing to contest and returns that retired value as current. Documents `stress-0015` through `stress-0020` (`selected_value` = `60d`, `2025-07-01`, `marcus webb`, `4h`, `14d`, `30d`, all equal to the retired `old_value`).
+- **14 of the 20 were labelled `CONTESTED` and served no current value at all** (`stress-0001`–`stress-0014`). Here the new value *was* recovered, but the paraphrase carried no supersession marker, so the extractor labelled both values `assert` and canonization correctly refused to invent an order.
 
-Outcomes: 14 `CONTESTED`, 6 stale. Reported as-is; the extractor was **not** tuned
-to the stress set.
+So the honest reading is not "it always fails safe". It is: **14 cases fail safe, 6 cases fail unsafe**. The unsafe six lose the new value entirely and then present the retired value as current — the exact failure this project exists to prevent. The extractor was not tuned to this set and these numbers are reported as they are. A model-assisted extractor is the obvious next step and is **not implemented** (`not_run`).
 
-## Interfaces
+Source: `corpus/out/stress.json` (`results[].decision`, `results[].selected_value`, `results[].value_recovered`, `results[].outcome`, `summary.outcomes`).
 
-- **HTTP** (`make api`): `POST /ground` (`mode` = `current` | `historical` |
-  `temporal`), `GET /claims?tenant_id=`, `GET /receipt/{id}`, `GET /health`. Every
-  response carries a `sha256` and the Cypher query identifiers used.
-- **MCP** (`make mcp`): tools `canister_ground` and `canister_claim` over stdio, same
-  fail-closed behavior. Client config:
+## Use it as a component
 
-  ```json
-  {
-    "mcpServers": {
-      "canister": {
-        "command": "uv",
-        "args": ["run", "--project", "/abs/path/to/canister", "canister-mcp"],
-        "env": {
-          "CANISTER_DEFAULT_TENANT": "demo",
-          "CANISTER_INDEX_PATH": "var/index.sqlite3",
-          "FALKORDB_HOST": "127.0.0.1",
-          "FALKORDB_PORT": "6379"
-        }
-      }
+Put Canister between your retriever and your LLM.
+
+```bash
+curl -X POST localhost:8000/ground -H 'Content-Type: application/json' -d '{
+  "question": "What is the current integration owner for Hooli?",
+  "mode": "temporal",
+  "tenant_id": "demo"
+}'
+```
+
+Example response (abridged):
+
+```json
+{
+  "grounding": "TEMPORAL_GRAPH",
+  "decision": { "state": "CANON", "value": "omar haddad",
+                "priority": 1, "reason": "explicit_supersession" },
+  "final_size": 10,
+  "cut": [ { "doc_id": "...", "reason": "superseded" } ],
+  "sha256": "...",
+  "query_ids": ["..."]
+}
+```
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /ground` | Ground a question. Modes: `current`, `historical`, `temporal`. |
+| `GET /claims?tenant_id=` | List claim keys and their state. |
+| `GET /grounding/{id}` | Replay a stored grounding record (`/receipt/{id}` is kept as an alias). |
+| `GET /health` | Liveness. |
+
+It fails closed: with FalkorDB down, `/ground` returns `503 TEMPORAL_GRAPH_UNAVAILABLE`.
+
+### MCP
+
+The same contract is exposed as MCP tools, `canister_ground` and `canister_claim`, with the same fail-closed behaviour. Client configuration:
+
+```json
+{
+  "mcpServers": {
+    "canister": {
+      "command": "uv",
+      "args": ["run", "canister-mcp"]
     }
   }
-  ```
-
-- **Console** (`make web`, `apps/web`): `/` overview, `/cut` the Temporal Cut,
-  `/truth` claim states, `/ask` current vs historical, `/results` the control tables.
-  Every number is read live from the API or from `var/*.json`; no hardcoded figures.
-
-## Layout
-
-```
-packages/graph/        client, schema, ids, writer, canonize, grounding
-packages/retrieval/    SQLite FTS5 store and BM25 candidates
-packages/extraction/   deterministic claim extraction
-packages/evaluation/   arms, context builder, metrics
-services/api/          FastAPI
-services/mcp/          MCP server (canister_ground, canister_claim)
-apps/web/              Next.js + Tailwind console
-scripts/               index, seed, verify, benchmark, envelope, controls, manifest
-corpus/                generator (gold corpus) and stress set
-tests/                 unit (no db) and integration (marked falkordb)
+}
 ```
 
-## Graph schema
+## The console
+
+A Next.js app that reads the live API and `evidence/*.json`. No hardcoded figures and no mock data.
+
+| Page | What it shows |
+|---|---|
+| `/` | Live headline numbers from the API |
+| `/gate` | The same BM25 ranking shown twice: the retired sentence highlighted, the graph path that justifies removing it, and the baseline answer beside the gated one |
+| `/truth` | Every claim key with its CANON / CONTESTED / UNKNOWN state |
+| `/ask` | Ask in current or historical mode and see the evidence |
+| `/results` | `controls.json` rendered as tables |
+
+## Honesty: limitations
+
+- **The corpus is synthetic.** We generated it with a fixed seed and planted the conflicts ourselves. Results of 0 leakage and 32/32 identical contexts are therefore close to guaranteed by construction. They demonstrate that the mechanism works as specified, not that it will perform at that level on real company data.
+- **The extractor is deterministic and template-aware.** It matches the planted claims exactly on all 200 documents because it was validated against our own gold labels. The stress set above shows what happens on phrasing it was not built for.
+- **When the extractor loses the new value, the system can be confidently wrong.** On the stress set, 6 of 20 documents had their new value expressed loosely and recovered as *nothing*; with only the retired value in the graph, canonization returned it as `CANON` current. That is false confidence, not a safe refusal, and it is a real limitation of a graph that only knows what the extractor gave it.
+- **No model is in the loop.** Answer correctness here is derived from the decision state, not from a model-written answer. No model-judged results are reported, and none are claimed.
+- **Question-to-claim matching is lexical.** It requires the entity and the whole attribute label. Embedding-based matching would scale better and is not implemented.
+- **Retrieval is lexical BM25.** Semantic retrieval would change recall, not the temporal argument.
+- **No resurrection handling.** There are no reliable timestamps, so a retired value reasserted later cannot be ordered against its supersession, and Canister does not claim to detect it.
+- **Single-node FalkorDB.** Scale and concurrency were not tested.
+- **`not_run`:** model-assisted extraction, model-judged answer scoring, and any deployment-scale benchmark.
+
+## Tech stack
+
+Python 3.12, uv workspace, FastAPI, pydantic v2, falkordb-py 1.8.0, SQLite FTS5, pytest, ruff, FalkorDB 4.22.1 (Redis 8.10.2) via Docker Compose, Next.js and Tailwind for the console.
+
+## Project layout
 
 ```
-(Entity)-[:HAS_CLAIM]->(ClaimKey)-[:HAS_VALUE]->(Proposition)
-(Assertion)-[:ASSERTS]->(Proposition)
-(Assertion)-[:IN_ARTIFACT]->(Artifact)
-(CanonEvent)-[:SELECTS]->(Proposition)
-(CanonEvent)-[:SUPERSEDES]->(CanonEvent)
+packages/
+  graph/        client, schema, ids, models, canonize, writer, grounding
+  retrieval/    SQLite FTS5 store and BM25 candidates
+  extraction/   vocab, normalisation, deterministic claim extractor
+  evaluation/   corpus loader, context builder, metrics, arms
+services/
+  api/          FastAPI service (fail-closed)
+  mcp/          MCP server exposing ground and claim lookup
+apps/web/       Next.js console
+corpus/         seeded generator and stress set; gold labels
+scripts/        index, seed, benchmark, controls, envelope, verify, manifest
+tests/          unit (no database) and integration (marked falkordb)
 ```
 
-Ids are deterministic. History is never overwritten. Re-ingest creates 0 new nodes.
+## Run it locally
 
-## Reproducibility
+Prerequisites: Docker, uv, Node 20+ with npm.
 
-- The corpus is generated with a fixed seed and the gold labels are written to
-  `corpus/out/gold.json`.
-- Every published number is measured by a script under `scripts/`. Anything not run
-  is recorded as `not_run`, never simulated.
-- `make manifest` writes `var/run_manifest.json` with the git commit, the FalkorDB
-  image digest and the SHA-256 of every result file.
+```bash
+docker compose up -d                      # FalkorDB on :6379, browser on :3000
+uv sync
+uv run python corpus/generator.py         # seeded synthetic corpus + gold labels
+uv run python scripts/index.py            # SQLite FTS5 index
+uv run python scripts/seed.py             # extract claims, write the graph, canonize
+uv run python scripts/verify.py           # 9 live checks, including a restart
+uv run python scripts/controls.py         # all controls -> evidence/controls.json
+uv run python scripts/envelope.py         # counts and environment
+uv run python scripts/manifest.py         # fingerprint every artifact
+uv run uvicorn canister_api.main:app      # API on :8000
+npm --prefix apps/web install             # console deps (once)
+npm --prefix apps/web run dev             # console on :3000
+```
 
-## Limitations
+`verify` checks: write and read, idempotent re-ingest, the 8-versus-1 majority adversarial case, supersession, contested, unknown, residue traversal, the grounding record, and persistence across a real container restart.
 
-- **Synthetic corpus.** The 200-document corpus is generated with a fixed seed
-  (`corpus/generator.py`); it is not real company data.
-- **Deterministic extractor.** Extraction is regex/ontology based, with no model and
-  no network. It recognizes a fixed set of entities, attributes and value shapes.
-- **Paraphrased supersession is missed.** On the 20-document stress set, the
-  extractor recovers the current value in 14/20 documents, flags supersession in
-  0/20, and the pipeline returns the current value in 0/20 (14 `CONTESTED`, 6 stale).
-- **Single-value answers.** A document that states two values with no supersession
-  marker canonizes to `CONTESTED` by design rather than guessing.
-- **Model-judged metrics: none.** Every reported metric is deterministic. No model is
-  called, so nothing is labelled model-judged.
-- **not_run.** Results only exist after the corresponding script runs; missing files
-  are surfaced as `not_run` rather than fabricated (see `var/run_manifest.json`).
+`.env.example` contains no required secrets. Nothing in this repository needs a paid service or an API key.
+
+## Tests
+
+```bash
+uv run ruff check .
+uv run python -m pytest -q                 # 51 tests
+uv run python -m pytest -m "not falkordb"  # unit tests only, no database, no network
+```
+
+Coverage includes canonization priority order (including the majority case), identifier determinism, extraction against the full gold set, grounding label precedence, metric arithmetic, the API including the 503 path with FalkorDB stopped and the `/grounding/{id}` replay (plus its `/receipt/{id}` alias), MCP tool schemas, and write-restart-read round trips against a live graph.
 
 ## Attribution
 
-Canister builds on the following dependencies. Licenses are listed as published by
-each project; see the linked projects for the authoritative text.
+Everything here is used under its own licence.
 
-| Dependency | Role | License |
-| --- | --- | --- |
-| [FalkorDB](https://github.com/FalkorDB/FalkorDB) | Graph engine; stores the temporal claim graph | SSPLv1 |
-| [falkordb-py](https://github.com/FalkorDB/falkordb-py) | Official Python client | MIT |
-| [FastAPI](https://github.com/fastapi/fastapi) | HTTP API | MIT |
-| [pydantic](https://github.com/pydantic/pydantic) | Request/response models | MIT |
-| [uvicorn](https://github.com/encode/uvicorn) | ASGI server | BSD-3-Clause |
-| [httpx](https://github.com/encode/httpx) | Test HTTP client | BSD-3-Clause |
-| [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Model Context Protocol server | MIT |
-| [Next.js](https://github.com/vercel/next.js) | Console framework | MIT |
-| [React](https://github.com/facebook/react) | Console UI | MIT |
-| [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) | Console styling | MIT |
-| [TypeScript](https://github.com/microsoft/TypeScript) | Console types | Apache-2.0 |
-| [Node.js](https://github.com/nodejs/node) | Console runtime | MIT |
-| [pytest](https://github.com/pytest-dev/pytest) | Test runner | MIT |
-| [ruff](https://github.com/astral-sh/ruff) | Linter and formatter | MIT |
-| [SQLite / FTS5](https://sqlite.org/) | BM25 candidate retrieval | Public domain |
-| [uv](https://github.com/astral-sh/uv) | Workspace and dependency manager | Apache-2.0 OR MIT |
-| [Python](https://www.python.org/) | Runtime | PSF-2.0 |
+| Component | Licence |
+|---|---|
+| FalkorDB server | SSPLv1 |
+| falkordb-py 1.8.0 | MIT |
+| FastAPI, pydantic, pytest, ruff | MIT |
+| uvicorn, httpx | BSD-3-Clause |
+| SQLite (FTS5) | Public domain |
+| uv | Apache-2.0 OR MIT |
+| Python | PSF-2.0 |
+| Next.js, React, Tailwind CSS | MIT |
 
-All code, copy and assets in this repository are original.
+All documents in the corpus are synthetic and generated by `corpus/generator.py`. All code in this repository was written during the hackathon window.
+
+## License
+
+MIT

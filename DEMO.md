@@ -30,9 +30,9 @@ Point at: **superseded_leak_total 42 → 0** and **questions 18 → 0**, while
 `context_size_mean` stays `10.0` and `current_recall_mean` stays `1.0`. Same BM25,
 same 10-doc budget; only the context topology changed.
 
-### 1:00 — The Temporal Cut, visually (30s)
+### 1:00 — The Temporal Gate, visually (30s)
 
-Open the console at `/cut`, type:
+Open the console at `/gate`, type:
 
 > `What is the current integration owner for Hooli?`
 
@@ -56,7 +56,7 @@ Point at, in order:
 - **safety envelope**: 32/32 non-conflict contexts byte-identical to flat, 0 removed
   outside conflicts, 0 pins outside conflicts — the graph touches only conflicts.
 
-Then open `/results` to show the same tables rendered straight from `var/controls.json`.
+Then open `/results` to show the same tables rendered straight from `evidence/controls.json`.
 
 ### 2:05 — History is not deleted (25s)
 
@@ -88,6 +88,6 @@ make manifest
 
 ## Fallbacks
 
-- If the browser is unavailable, `curl -s localhost:8000/ground -H 'content-type: application/json' -d '{"question":"What is the current integration owner for Hooli?","mode":"current"}'` shows the receipt, `sha256` and Cypher ids.
+- If the browser is unavailable, `curl -s localhost:8000/ground -H 'content-type: application/json' -d '{"question":"What is the current integration owner for Hooli?","mode":"current"}'` shows the grounding record, `sha256` and Cypher ids.
 - If FalkorDB is down, the same call returns `503 TEMPORAL_GRAPH_UNAVAILABLE` — that
   is the fail-closed behavior, and it is worth showing rather than hiding.
