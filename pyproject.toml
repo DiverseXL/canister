@@ -1,0 +1,47 @@
+[project]
+name = "canister-workspace"
+version = "0.1.0"
+description = "Canister: a temporal claim graph on FalkorDB that keeps superseded company facts out of an AI agent's context."
+requires-python = ">=3.12"
+dependencies = [
+    "canister-graph",
+    "canister-retrieval",
+    "canister-extraction",
+    "canister-evaluation",
+    "canister-api",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "httpx>=0.27",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+canister-graph = { workspace = true }
+canister-retrieval = { workspace = true }
+canister-extraction = { workspace = true }
+canister-evaluation = { workspace = true }
+canister-api = { workspace = true }
+
+[tool.uv.workspace]
+members = ["packages/*", "services/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["."]
+markers = [
+    "falkordb: integration test that requires a running FalkorDB instance",
+]

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "canister-evaluation"
+version = "0.1.0"
+description = "Evaluation arms, context builder and metrics."
+requires-python = ">=3.12"
+dependencies = [
+    "canister-graph",
+    "canister-retrieval",
+    "canister-extraction",
+]
+
+[tool.uv.sources]
+canister-graph = { workspace = true }
+canister-retrieval = { workspace = true }
+canister-extraction = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/canister_evaluation"]

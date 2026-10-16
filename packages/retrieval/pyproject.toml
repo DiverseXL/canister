@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "canister-retrieval"
+version = "0.1.0"
+description = "SQLite FTS5 store and BM25 candidate retrieval."
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/canister_retrieval"]

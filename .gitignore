@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local env
+.env
+
+# Generated artifacts (regenerate with `make corpus index`)
+corpus/out/
+var/
+
+# FalkorDB volume (if ever bind-mounted locally)
+falkordb-data/

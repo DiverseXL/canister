@@ -1,0 +1,291 @@
+"""Integration tests requiring a running FalkorDB (marker: falkordb)."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+from canister_evaluation import (
+    build_fts_documents,
+    build_ingest_documents,
+    sha256_text,
+)
+from canister_graph import (
+    ArtifactInput,
+    AssertionInput,
+    GraphClaimProvider,
+    GraphWriter,
+    IngestDocument,
+    ids,
+)
+from canister_graph import ground as run_ground
+from canister_retrieval import FtsStore
+
+pytestmark = pytest.mark.falkordb
+
+
+def make_doc(
+    doc_id: str,
+    entity: str,
+    attribute: str,
+    label: str,
+    value_type: str,
+    value_raw: str,
+    value_norm: str,
+    *,
+    stance: str = "assert",
+    explicit: bool = False,
+    prior: str | None = None,
+    date: str = "2025-01-01",
+    source: str = "test",
+) -> IngestDocument:
+    text = f"{entity} {label} {value_raw}"
+    artifact = ArtifactInput(
+        doc_id=doc_id,
+        title=f"{entity} {label}",
+        source=source,
+        published_at=date,
+        content_sha256=sha256_text(text),
+        path=f"documents/{doc_id}.md",
+    )
+    assertion = AssertionInput(
+        doc_id=doc_id,
+        entity=entity,
+        attribute=attribute,
+        attribute_label=label,
+        value_type=value_type,
+        value_raw=value_raw,
+        value_norm=value_norm,
+        stance=stance,
+        explicit_supersession=explicit,
+        prior_value=prior,
+        span_start=0,
+        span_end=len(text),
+        quote=text,
+        structured=False,
+        source=source,
+        published_at=date,
+    )
+    return IngestDocument(artifact=artifact, assertions=(assertion,))
+
+
+def test_write_read_and_idempotent(graph) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    docs = [
+        make_doc(
+            f"d{i}", "Acme", "starter_price", "starter plan price", "money", f"$0.0{i}", f"0.0{i}"
+        )
+        for i in range(1, 6)
+    ]
+    writer.ingest(docs)
+    writer.canonize_all()
+    nodes = writer.count_nodes()
+    rels = writer.count_relationships()
+    assert nodes > 0
+
+    writer.ingest(docs)
+    writer.canonize_all()
+    assert writer.count_nodes() == nodes, "re-ingest must create 0 new nodes"
+    assert writer.count_relationships() == rels, "re-ingest must create 0 new relationships"
+
+    result = graph.query("MATCH (a:Artifact) RETURN count(a)")
+    assert result.result_set[0][0] == 5
+
+
+def test_supersession_chain_and_residue(graph) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    ckid = ids.claim_key_id("Acme", "starter_price")
+
+    writer.ingest(
+        [
+            make_doc(
+                "d-old",
+                "Acme",
+                "starter_price",
+                "starter plan price",
+                "money",
+                "$0.08",
+                "0.08",
+                date="2025-01-01",
+            )
+        ]
+    )
+    writer.canonize_all()
+    first = graph.query(
+        "MATCH (ce:CanonEvent {claim_key_id:$ck}) RETURN ce.id, ce.selected_value, ce.current",
+        {"ck": ckid},
+    ).result_set
+    assert len(first) == 1
+    assert first[0][1] == "0.08"
+    assert first[0][2] is True
+
+    writer.ingest(
+        [
+            make_doc(
+                "d-new",
+                "Acme",
+                "starter_price",
+                "starter plan price",
+                "money",
+                "$0.06",
+                "0.06",
+                stance="supersede",
+                explicit=True,
+                prior="0.08",
+                date="2025-06-01",
+            )
+        ]
+    )
+    writer.canonize_all()
+
+    current = graph.query(
+        "MATCH (ce:CanonEvent {claim_key_id:$ck}) WHERE ce.current=true RETURN ce.selected_value",
+        {"ck": ckid},
+    ).result_set
+    assert len(current) == 1
+    assert current[0][0] == "0.06"
+
+    chain = graph.query(
+        "MATCH (a:CanonEvent)-[:SUPERSEDES]->(b:CanonEvent) "
+        "WHERE a.claim_key_id=$ck RETURN a.selected_value, b.selected_value",
+        {"ck": ckid},
+    ).result_set
+    assert len(chain) == 1
+    assert chain[0] == ["0.06", "0.08"]
+
+    events = graph.query(
+        "MATCH (ce:CanonEvent {claim_key_id:$ck}) RETURN ce.id", {"ck": ckid}
+    ).result_set
+    assert len(events) == 2, "history must be preserved, not overwritten"
+
+
+def test_majority_adversarial_on_graph(graph) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    docs = [
+        make_doc(
+            f"old{i}",
+            "Globex",
+            "starter_price",
+            "starter plan price",
+            "money",
+            "$0.08",
+            "0.08",
+            date=f"2025-01-{i + 1:02d}",
+        )
+        for i in range(8)
+    ]
+    docs.append(
+        make_doc(
+            "new",
+            "Globex",
+            "starter_price",
+            "starter plan price",
+            "money",
+            "$0.06",
+            "0.06",
+            stance="supersede",
+            explicit=True,
+            prior="0.08",
+            date="2025-06-01",
+        )
+    )
+    writer.ingest(docs)
+    decisions = writer.canonize_all()
+    majority = [d for d in decisions if d.claim_key == ids.claim_key_id("Globex", "starter_price")]
+    assert len(majority) == 1
+    assert majority[0].selected_value == "0.06"
+    assert majority[0].priority == 1
+    assert len(majority[0].superseded_assertion_ids) == 8
+
+
+def test_contested_on_graph(graph) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    docs = [
+        make_doc(
+            "c1",
+            "Initech",
+            "refund_window",
+            "refund window",
+            "duration_days",
+            "30 days",
+            "30d",
+            date="2025-03-01",
+        ),
+        make_doc(
+            "c2",
+            "Initech",
+            "refund_window",
+            "refund window",
+            "duration_days",
+            "14 days",
+            "14d",
+            date="2025-03-01",
+        ),
+    ]
+    writer.ingest(docs)
+    decisions = writer.canonize_all()
+    contested = [
+        d for d in decisions if d.claim_key == ids.claim_key_id("Initech", "refund_window")
+    ]
+    assert contested[0].decision == "CONTESTED"
+    assert contested[0].selected_value is None
+
+
+def test_unknown_on_graph(graph) -> None:
+    GraphWriter(graph).ensure_schema()
+    provider = GraphClaimProvider(graph)
+    assert (
+        provider.relevant_claim_keys("What is the current starter plan price for Nonexistent Co?")
+        == []
+    )
+    state = provider.claim_state(ids.claim_key_id("Nonexistent Co", "starter_price"))
+    assert state.decision == "UNKNOWN"
+
+
+def test_full_corpus_round_trip(graph, corpus_dir: Path, gold: dict) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    documents = build_ingest_documents(corpus_dir, gold)
+
+    writer.ingest(documents)
+    decisions = writer.canonize_all()
+    nodes = writer.count_nodes()
+
+    assert len(decisions) == 40
+    assert sum(1 for d in decisions if d.decision == "CONTESTED") == 2
+
+    writer.ingest(documents)
+    writer.canonize_all()
+    assert writer.count_nodes() == nodes
+
+    provider = GraphClaimProvider(graph)
+    question = next(q for q in gold["questions"] if q["kind"] == "answerable")
+    keys = provider.relevant_claim_keys(question["question"])
+    assert keys, "the question's claim key must be discoverable in the graph"
+    assert provider.claim_state(keys[0]).selected_value == question["expected"]
+
+
+def test_ground_end_to_end(graph, corpus_dir: Path, gold: dict, tmp_path: Path) -> None:
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    writer.ingest(build_ingest_documents(corpus_dir, gold))
+    writer.canonize_all()
+
+    index_path = tmp_path / "index.sqlite3"
+    store = FtsStore(index_path)
+    store.reset()
+    store.add_documents(build_fts_documents(corpus_dir, gold))
+
+    provider = GraphClaimProvider(graph)
+    question = next(q for q in gold["questions"] if q["kind"] == "answerable")
+    receipt = run_ground(question["question"], "temporal", provider=provider, retrieve=store.bm25)
+
+    assert receipt["final_size"] == 10
+    assert all(entry["label"] != "superseded" for entry in receipt["final_context"])
+    assert len(receipt["sha256"]) == 64
+    decision = receipt["decisions"][receipt["claim_keys"][0]]
+    assert decision["selected_value"] == question["expected"]

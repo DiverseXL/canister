@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "canister-graph"
+version = "0.1.0"
+description = "FalkorDB temporal claim graph: client, schema, ids, writer, canonize, grounding."
+requires-python = ">=3.12"
+dependencies = [
+    "falkordb>=1.6.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/canister_graph"]

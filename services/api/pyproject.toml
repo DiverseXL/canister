@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "canister-api"
+version = "0.1.0"
+description = "FastAPI service for grounded, temporal context."
+requires-python = ">=3.12"
+dependencies = [
+    "canister-graph",
+    "canister-evaluation",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "pydantic>=2.6",
+]
+
+[tool.uv.sources]
+canister-graph = { workspace = true }
+canister-evaluation = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/canister_api"]
