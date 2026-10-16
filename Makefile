@@ -23,7 +23,7 @@ help:
 > @echo "  verify            end-to-end verification suite"
 > @echo "  benchmark         flat vs temporal arms over gold questions"
 > @echo "  envelope          write the measured submission envelope"
-> @echo "  controls          Task 8 controls -> var/controls.json"
+> @echo "  controls          Task 8 controls -> evidence/controls.json"
 > @echo "  stress            Task 9 paraphrased-supersession stress set"
 > @echo "  manifest          git commit + FalkorDB digest + result hashes"
 > @echo "  clean             remove generated artifacts"

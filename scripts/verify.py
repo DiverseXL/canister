@@ -78,7 +78,7 @@ def _restart_falkordb() -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the Canister verification suite.")
     parser.add_argument("--corpus", type=Path, default=Path(DEFAULT_CORPUS))
-    parser.add_argument("--out", type=Path, default=Path("var/verify.json"))
+    parser.add_argument("--out", type=Path, default=Path("evidence/verify.json"))
     parser.add_argument("--skip-restart", action="store_true")
     args = parser.parse_args()
 

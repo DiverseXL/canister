@@ -443,7 +443,7 @@ def main() -> None:
     parser.add_argument("--tenant-a", default="canister_controls_a")
     parser.add_argument("--tenant-b", default="canister_controls_b")
     parser.add_argument("--k", type=int, default=10)
-    parser.add_argument("--out", type=Path, default=Path("var/controls.json"))
+    parser.add_argument("--out", type=Path, default=Path("evidence/controls.json"))
     args = parser.parse_args()
 
     gold = load_gold(args.corpus)

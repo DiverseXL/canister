@@ -1,0 +1,111 @@
+{
+  "benchmark": {
+    "arms": {
+      "flat": {
+        "answer_correct_rate": 1.0,
+        "answerable_correct_rate": 1.0,
+        "contested_correct_rate": 1.0,
+        "context_size_all_ten": true,
+        "context_size_mean": 10.0,
+        "current_recall_mean": 1.0,
+        "questions": 50,
+        "superseded_leak_questions": 18,
+        "superseded_leak_total": 42,
+        "unanswerable_correct_rate": 1.0
+      },
+      "temporal": {
+        "answer_correct_rate": 1.0,
+        "answerable_correct_rate": 1.0,
+        "contested_correct_rate": 1.0,
+        "context_size_all_ten": true,
+        "context_size_mean": 10.0,
+        "current_recall_mean": 1.0,
+        "questions": 50,
+        "superseded_leak_questions": 0,
+        "superseded_leak_total": 0,
+        "unanswerable_correct_rate": 1.0
+      }
+    }
+  },
+  "corpus": {
+    "answerable_claim_keys": 40,
+    "claim_keys": 40,
+    "conflicts": 18,
+    "contested": 2,
+    "documents": 200,
+    "questions": 50,
+    "seed": 1337,
+    "unanswerable_questions": 10
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10"
+  },
+  "generated_at_utc": "2026-10-16T19:48:45+00:00",
+  "graph": {
+    "artifacts": 200,
+    "assertions": 200,
+    "canon": 38,
+    "canon_events": 40,
+    "contested": 2,
+    "nodes": 552,
+    "relationships": 538,
+    "supersedes_edges": 0,
+    "unknown": 0,
+    "versions": {
+      "graph_module": "42201",
+      "redis_version": "8.10.2"
+    }
+  },
+  "measured_by": {
+    "benchmark": "scripts/benchmark.py",
+    "corpus": "corpus/generator.py",
+    "envelope": "scripts/envelope.py",
+    "verify": "scripts/verify.py"
+  },
+  "project": "Canister",
+  "track": "Company Brain (Track 3)",
+  "verify": {
+    "checks": [
+      {
+        "name": "write_read",
+        "status": "pass"
+      },
+      {
+        "name": "idempotent_reingest",
+        "status": "pass"
+      },
+      {
+        "name": "majority_adversarial",
+        "status": "pass"
+      },
+      {
+        "name": "supersession",
+        "status": "pass"
+      },
+      {
+        "name": "contested",
+        "status": "pass"
+      },
+      {
+        "name": "unknown",
+        "status": "pass"
+      },
+      {
+        "name": "residue_traversal",
+        "status": "pass"
+      },
+      {
+        "name": "ground_receipt",
+        "status": "pass"
+      },
+      {
+        "name": "restart_persistence",
+        "status": "pass"
+      }
+    ],
+    "failed": 0,
+    "not_run": 0,
+    "passed": 9
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "artifacts": 200,
+        "assertions": 200,
+        "nodes": 552
+      },
+      "name": "write_read",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "new_nodes": 0
+      },
+      "name": "idempotent_reingest",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "priority": 1,
+        "selected": "omar haddad"
+      },
+      "name": "majority_adversarial",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "old": "0.25",
+        "selected": "0.12"
+      },
+      "name": "supersession",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "decision": "CONTESTED"
+      },
+      "name": "contested",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "decision": "UNKNOWN"
+      },
+      "name": "unknown",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "chain": [
+          [
+            "0.12",
+            "0.25"
+          ]
+        ],
+        "events": 2
+      },
+      "name": "residue_traversal",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "cut_set": 30,
+        "final_size": 10,
+        "pinned": [],
+        "sha256": "5fd6f112df4a085b"
+      },
+      "name": "ground_receipt",
+      "status": "pass"
+    },
+    {
+      "detail": {
+        "nodes_after": 552,
+        "nodes_before": 552
+      },
+      "name": "restart_persistence",
+      "status": "pass"
+    }
+  ],
+  "failed": 0,
+  "not_run": 0,
+  "passed": 9
+}

@@ -66,7 +66,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Write the submission envelope.")
     parser.add_argument("--corpus", type=Path, default=DEFAULT_CORPUS)
     parser.add_argument("--tenant", default="demo")
-    parser.add_argument("--out", type=Path, default=Path("var/envelope.json"))
+    parser.add_argument("--out", type=Path, default=Path("evidence/envelope.json"))
     args = parser.parse_args()
 
     gold = load_gold(args.corpus)
@@ -94,7 +94,7 @@ def main() -> None:
         },
     }
 
-    benchmark_path = Path("var/benchmark.json")
+    benchmark_path = Path("evidence/benchmark.json")
     if benchmark_path.exists():
         benchmark = json.loads(benchmark_path.read_text(encoding="utf-8"))
         envelope["benchmark"] = {
@@ -103,7 +103,7 @@ def main() -> None:
     else:
         envelope["benchmark"] = "not_run"
 
-    verify_path = Path("var/verify.json")
+    verify_path = Path("evidence/verify.json")
     if verify_path.exists():
         verify = json.loads(verify_path.read_text(encoding="utf-8"))
         envelope["verify"] = {

@@ -29,7 +29,7 @@ def main() -> None:
     parser.add_argument("--corpus", type=Path, default=Path(DEFAULT_CORPUS))
     parser.add_argument("--index", type=Path, default=Path(DEFAULT_INDEX))
     parser.add_argument("--tenant", default=os.environ.get("CANISTER_DEFAULT_TENANT", "demo"))
-    parser.add_argument("--out", type=Path, default=Path("var/benchmark.json"))
+    parser.add_argument("--out", type=Path, default=Path("evidence/benchmark.json"))
     args = parser.parse_args()
 
     gold = load_gold(args.corpus)

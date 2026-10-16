@@ -1,4 +1,4 @@
-"""Write var/run_manifest.json: git commit, FalkorDB image digest, result hashes.
+"""Write evidence/run_manifest.json: git commit, FalkorDB image digest, result hashes.
 
 Everything is best-effort and honest: if git, Docker or a result file is absent
 the field is recorded as ``not_run`` instead of guessed.
@@ -82,7 +82,7 @@ def falkordb_info() -> dict:
 def result_files(root: Path) -> dict[str, str]:
     targets: list[Path] = []
     for pattern in (
-        "var/*.json",
+        "evidence/*.json",
         "var/*.sqlite3",
         "corpus/out/gold.json",
         "corpus/out/stress.json",
@@ -99,11 +99,17 @@ def result_files(root: Path) -> dict[str, str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Write the run manifest.")
-    parser.add_argument("--out", type=Path, default=Path("var/run_manifest.json"))
+    parser.add_argument("--out", type=Path, default=Path("evidence/run_manifest.json"))
     args = parser.parse_args()
 
     root = Path.cwd()
     results = result_files(root)
+    # Never hash the manifest's own output; it changes on every run.
+    try:
+        self_key = str(args.out.resolve().relative_to(root.resolve())).replace("\\", "/")
+        results.pop(self_key, None)
+    except ValueError:
+        pass
     missing = (
         [] if results else ["no result files found; run make corpus index seed benchmark controls"]
     )
