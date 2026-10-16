@@ -90,6 +90,19 @@ def test_temporal_pins_missed_current_evidence() -> None:
     assert receipt["final_size"] == 10
 
 
+def test_temporal_pin_evicts_lowest_ranked_never_extends_budget() -> None:
+    ranking = ranking_with_current_late()
+    provider = provider_for_current_late()
+    receipt = ground("q", "temporal", provider=provider, retrieve=lambda q, k: ranking[:k])
+    final_ids = [entry["doc_id"] for entry in receipt["final_context"]]
+    assert len(final_ids) == 10
+    assert len(set(final_ids)) == 10
+    assert "current" in final_ids
+    assert "neutral-9" not in final_ids
+    cut_ids = {entry["doc_id"] for entry in receipt["cut_set"]}
+    assert "neutral-9" in cut_ids
+
+
 def test_flat_mode_keeps_superseded() -> None:
     ranking = ranking_with_current_late()
     provider = provider_for_current_late()

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "canister-mcp"
+version = "0.1.0"
+description = "MCP server exposing Canister temporal grounding tools."
+requires-python = ">=3.12"
+dependencies = [
+    "canister-graph",
+    "canister-evaluation",
+    "canister-retrieval",
+    "mcp>=1.2",
+]
+
+[project.scripts]
+canister-mcp = "canister_mcp.server:main"
+
+[tool.uv.sources]
+canister-graph = { workspace = true }
+canister-evaluation = { workspace = true }
+canister-retrieval = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/canister_mcp"]

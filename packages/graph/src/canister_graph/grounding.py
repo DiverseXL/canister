@@ -49,6 +49,20 @@ READ_DOC_VALUES = (
     "RETURN DISTINCT ck.id AS ck, p.value_norm AS value"
 )
 
+_CYPHER: dict[str, str] = {
+    "READ_KEY_INFO": READ_KEY_INFO,
+    "READ_STATE": READ_STATE,
+    "READ_DOC_VALUES": READ_DOC_VALUES,
+}
+
+
+def cypher_queries() -> dict[str, str]:
+    """Identifiers of the Cypher queries used by :func:`ground`, with a hash of each."""
+    return {
+        name: hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+        for name, text in _CYPHER.items()
+    }
+
 
 class ClaimProvider(Protocol):
     def relevant_claim_keys(self, question: str) -> list[str]: ...
@@ -177,6 +191,7 @@ def ground(
         "pinned": pinned,
         "final_size": len(final_context),
         "sha256": _sha256_context(final_context),
+        "cypher_queries": cypher_queries(),
     }
 
 
@@ -222,6 +237,17 @@ class GraphClaimProvider:
             result = self.graph.query(READ_KEY_INFO)
             self._keys = [(row[0], row[1], row[2], row[3] or "") for row in result.result_set]
         return self._keys
+
+    def all_claim_keys(self) -> list[dict[str, str]]:
+        return [
+            {
+                "claim_key": key_id,
+                "entity": entity,
+                "attribute": attribute,
+                "attribute_label": label,
+            }
+            for key_id, entity, attribute, label in self._all_keys()
+        ]
 
     def relevant_claim_keys(self, question: str) -> list[str]:
         question_lower = question.lower()

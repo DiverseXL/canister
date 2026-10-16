@@ -17,3 +17,9 @@ var/
 
 # FalkorDB volume (if ever bind-mounted locally)
 falkordb-data/
+
+# Node / Next.js (apps/web)
+node_modules/
+.next/
+out/
+next-env.d.ts

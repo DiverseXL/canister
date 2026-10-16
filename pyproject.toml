@@ -9,6 +9,7 @@ dependencies = [
     "canister-extraction",
     "canister-evaluation",
     "canister-api",
+    "canister-mcp",
 ]
 
 [dependency-groups]
@@ -27,6 +28,7 @@ canister-retrieval = { workspace = true }
 canister-extraction = { workspace = true }
 canister-evaluation = { workspace = true }
 canister-api = { workspace = true }
+canister-mcp = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*", "services/*"]
