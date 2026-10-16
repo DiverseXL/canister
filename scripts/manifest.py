@@ -21,6 +21,8 @@ CONTAINER = "canister-falkordb"
 
 
 def sha256_file(path: Path) -> str:
+    # Hash raw bytes exactly as stored on disk, so a hash computed on one machine
+    # matches the same file in a fresh clone (no newline normalisation).
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(65536), b""):
@@ -82,8 +84,8 @@ def falkordb_info() -> dict:
 def result_files(root: Path) -> dict[str, str]:
     targets: list[Path] = []
     for pattern in (
+        # SQLite indexes are excluded: their bytes are not reproducible run to run.
         "evidence/*.json",
-        "var/*.sqlite3",
         "corpus/out/gold.json",
         "corpus/out/stress.json",
         "corpus/out/documents/*.md",
@@ -97,10 +99,54 @@ def result_files(root: Path) -> dict[str, str]:
     return hashes
 
 
-def main() -> None:
+def check(out: Path) -> int:
+    """Re-hash every file listed in ``out`` and report any mismatch."""
+    if not out.is_file():
+        print(f"{out} not found; run 'scripts/manifest.py' first")
+        return 1
+    data = json.loads(out.read_text(encoding="utf-8"))
+    expected: dict[str, str] = data.get("results", {})
+    recorded = data.get("git", {}).get("commit", "not_run")
+    root = Path.cwd()
+    matches = 0
+    mismatches: list[tuple[str, str, str]] = []
+    missing: list[str] = []
+    for rel, want in sorted(expected.items()):
+        path = root / rel
+        if not path.is_file():
+            missing.append(rel)
+            continue
+        got = sha256_file(path)
+        if got == want:
+            matches += 1
+        else:
+            mismatches.append((rel, want, got))
+    print(f"manifest commit: {recorded}")
+    print(
+        f"checked {len(expected)} file(s): "
+        f"{matches} match, {len(mismatches)} mismatch, {len(missing)} missing"
+    )
+    for rel, want, got in mismatches:
+        print(f"  MISMATCH {rel}")
+        print(f"    manifest {want}")
+        print(f"    on disk  {got}")
+    for rel in missing:
+        print(f"  MISSING  {rel}")
+    return 1 if (mismatches or missing) else 0
+
+
+def main() -> int:
     parser = argparse.ArgumentParser(description="Write the run manifest.")
     parser.add_argument("--out", type=Path, default=Path("evidence/run_manifest.json"))
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="re-hash every file listed in the manifest and report mismatches",
+    )
     args = parser.parse_args()
+
+    if args.check:
+        return check(args.out)
 
     root = Path.cwd()
     results = result_files(root)
@@ -131,7 +177,8 @@ def main() -> None:
     args.out.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
     print(json.dumps(manifest, indent=2, sort_keys=True))
     print(f"\nWrote {args.out}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

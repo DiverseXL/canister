@@ -1,5 +1,8 @@
 * text=auto eol=lf
 
+# Evidence files are hashed byte-for-byte, so keep their bytes exactly as written.
+evidence/*.json -text
+
 *.png binary
 *.jpg binary
 *.pdf binary
