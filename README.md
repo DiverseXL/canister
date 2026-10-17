@@ -35,7 +35,7 @@ uv run python scripts/verify.py        # 9 live checks incl. a database restart
 uv run python scripts/controls.py      # every control below, written to evidence/controls.json
 uv run python corpus/stress.py         # the stress set above, written to corpus/out/stress.json
 uv run uvicorn canister_api.main:app   # API on :8000
-npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3000
+npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3000 (or :3001)
 ```
 
 ## Table of contents
@@ -277,6 +277,8 @@ The same contract is exposed as MCP tools, `canister_ground` and `canister_claim
 
 A Next.js app that reads the live API and `evidence/*.json`. No hardcoded figures and no mock data.
 
+The console defaults to port 3000. Docker Compose also maps FalkorDB's browser to 3000, so when that port is busy Next.js serves the console on 3001 instead; the API's default `CANISTER_CORS_ORIGINS` allows both `localhost` and `127.0.0.1` on either port.
+
 | Page | What it shows |
 |---|---|
 | `/` | Live headline numbers from the API |
@@ -335,7 +337,7 @@ uv run python scripts/envelope.py         # counts and environment
 uv run python scripts/manifest.py         # fingerprint every artifact
 uv run uvicorn canister_api.main:app      # API on :8000
 npm --prefix apps/web install             # console deps (once)
-npm --prefix apps/web run dev             # console on :3000
+npm --prefix apps/web run dev             # console on :3000 (or :3001)
 ```
 
 `verify` checks: write and read, idempotent re-ingest, the 8-versus-1 majority adversarial case, supersession, contested, unknown, residue traversal, the grounding record, and persistence across a real container restart.
