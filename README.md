@@ -13,7 +13,7 @@ Design inspired by Canon (Enoch208/canon).
 
 Every number below is produced by a script in this repository on a **synthetic, seeded corpus** that we generate. See [Honesty: limitations](#honesty-limitations) before reading anything into them.
 
-`evidence/run_manifest.json` records the commit the evidence came from, the FalkorDB image digest and a SHA-256 of every result file. It was generated at commit `76d63bed718f1be1e96c317792128278a81bb62d`; every later commit touches only this line and the manifest itself. Recheck any checkout with `uv run python scripts/manifest.py --check`.
+`evidence/run_manifest.json` records the commit the evidence came from, the FalkorDB image digest and a SHA-256 of every result file. It was generated at commit `76d63bed718f1be1e96c317792128278a81bb62d`; later commits do not change any file in evidence/. Recheck any checkout with `uv run python scripts/manifest.py --check`.
 
 | Measurement | Baseline (BM25 only) | Canister |
 |---|---|---|
@@ -54,12 +54,15 @@ npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3
 10. [Use it as a component](#use-it-as-a-component)
 11. [The console](#the-console)
 12. [Honesty: limitations](#honesty-limitations)
-13. [AI use disclosure](#ai-use-disclosure)
-14. [Tech stack](#tech-stack)
-15. [Project layout](#project-layout)
-16. [Run it locally](#run-it-locally)
-17. [Tests](#tests)
-18. [Attribution](#attribution)
+13. [Why a graph](#why-a-graph)
+14. [How this maps to the rules and Track 3](#how-this-maps-to-the-rules-and-track-3)
+15. [Notes for the FalkorDB team](#notes-for-the-falkordb-team)
+16. [AI use disclosure](#ai-use-disclosure)
+17. [Tech stack](#tech-stack)
+18. [Project layout](#project-layout)
+19. [Run it locally](#run-it-locally)
+20. [Tests](#tests)
+21. [Attribution](#attribution)
 
 ## The problem
 
@@ -428,9 +431,47 @@ The console defaults to port 3000. Docker Compose also maps FalkorDB's browser t
 - **Single-node FalkorDB.** Scale and concurrency were not tested.
 - **`not_run`:** the fail-safe rule that marks a claim `CONTESTED` when a supersession cue is present but no new value was extracted, model-assisted extraction, model-judged answer scoring, and any deployment-scale benchmark.
 
+## Why a graph
+
+Canister's central decision is a path, not a lookup. For every claim, FalkorDB answers "which values has this claim held, which document asserted each, and which later event retired which?" Three parts of the product need traversal:
+
+- **Revision chains.** A claim can be revised more than once. The current value is found by walking `(CanonEvent)-[:SUPERSEDES*1..10]->` and selecting the head of the chain, so the answer does not depend on how many revisions exist.
+- **Residue.** To find every document that still asserts a retired value, the query goes proposition -> assertions -> artifacts in reverse. The fan-in is unbounded and each hop carries its own evidence span.
+- **Tenant isolation.** Each tenant is a separate graph (`select_graph`), so one tenant's claims cannot be reached from another's traversal.
+
+What the graph does not do: pairwise supersession of one old value by one new value could be stored in a relational table with a `superseded_by` column, and most of the planted conflicts in our corpus are single-step. We did not run a relational baseline, so we make no measured claim about the graph's advantage over one (`not_run`). The case for FalkorDB here rests on chains, reverse traversal and per-tenant graphs, and on the grounding record returning the path that justified each cut.
+
+## How this maps to the rules and Track 3
+
+| Rule or Track 3 focus area | Where in the repo | Evidence |
+|---|---|---|
+| FalkorDB is the primary database (rules 2, 3) | packages/graph (writer, canonize, grounding) | Without FalkorDB the API returns 503 TEMPORAL_GRAPH_UNAVAILABLE; it never falls back to plain retrieval (test in tests/unit/test_api.py, live check in evidence/verify.json) |
+| Keeping knowledge current as things change | canonize.py: supersession, corroboration tie-break, CONTESTED | evidence/controls.json: 43 superseded documents in context under plain BM25 vs 0 under the gate |
+| Tracing decisions back to their source | grounding record: cut set with reasons, evidence spans, context SHA-256, Cypher query ids | GET /grounding/{id}; the /gate page; evidence/verify.json (ground_receipt check) |
+| Answers with clear sources | every answer is CANON, CONTESTED or UNKNOWN | evidence/verify.json (supersession, contested, unknown checks) |
+| Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in corpus/out/gold.json (Cyberdyne Systems: tom falk → nina petrov; Wonka Industries: priya nair → grace kim; Globex: sam ortiz → nina petrov; Acme Corp: tom falk → marcus webb; Stark Industries: dana cole); demo query in console /gate and /ground for Hooli integration owner |
+| Knowledge from docs, tickets and chats in one graph | multi-source corpus generator (corpus/generator.py) and artifact schema (writer.py) | The 200 documents in corpus/out/gold.json come from 5 corporate sources (internal-wiki, release-notes, sales-ops, support-portal, finance-shared), linked in graph as `(as:Assertion)-[:IN_ARTIFACT]->(art:Artifact)` with `art.source` |
+| Data allowed (rule 6) | synthetic corpus from a seeded generator | corpus/generator.py, seed 1337; evidence/envelope.json (corpus.seed=1337, corpus.documents=200) |
+| Work began after the opening (rule 8) | commit history | `git log --reverse` (initial commit d381333 on Oct 16, 2026, 18:03:10 +0100 after opening) |
+| Setup, data model, Cypher, track (rule 10) | this README | the "Cypher the product depends on" section, the "Architecture" data model table, Track 3 (Company Brain) header |
+| AI disclosure (rule 11) | "AI use disclosure" section | see the "AI use disclosure" section below |
+| Not measured | concurrency, scale beyond one node | not_run (see "Honesty: limitations") |
+
+## Notes for the FalkorDB team
+
+1. **Spurious "Query timed out" with `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` set via `FALKORDB_ARGS`:** During development, setting `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` overrides in `docker-compose.yml` caused intermittent, spurious `"Query timed out"` errors. Removing the overrides eliminated the issue. We attempted to reproduce this in a throwaway container (`fdb-repro` with `FALKORDB_ARGS="MAX_QUEUED_QUERIES 50 TIMEOUT_MAX 1000"` on FalkorDB module v42201 / Redis 8.10.2) running a loop of 200 read queries, but the error did not reproduce (`timed_out=0`). We record that we saw spurious timeouts once with overrides set, removed them, and could not reproduce afterwards under synthetic test conditions.
+2. **`graph.delete()` on a key that doesn't exist raises an error:** Calling `graph.delete()` on a non-existent graph key raises `redis.exceptions.ResponseError: Invalid graph operation on empty key` rather than returning `False` or behaving as a no-op. In `packages/graph/src/canister_graph/client.py`, `drop_graph()` guards deletion by checking `if name in db.list_graphs(): db.select_graph(name).delete()`. Suggestion: adding an `ignore_missing=True` parameter to `graph.delete()` in `falkordb-py` would simplify teardown scripts.
+3. **Re-creating an existing index raises "Attribute 'id' is already indexed":** Executing `CREATE INDEX FOR (n:Label) ON (n.prop)` when an index already exists raises `redis.exceptions.ResponseError: Attribute 'id' is already indexed` instead of being idempotent. In `packages/graph/src/canister_graph/schema.py`, `ensure_schema()` wraps index creation queries in `try...except` and catches exceptions containing `"already indexed"`. Suggestion: native support for `CREATE INDEX IF NOT EXISTS` syntax would make schema bootstrapping idempotent.
+
+### Lessons learned
+
+- In Cypher, reversing relationship direction in a `MATCH` (e.g. `(p)-[:ASSERTS]->(a)` instead of `(p)<-[:ASSERTS]-(a)`) returns zero rows with no error because it is a syntactically valid path pattern that happens not to match; integration round-trip tests asserting non-zero entity and relationship counts catch this early.
+
 ## AI use disclosure
 
-This project was built with AI coding assistants: Claude for design and planning, and an OpenCode agent running DeepSeek for implementation. The author directed the design and verified the results, including every number reported here.
+Design inspired by Canon (Enoch208/canon). This project was built with AI coding assistants: Claude for design, planning, prompts, and review; an OpenCode agent running DeepSeek for implementation; and Antigravity (Gemini) for README and documentation edits. The author directed the design and verified the results, including every number reported here.
+
+No AI model is in the loop at runtime: answer correctness, document filtering, and context decisions are computed deterministically from FalkorDB graph traversals and Python canonization rules.
 
 ## Tech stack
 
