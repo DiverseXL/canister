@@ -368,12 +368,21 @@ Example response (abridged):
 ```json
 {
   "grounding": "TEMPORAL_GRAPH",
-  "decision": { "state": "CANON", "value": "0.07",
-                "priority": 1, "reason": "explicit_supersession" },
+  "decisions": {
+    "ck_b8882b4b5296aafbb8577e5c6379d4d1": {
+      "decision": "CANON",
+      "selected_value": "0.07",
+      "priority": 1,
+      "reason": "explicit_supersession"
+    }
+  },
   "final_size": 10,
-  "cut": [ { "doc_id": "doc-0001", "reason": "superseded" }, "...8 more" ],
-  "sha256": "...",
-  "receipt_id": "..."
+  "cut_set": [
+    { "rank": 0, "doc_id": "doc-0001", "label": "superseded", "bm25_score": 8.298664, "reason": "superseded" },
+    "...8 more superseded, 21 outside_budget"
+  ],
+  "sha256": "9db6d3e197529b119fd9fe49a99d4798e0ef7f35cef81f72b2b935f0f7df60f8",
+  "receipt_id": "d23f2532aaf763c8"
 }
 ```
 
