@@ -1,0 +1,157 @@
+{
+  "generated_by": "scripts/perf.py",
+  "generated_at_utc": "2026-10-17T19:59:42+00:00",
+  "date": "2026-10-17",
+  "graph": {
+    "name": "perf_e5c6d4ee",
+    "prefix": "perf_"
+  },
+  "note": "Single local Docker FalkorDB node shared with other processes (the demo/bench graphs and other workloads are live). Figures are indicative measurements of this one local node only; they are not a claim about any other system.",
+  "environment": {
+    "falkordb": {
+      "module_graph_version": 42201,
+      "redis_version": "8.10.2",
+      "python_client_version": "1.8.0"
+    },
+    "cpu_count": 4,
+    "python_version": "3.12.10",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "git_commit": "b4cee228d64b4809d63141fa713c9263941aa43f"
+  },
+  "dataset": {
+    "batch_size": 500,
+    "chain_length": 10,
+    "chains": 100,
+    "fan_in": [
+      10,
+      100,
+      1000
+    ],
+    "nodes": {
+      "total": 10000,
+      "Entity": 200,
+      "ClaimKey": 1800,
+      "Proposition": 3000,
+      "Assertion": 3000,
+      "Artifact": 1000,
+      "CanonEvent": 1000
+    },
+    "relationships": {
+      "total": 30000,
+      "HAS_CLAIM": 3800,
+      "HAS_VALUE": 6500,
+      "IN_ARTIFACT": 7500,
+      "SELECTS": 3800,
+      "ASSERTS": 7500,
+      "SUPERSEDES": 900
+    }
+  },
+  "write_throughput": {
+    "nodes": {
+      "count": 10000,
+      "seconds": 0.537125,
+      "nodes_per_second": 18617.6
+    },
+    "relationships": {
+      "count": 30000,
+      "seconds": 0.779215,
+      "edges_per_second": 38500.3
+    },
+    "total_seconds": 1.31634,
+    "verified": {
+      "nodes": 10000,
+      "relationships": 30000
+    }
+  },
+  "latency": {
+    "warmup_runs": 20,
+    "timed_runs": 200,
+    "seed": 20261017,
+    "claim_neighbourhood": {
+      "warmup_runs": 20,
+      "timed_runs": 200,
+      "p50_ms": 2.749,
+      "p95_ms": 6.636,
+      "max_ms": 16.848,
+      "rows_returned": {
+        "min": 1,
+        "max": 12,
+        "mean": 3.775
+      }
+    },
+    "supersession_lineage": {
+      "warmup_runs": 20,
+      "timed_runs": 200,
+      "p50_ms": 2.753,
+      "p95_ms": 7.266,
+      "max_ms": 17.043,
+      "rows_returned": {
+        "min": 9,
+        "max": 9,
+        "mean": 9.0
+      }
+    },
+    "reverse_residue": {
+      "fan_in_10": {
+        "warmup_runs": 20,
+        "timed_runs": 200,
+        "p50_ms": 5.249,
+        "p95_ms": 14.648,
+        "max_ms": 23.157,
+        "rows_returned": {
+          "min": 20,
+          "max": 20,
+          "mean": 20.0
+        }
+      },
+      "fan_in_100": {
+        "warmup_runs": 20,
+        "timed_runs": 200,
+        "p50_ms": 16.645,
+        "p95_ms": 38.151,
+        "max_ms": 61.152,
+        "rows_returned": {
+          "min": 200,
+          "max": 200,
+          "mean": 200.0
+        }
+      },
+      "fan_in_1000": {
+        "warmup_runs": 20,
+        "timed_runs": 200,
+        "p50_ms": 104.671,
+        "p95_ms": 210.378,
+        "max_ms": 403.559,
+        "rows_returned": {
+          "min": 2000,
+          "max": 2000,
+          "mean": 2000.0
+        }
+      }
+    },
+    "two_hop_neighbourhood": {
+      "warmup_runs": 20,
+      "timed_runs": 200,
+      "p50_ms": 3.862,
+      "p95_ms": 10.162,
+      "max_ms": 25.615,
+      "rows_returned": {
+        "min": 15,
+        "max": 55,
+        "mean": 38.85
+      }
+    },
+    "two_hop_note": "rows returned = Entity -> ClaimKey -> Proposition matches",
+    "ordinary_propositions": 2997
+  },
+  "teardown": {
+    "seconds": 0.014422,
+    "dropped": true,
+    "still_listed": false,
+    "confirmed_gone": true,
+    "graphs_after": [
+      "bench",
+      "demo"
+    ]
+  }
+}
