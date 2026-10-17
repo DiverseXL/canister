@@ -35,7 +35,7 @@ uv run python scripts/index.py         # SQLite FTS5 index
 uv run python scripts/seed.py          # extract, write the graph, canonize
 uv run python scripts/verify.py        # 9 live checks incl. a database restart
 uv run python scripts/controls.py      # every control below, written to evidence/controls.json
-uv run python corpus/stress.py         # the stress set above, written to corpus/out/stress.json
+uv run python corpus/stress.py         # the stress set above, written to evidence/stress.json
 uv run uvicorn canister_api.main:app   # API on :8000
 npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3000 (or :3001)
 ```
@@ -349,7 +349,7 @@ What "6 stale" actually means, stated plainly:
 
 So the honest reading is not "it always fails safe". It is: **14 cases fail safe, 6 cases fail unsafe**. The unsafe six lose the new value entirely and then present the retired value as current — the exact failure this project exists to prevent. The extractor was not tuned to this set and these numbers are reported as they are. A model-assisted extractor is the obvious next step and is **not implemented** (`not_run`).
 
-Source: `corpus/out/stress.json` (`results[].decision`, `results[].selected_value`, `results[].value_recovered`, `results[].outcome`, `summary.outcomes`).
+Source: `evidence/stress.json` (`results[].decision`, `results[].selected_value`, `results[].value_recovered`, `results[].outcome`, `summary.outcomes`).
 
 **Next step (`not_run`).** Two changes would close this gap and neither is implemented: a fail-safe rule that marks a claim `CONTESTED` whenever a supersession cue is present but no new value was extracted, and a model-assisted extractor for loosely-phrased new values. Both are `not_run`; the deterministic extractor reported here is unchanged.
 
@@ -456,8 +456,8 @@ What the graph does not do: pairwise supersession of one old value by one new va
 | Keeping knowledge current as things change | canonize.py: supersession, corroboration tie-break, CONTESTED | evidence/controls.json: 43 superseded documents in context under plain BM25 vs 0 under the gate |
 | Tracing decisions back to their source | grounding record: cut set with reasons, evidence spans, context SHA-256, Cypher query ids | GET /grounding/{id}; the /gate page; evidence/verify.json (ground_receipt check) |
 | Answers with clear sources | every answer is CANON, CONTESTED or UNKNOWN | evidence/verify.json (supersession, contested, unknown checks) |
-| Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in corpus/out/gold.json; demo query for `Acme Corp / starter_price` (CANON, `0.07`, explicit_supersession) shown in `/gate` and `/ground` |
-| Knowledge from docs, tickets and chats in one graph | multi-source corpus generator (corpus/generator.py) and artifact schema (writer.py) | The 200 documents in corpus/out/gold.json come from 5 corporate sources (internal-wiki, release-notes, sales-ops, support-portal, finance-shared), linked in graph as `(as:Assertion)-[:IN_ARTIFACT]->(art:Artifact)` with `art.source` |
+| Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in evidence/gold.json; demo query for `Acme Corp / starter_price` (CANON, `0.07`, explicit_supersession) shown in `/gate` and `/ground` |
+| Knowledge from docs, tickets and chats in one graph | multi-source corpus generator (corpus/generator.py) and artifact schema (writer.py) | The 200 documents in evidence/gold.json come from 5 corporate sources (internal-wiki, release-notes, sales-ops, support-portal, finance-shared), linked in graph as `(as:Assertion)-[:IN_ARTIFACT]->(art:Artifact)` with `art.source` |
 | Data allowed (rule 6) | synthetic corpus from a seeded generator | corpus/generator.py, seed 1337; evidence/envelope.json (corpus.seed=1337, corpus.documents=200) |
 | Work began after the opening (rule 8) | commit history | `git log --reverse` (initial commit d381333 on Oct 16, 2026, 18:03:10 +0100 after opening) |
 | Setup, data model, Cypher, track (rule 10) | this README | the "Cypher the product depends on" section, the "Architecture" data model table, Track 3 (Company Brain) header |
@@ -513,7 +513,7 @@ uv run python scripts/index.py            # SQLite FTS5 index
 uv run python scripts/seed.py             # extract claims, write the graph, canonize
 uv run python scripts/verify.py           # 9 live checks, including a restart
 uv run python scripts/controls.py         # all controls -> evidence/controls.json
-uv run python corpus/stress.py            # stress set -> corpus/out/stress.json
+uv run python corpus/stress.py            # stress set -> evidence/stress.json
 uv run python scripts/envelope.py         # counts and environment
 uv run python scripts/manifest.py         # fingerprint every artifact
 uv run uvicorn canister_api.main:app      # API on :8000

@@ -369,6 +369,9 @@ def build(out_dir: Path) -> dict:
         "documents": [{k: v for k, v in asdict(doc).items() if k != "body"} for doc in docs],
     }
     (out_dir / "gold.json").write_text(json.dumps(gold, indent=2, sort_keys=True), encoding="utf-8")
+    evidence_gold = Path("evidence/gold.json")
+    if evidence_gold.parent.exists():
+        evidence_gold.write_text(json.dumps(gold, indent=2, sort_keys=True), encoding="utf-8")
     return gold
 
 

@@ -275,6 +275,9 @@ def main() -> None:
 
     report = run(args.corpus, args.tenant)
     args.out.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+    evidence_stress = Path("evidence/stress.json")
+    if evidence_stress.parent.exists():
+        evidence_stress.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
     summary = report["summary"]
     print(

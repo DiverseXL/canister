@@ -11,14 +11,14 @@
     "platform": "Windows-11-10.0.26100-SP0",
     "python": "3.12.10"
   },
-  "generated_at_utc": "2026-10-17T01:51:38+00:00",
+  "generated_at_utc": "2026-10-17T19:11:47+00:00",
   "git": {
     "branch": "main",
-    "commit": "76d63bed718f1be1e96c317792128278a81bb62d",
-    "dirty": false
+    "commit": "ee9c0660df2ceb567ea7f2ab76cd5833edc07028",
+    "dirty": true
   },
   "missing": [],
-  "result_file_count": 226,
+  "result_file_count": 228,
   "results": {
     "corpus/out/documents/doc-0001.md": "8210d47f6be41884ff77a39493ae8968a36a5109d40c22d365ab2749c1128aff",
     "corpus/out/documents/doc-0002.md": "ddf0ce65af75fb29ce1e7905b7b4336ae414d49a8f77a8132fcc3387640a8fe7",
@@ -245,6 +245,8 @@
     "evidence/benchmark.json": "669815704d1cb50b7cd900a1057d6f6a2e14272aa316b5cb553b0af84201093f",
     "evidence/controls.json": "7ce92a9f197eb77cd95fb7f7da220339d9f71a1f295c9e40d94b7ad0ac84ebd7",
     "evidence/envelope.json": "13496c3bae01d6abe45842cd61e2c5493932a235b88f49f08b9d90438e990c25",
+    "evidence/gold.json": "df1c0caa09b9fc5660ce7be139a0e473b2f4dc76339d45ae1bd3944a1d81a677",
+    "evidence/stress.json": "bfebc65cb6b55d4663be08d77037109139828a63b2a874bc3a6f9c8e4ae3a7c4",
     "evidence/verify.json": "20fab057e2b781ae9df804843564b5021232e76dce72282a1bc125be8d3d8b51"
   }
 }

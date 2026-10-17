@@ -1,0 +1,4937 @@
+{
+  "claim_keys": [
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.07",
+      "entity": "Acme Corp",
+      "kind": "majority",
+      "old_value": "0.15"
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": "2025-08-15",
+      "entity": "Initech",
+      "kind": "conflict",
+      "old_value": "2025-03-01"
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": "2025-07-01",
+      "entity": "Globex",
+      "kind": "conflict",
+      "old_value": "2025-11-01"
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": "2025-05-15",
+      "entity": "Soylent",
+      "kind": "conflict",
+      "old_value": "2025-04-01"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "nina petrov",
+      "entity": "Cyberdyne Systems",
+      "kind": "conflict",
+      "old_value": "tom falk"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "grace kim",
+      "entity": "Wonka Industries",
+      "kind": "conflict",
+      "old_value": "priya nair"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "2.50",
+      "entity": "Stark Industries",
+      "kind": "conflict",
+      "old_value": "0.12"
+    },
+    {
+      "attribute": "refund_window",
+      "attribute_label": "refund window",
+      "current_value": "14d",
+      "entity": "Hooli",
+      "kind": "conflict",
+      "old_value": "7d"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.05",
+      "entity": "Umbrella Corp",
+      "kind": "conflict",
+      "old_value": "0.04"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "0.40",
+      "entity": "Vehement Capital",
+      "kind": "conflict",
+      "old_value": "0.08"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "24h",
+      "entity": "Tyrell Corp",
+      "kind": "conflict",
+      "old_value": "12h"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.06",
+      "entity": "Globex",
+      "kind": "conflict",
+      "old_value": "0.15"
+    },
+    {
+      "attribute": "refund_window",
+      "attribute_label": "refund window",
+      "current_value": "30d",
+      "entity": "Vehement Capital",
+      "kind": "conflict",
+      "old_value": "14d"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "2.50",
+      "entity": "Initech",
+      "kind": "conflict",
+      "old_value": "0.40"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "48h",
+      "entity": "Cyberdyne Systems",
+      "kind": "conflict",
+      "old_value": "24h"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "48h",
+      "entity": "Hooli",
+      "kind": "conflict",
+      "old_value": "72h"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "nina petrov",
+      "entity": "Globex",
+      "kind": "conflict",
+      "old_value": "sam ortiz"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "marcus webb",
+      "entity": "Acme Corp",
+      "kind": "conflict",
+      "old_value": "tom falk"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": null,
+      "entity": "Wonka Industries",
+      "kind": "contested",
+      "old_value": null
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": null,
+      "entity": "Wonka Industries",
+      "kind": "contested",
+      "old_value": null
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "0.50",
+      "entity": "Acme Corp",
+      "kind": "stable",
+      "old_value": "0.50"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "dana cole",
+      "entity": "Stark Industries",
+      "kind": "stable",
+      "old_value": "dana cole"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "48h",
+      "entity": "Soylent",
+      "kind": "stable",
+      "old_value": "48h"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "0.12",
+      "entity": "Hooli",
+      "kind": "stable",
+      "old_value": "0.12"
+    },
+    {
+      "attribute": "refund_window",
+      "attribute_label": "refund window",
+      "current_value": "45d",
+      "entity": "Cyberdyne Systems",
+      "kind": "stable",
+      "old_value": "45d"
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": "2025-12-01",
+      "entity": "Acme Corp",
+      "kind": "stable",
+      "old_value": "2025-12-01"
+    },
+    {
+      "attribute": "refund_window",
+      "attribute_label": "refund window",
+      "current_value": "7d",
+      "entity": "Stark Industries",
+      "kind": "stable",
+      "old_value": "7d"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "0.15",
+      "entity": "Soylent",
+      "kind": "stable",
+      "old_value": "0.15"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "0.08",
+      "entity": "Umbrella Corp",
+      "kind": "stable",
+      "old_value": "0.08"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "2.50",
+      "entity": "Tyrell Corp",
+      "kind": "stable",
+      "old_value": "2.50"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "ravi menon",
+      "entity": "Hooli",
+      "kind": "stable",
+      "old_value": "ravi menon"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.50",
+      "entity": "Vehement Capital",
+      "kind": "stable",
+      "old_value": "0.50"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "nina petrov",
+      "entity": "Wayne Enterprises",
+      "kind": "stable",
+      "old_value": "nina petrov"
+    },
+    {
+      "attribute": "pro_price",
+      "attribute_label": "pro plan price",
+      "current_value": "1.00",
+      "entity": "Initech",
+      "kind": "stable",
+      "old_value": "1.00"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "24h",
+      "entity": "Initech",
+      "kind": "stable",
+      "old_value": "24h"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.08",
+      "entity": "Wonka Industries",
+      "kind": "stable",
+      "old_value": "0.08"
+    },
+    {
+      "attribute": "launch_date",
+      "attribute_label": "launch date",
+      "current_value": "2025-04-01",
+      "entity": "Umbrella Corp",
+      "kind": "stable",
+      "old_value": "2025-04-01"
+    },
+    {
+      "attribute": "support_sla",
+      "attribute_label": "support response SLA",
+      "current_value": "12h",
+      "entity": "Globex",
+      "kind": "stable",
+      "old_value": "12h"
+    },
+    {
+      "attribute": "integration_owner",
+      "attribute_label": "integration owner",
+      "current_value": "tom falk",
+      "entity": "Initech",
+      "kind": "stable",
+      "old_value": "tom falk"
+    },
+    {
+      "attribute": "starter_price",
+      "attribute_label": "starter plan price",
+      "current_value": "0.04",
+      "entity": "Hooli",
+      "kind": "stable",
+      "old_value": "0.04"
+    }
+  ],
+  "counts": {
+    "claim_keys": 40,
+    "conflicts": 18,
+    "contested": 2,
+    "documents": 200,
+    "questions": 50,
+    "unanswerable_questions": 10
+  },
+  "documents": [
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0001",
+      "gold_label": "superseded",
+      "path": "documents/doc-0001.md",
+      "published_at": "2025-01-06",
+      "source": "release-notes",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0002",
+      "gold_label": "superseded",
+      "path": "documents/doc-0002.md",
+      "published_at": "2025-01-13",
+      "source": "sales-ops",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0003",
+      "gold_label": "superseded",
+      "path": "documents/doc-0003.md",
+      "published_at": "2025-01-20",
+      "source": "support-portal",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0004",
+      "gold_label": "superseded",
+      "path": "documents/doc-0004.md",
+      "published_at": "2025-01-27",
+      "source": "finance-shared",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0005",
+      "gold_label": "superseded",
+      "path": "documents/doc-0005.md",
+      "published_at": "2025-02-03",
+      "source": "internal-wiki",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0006",
+      "gold_label": "superseded",
+      "path": "documents/doc-0006.md",
+      "published_at": "2025-02-10",
+      "source": "release-notes",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0007",
+      "gold_label": "superseded",
+      "path": "documents/doc-0007.md",
+      "published_at": "2025-02-17",
+      "source": "sales-ops",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0008",
+      "gold_label": "superseded",
+      "path": "documents/doc-0008.md",
+      "published_at": "2025-02-24",
+      "source": "support-portal",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0009",
+      "gold_label": "superseded",
+      "path": "documents/doc-0009.md",
+      "published_at": "2025-03-03",
+      "source": "finance-shared",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": true,
+          "prior_value": "0.15",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "0.07",
+          "value_raw": "$0.07"
+        }
+      ],
+      "doc_id": "doc-0010",
+      "gold_label": "current",
+      "path": "documents/doc-0010.md",
+      "published_at": "2025-10-06",
+      "source": "internal-wiki",
+      "title": "Acme Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-03-01",
+          "value_raw": "2025-03-01"
+        }
+      ],
+      "doc_id": "doc-0011",
+      "gold_label": "superseded",
+      "path": "documents/doc-0011.md",
+      "published_at": "2025-03-24",
+      "source": "release-notes",
+      "title": "Initech launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-03-01",
+          "value_raw": "2025-03-01"
+        }
+      ],
+      "doc_id": "doc-0012",
+      "gold_label": "superseded",
+      "path": "documents/doc-0012.md",
+      "published_at": "2025-03-31",
+      "source": "sales-ops",
+      "title": "Initech launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": "2025-03-01",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "2025-08-15",
+          "value_raw": "2025-08-15"
+        }
+      ],
+      "doc_id": "doc-0013",
+      "gold_label": "current",
+      "path": "documents/doc-0013.md",
+      "published_at": "2025-06-16",
+      "source": "support-portal",
+      "title": "Initech launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-11-01",
+          "value_raw": "2025-11-01"
+        }
+      ],
+      "doc_id": "doc-0014",
+      "gold_label": "superseded",
+      "path": "documents/doc-0014.md",
+      "published_at": "2025-04-21",
+      "source": "finance-shared",
+      "title": "Globex launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-11-01",
+          "value_raw": "2025-11-01"
+        }
+      ],
+      "doc_id": "doc-0015",
+      "gold_label": "superseded",
+      "path": "documents/doc-0015.md",
+      "published_at": "2025-04-28",
+      "source": "internal-wiki",
+      "title": "Globex launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": "2025-11-01",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "2025-07-01",
+          "value_raw": "2025-07-01"
+        }
+      ],
+      "doc_id": "doc-0016",
+      "gold_label": "current",
+      "path": "documents/doc-0016.md",
+      "published_at": "2025-07-14",
+      "source": "release-notes",
+      "title": "Globex launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0017",
+      "gold_label": "superseded",
+      "path": "documents/doc-0017.md",
+      "published_at": "2025-05-19",
+      "source": "sales-ops",
+      "title": "Soylent launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0018",
+      "gold_label": "superseded",
+      "path": "documents/doc-0018.md",
+      "published_at": "2025-05-26",
+      "source": "support-portal",
+      "title": "Soylent launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Soylent",
+          "explicit_supersession": true,
+          "prior_value": "2025-04-01",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "2025-05-15",
+          "value_raw": "2025-05-15"
+        }
+      ],
+      "doc_id": "doc-0019",
+      "gold_label": "current",
+      "path": "documents/doc-0019.md",
+      "published_at": "2025-08-11",
+      "source": "finance-shared",
+      "title": "Soylent launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0020",
+      "gold_label": "superseded",
+      "path": "documents/doc-0020.md",
+      "published_at": "2025-06-16",
+      "source": "internal-wiki",
+      "title": "Cyberdyne Systems integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0021",
+      "gold_label": "superseded",
+      "path": "documents/doc-0021.md",
+      "published_at": "2025-06-23",
+      "source": "release-notes",
+      "title": "Cyberdyne Systems integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": "tom falk",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0022",
+      "gold_label": "current",
+      "path": "documents/doc-0022.md",
+      "published_at": "2025-09-08",
+      "source": "sales-ops",
+      "title": "Cyberdyne Systems integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "priya nair",
+          "value_raw": "Priya Nair"
+        }
+      ],
+      "doc_id": "doc-0023",
+      "gold_label": "superseded",
+      "path": "documents/doc-0023.md",
+      "published_at": "2025-07-14",
+      "source": "support-portal",
+      "title": "Wonka Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "priya nair",
+          "value_raw": "Priya Nair"
+        }
+      ],
+      "doc_id": "doc-0024",
+      "gold_label": "superseded",
+      "path": "documents/doc-0024.md",
+      "published_at": "2025-07-21",
+      "source": "finance-shared",
+      "title": "Wonka Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": "priya nair",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "grace kim",
+          "value_raw": "Grace Kim"
+        }
+      ],
+      "doc_id": "doc-0025",
+      "gold_label": "current",
+      "path": "documents/doc-0025.md",
+      "published_at": "2025-10-06",
+      "source": "internal-wiki",
+      "title": "Wonka Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0026",
+      "gold_label": "superseded",
+      "path": "documents/doc-0026.md",
+      "published_at": "2025-08-11",
+      "source": "release-notes",
+      "title": "Stark Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0027",
+      "gold_label": "superseded",
+      "path": "documents/doc-0027.md",
+      "published_at": "2025-08-18",
+      "source": "sales-ops",
+      "title": "Stark Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Stark Industries",
+          "explicit_supersession": true,
+          "prior_value": "0.12",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0028",
+      "gold_label": "current",
+      "path": "documents/doc-0028.md",
+      "published_at": "2025-11-03",
+      "source": "support-portal",
+      "title": "Stark Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0029",
+      "gold_label": "superseded",
+      "path": "documents/doc-0029.md",
+      "published_at": "2025-09-08",
+      "source": "finance-shared",
+      "title": "Hooli refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0030",
+      "gold_label": "superseded",
+      "path": "documents/doc-0030.md",
+      "published_at": "2025-09-15",
+      "source": "internal-wiki",
+      "title": "Hooli refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": "7d",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "14d",
+          "value_raw": "14 days"
+        }
+      ],
+      "doc_id": "doc-0031",
+      "gold_label": "current",
+      "path": "documents/doc-0031.md",
+      "published_at": "2025-12-01",
+      "source": "release-notes",
+      "title": "Hooli refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0032",
+      "gold_label": "superseded",
+      "path": "documents/doc-0032.md",
+      "published_at": "2025-10-06",
+      "source": "sales-ops",
+      "title": "Umbrella Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0033",
+      "gold_label": "superseded",
+      "path": "documents/doc-0033.md",
+      "published_at": "2025-10-13",
+      "source": "support-portal",
+      "title": "Umbrella Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": "0.04",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "0.05",
+          "value_raw": "$0.05"
+        }
+      ],
+      "doc_id": "doc-0034",
+      "gold_label": "current",
+      "path": "documents/doc-0034.md",
+      "published_at": "2025-12-29",
+      "source": "finance-shared",
+      "title": "Umbrella Corp starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0035",
+      "gold_label": "superseded",
+      "path": "documents/doc-0035.md",
+      "published_at": "2025-11-03",
+      "source": "internal-wiki",
+      "title": "Vehement Capital pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0036",
+      "gold_label": "superseded",
+      "path": "documents/doc-0036.md",
+      "published_at": "2025-11-10",
+      "source": "release-notes",
+      "title": "Vehement Capital pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": true,
+          "prior_value": "0.08",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "0.40",
+          "value_raw": "$0.40"
+        }
+      ],
+      "doc_id": "doc-0037",
+      "gold_label": "current",
+      "path": "documents/doc-0037.md",
+      "published_at": "2026-01-26",
+      "source": "sales-ops",
+      "title": "Vehement Capital pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0038",
+      "gold_label": "superseded",
+      "path": "documents/doc-0038.md",
+      "published_at": "2025-12-01",
+      "source": "support-portal",
+      "title": "Tyrell Corp support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0039",
+      "gold_label": "superseded",
+      "path": "documents/doc-0039.md",
+      "published_at": "2025-12-08",
+      "source": "finance-shared",
+      "title": "Tyrell Corp support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": "12h",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0040",
+      "gold_label": "current",
+      "path": "documents/doc-0040.md",
+      "published_at": "2026-02-23",
+      "source": "internal-wiki",
+      "title": "Tyrell Corp support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0041",
+      "gold_label": "superseded",
+      "path": "documents/doc-0041.md",
+      "published_at": "2025-12-29",
+      "source": "release-notes",
+      "title": "Globex starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0042",
+      "gold_label": "superseded",
+      "path": "documents/doc-0042.md",
+      "published_at": "2026-01-05",
+      "source": "sales-ops",
+      "title": "Globex starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": "0.15",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "0.06",
+          "value_raw": "$0.06"
+        }
+      ],
+      "doc_id": "doc-0043",
+      "gold_label": "current",
+      "path": "documents/doc-0043.md",
+      "published_at": "2026-03-23",
+      "source": "support-portal",
+      "title": "Globex starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "14d",
+          "value_raw": "14 days"
+        }
+      ],
+      "doc_id": "doc-0044",
+      "gold_label": "superseded",
+      "path": "documents/doc-0044.md",
+      "published_at": "2026-01-26",
+      "source": "finance-shared",
+      "title": "Vehement Capital refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "14d",
+          "value_raw": "14 days"
+        }
+      ],
+      "doc_id": "doc-0045",
+      "gold_label": "superseded",
+      "path": "documents/doc-0045.md",
+      "published_at": "2026-02-02",
+      "source": "internal-wiki",
+      "title": "Vehement Capital refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Vehement Capital",
+          "explicit_supersession": true,
+          "prior_value": "14d",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "30d",
+          "value_raw": "30 days"
+        }
+      ],
+      "doc_id": "doc-0046",
+      "gold_label": "current",
+      "path": "documents/doc-0046.md",
+      "published_at": "2026-04-20",
+      "source": "release-notes",
+      "title": "Vehement Capital refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.40",
+          "value_raw": "$0.40"
+        }
+      ],
+      "doc_id": "doc-0047",
+      "gold_label": "superseded",
+      "path": "documents/doc-0047.md",
+      "published_at": "2026-02-23",
+      "source": "sales-ops",
+      "title": "Initech starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.40",
+          "value_raw": "$0.40"
+        }
+      ],
+      "doc_id": "doc-0048",
+      "gold_label": "superseded",
+      "path": "documents/doc-0048.md",
+      "published_at": "2026-03-02",
+      "source": "support-portal",
+      "title": "Initech starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": "0.40",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0049",
+      "gold_label": "current",
+      "path": "documents/doc-0049.md",
+      "published_at": "2026-05-18",
+      "source": "finance-shared",
+      "title": "Initech starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0050",
+      "gold_label": "superseded",
+      "path": "documents/doc-0050.md",
+      "published_at": "2026-03-23",
+      "source": "internal-wiki",
+      "title": "Cyberdyne Systems support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0051",
+      "gold_label": "superseded",
+      "path": "documents/doc-0051.md",
+      "published_at": "2026-03-30",
+      "source": "release-notes",
+      "title": "Cyberdyne Systems support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": "24h",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0052",
+      "gold_label": "current",
+      "path": "documents/doc-0052.md",
+      "published_at": "2026-06-15",
+      "source": "sales-ops",
+      "title": "Cyberdyne Systems support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "72h",
+          "value_raw": "72 hours"
+        }
+      ],
+      "doc_id": "doc-0053",
+      "gold_label": "superseded",
+      "path": "documents/doc-0053.md",
+      "published_at": "2026-04-20",
+      "source": "support-portal",
+      "title": "Hooli support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "72h",
+          "value_raw": "72 hours"
+        }
+      ],
+      "doc_id": "doc-0054",
+      "gold_label": "superseded",
+      "path": "documents/doc-0054.md",
+      "published_at": "2026-04-27",
+      "source": "finance-shared",
+      "title": "Hooli support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Hooli",
+          "explicit_supersession": true,
+          "prior_value": "72h",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0055",
+      "gold_label": "current",
+      "path": "documents/doc-0055.md",
+      "published_at": "2026-07-13",
+      "source": "internal-wiki",
+      "title": "Hooli support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "sam ortiz",
+          "value_raw": "Sam Ortiz"
+        }
+      ],
+      "doc_id": "doc-0056",
+      "gold_label": "superseded",
+      "path": "documents/doc-0056.md",
+      "published_at": "2026-05-18",
+      "source": "release-notes",
+      "title": "Globex integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "sam ortiz",
+          "value_raw": "Sam Ortiz"
+        }
+      ],
+      "doc_id": "doc-0057",
+      "gold_label": "superseded",
+      "path": "documents/doc-0057.md",
+      "published_at": "2026-05-25",
+      "source": "sales-ops",
+      "title": "Globex integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": "sam ortiz",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0058",
+      "gold_label": "current",
+      "path": "documents/doc-0058.md",
+      "published_at": "2026-08-10",
+      "source": "support-portal",
+      "title": "Globex integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0059",
+      "gold_label": "superseded",
+      "path": "documents/doc-0059.md",
+      "published_at": "2026-06-15",
+      "source": "finance-shared",
+      "title": "Acme Corp integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0060",
+      "gold_label": "superseded",
+      "path": "documents/doc-0060.md",
+      "published_at": "2026-06-22",
+      "source": "internal-wiki",
+      "title": "Acme Corp integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": "tom falk",
+          "stance": "supersede",
+          "structured": false,
+          "value_norm": "marcus webb",
+          "value_raw": "Marcus Webb"
+        }
+      ],
+      "doc_id": "doc-0061",
+      "gold_label": "current",
+      "path": "documents/doc-0061.md",
+      "published_at": "2026-09-07",
+      "source": "release-notes",
+      "title": "Acme Corp integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0062",
+      "gold_label": "contested",
+      "path": "documents/doc-0062.md",
+      "published_at": "2026-08-17",
+      "source": "sales-ops",
+      "title": "Wonka Industries support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0063",
+      "gold_label": "contested",
+      "path": "documents/doc-0063.md",
+      "published_at": "2026-08-17",
+      "source": "support-portal",
+      "title": "Wonka Industries support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0064",
+      "gold_label": "contested",
+      "path": "documents/doc-0064.md",
+      "published_at": "2026-10-05",
+      "source": "finance-shared",
+      "title": "Wonka Industries launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-09-01",
+          "value_raw": "2025-09-01"
+        }
+      ],
+      "doc_id": "doc-0065",
+      "gold_label": "contested",
+      "path": "documents/doc-0065.md",
+      "published_at": "2026-10-05",
+      "source": "internal-wiki",
+      "title": "Wonka Industries launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0066",
+      "gold_label": "current",
+      "path": "documents/doc-0066.md",
+      "published_at": "2026-10-19",
+      "source": "release-notes",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0067",
+      "gold_label": "current",
+      "path": "documents/doc-0067.md",
+      "published_at": "2026-10-26",
+      "source": "sales-ops",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0068",
+      "gold_label": "current",
+      "path": "documents/doc-0068.md",
+      "published_at": "2026-11-02",
+      "source": "support-portal",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0069",
+      "gold_label": "current",
+      "path": "documents/doc-0069.md",
+      "published_at": "2026-11-09",
+      "source": "finance-shared",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0070",
+      "gold_label": "current",
+      "path": "documents/doc-0070.md",
+      "published_at": "2026-11-16",
+      "source": "internal-wiki",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0071",
+      "gold_label": "current",
+      "path": "documents/doc-0071.md",
+      "published_at": "2026-11-23",
+      "source": "release-notes",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0072",
+      "gold_label": "current",
+      "path": "documents/doc-0072.md",
+      "published_at": "2026-11-30",
+      "source": "sales-ops",
+      "title": "Acme Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0073",
+      "gold_label": "current",
+      "path": "documents/doc-0073.md",
+      "published_at": "2026-12-07",
+      "source": "support-portal",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0074",
+      "gold_label": "current",
+      "path": "documents/doc-0074.md",
+      "published_at": "2026-12-14",
+      "source": "finance-shared",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0075",
+      "gold_label": "current",
+      "path": "documents/doc-0075.md",
+      "published_at": "2026-12-21",
+      "source": "internal-wiki",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0076",
+      "gold_label": "current",
+      "path": "documents/doc-0076.md",
+      "published_at": "2026-12-28",
+      "source": "release-notes",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0077",
+      "gold_label": "current",
+      "path": "documents/doc-0077.md",
+      "published_at": "2027-01-04",
+      "source": "sales-ops",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0078",
+      "gold_label": "current",
+      "path": "documents/doc-0078.md",
+      "published_at": "2027-01-11",
+      "source": "support-portal",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "dana cole",
+          "value_raw": "Dana Cole"
+        }
+      ],
+      "doc_id": "doc-0079",
+      "gold_label": "current",
+      "path": "documents/doc-0079.md",
+      "published_at": "2027-01-18",
+      "source": "finance-shared",
+      "title": "Stark Industries integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0080",
+      "gold_label": "current",
+      "path": "documents/doc-0080.md",
+      "published_at": "2027-01-25",
+      "source": "internal-wiki",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0081",
+      "gold_label": "current",
+      "path": "documents/doc-0081.md",
+      "published_at": "2027-02-01",
+      "source": "release-notes",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0082",
+      "gold_label": "current",
+      "path": "documents/doc-0082.md",
+      "published_at": "2027-02-08",
+      "source": "sales-ops",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0083",
+      "gold_label": "current",
+      "path": "documents/doc-0083.md",
+      "published_at": "2027-02-15",
+      "source": "support-portal",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0084",
+      "gold_label": "current",
+      "path": "documents/doc-0084.md",
+      "published_at": "2027-02-22",
+      "source": "finance-shared",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0085",
+      "gold_label": "current",
+      "path": "documents/doc-0085.md",
+      "published_at": "2027-03-01",
+      "source": "internal-wiki",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "48h",
+          "value_raw": "48 hours"
+        }
+      ],
+      "doc_id": "doc-0086",
+      "gold_label": "current",
+      "path": "documents/doc-0086.md",
+      "published_at": "2027-03-08",
+      "source": "release-notes",
+      "title": "Soylent support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0087",
+      "gold_label": "current",
+      "path": "documents/doc-0087.md",
+      "published_at": "2027-03-15",
+      "source": "sales-ops",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0088",
+      "gold_label": "current",
+      "path": "documents/doc-0088.md",
+      "published_at": "2027-03-22",
+      "source": "support-portal",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0089",
+      "gold_label": "current",
+      "path": "documents/doc-0089.md",
+      "published_at": "2027-03-29",
+      "source": "finance-shared",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0090",
+      "gold_label": "current",
+      "path": "documents/doc-0090.md",
+      "published_at": "2027-04-05",
+      "source": "internal-wiki",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0091",
+      "gold_label": "current",
+      "path": "documents/doc-0091.md",
+      "published_at": "2027-04-12",
+      "source": "release-notes",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0092",
+      "gold_label": "current",
+      "path": "documents/doc-0092.md",
+      "published_at": "2027-04-19",
+      "source": "sales-ops",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.12",
+          "value_raw": "$0.12"
+        }
+      ],
+      "doc_id": "doc-0093",
+      "gold_label": "current",
+      "path": "documents/doc-0093.md",
+      "published_at": "2027-04-26",
+      "source": "support-portal",
+      "title": "Hooli pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0094",
+      "gold_label": "current",
+      "path": "documents/doc-0094.md",
+      "published_at": "2027-05-03",
+      "source": "finance-shared",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0095",
+      "gold_label": "current",
+      "path": "documents/doc-0095.md",
+      "published_at": "2027-05-10",
+      "source": "internal-wiki",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0096",
+      "gold_label": "current",
+      "path": "documents/doc-0096.md",
+      "published_at": "2027-05-17",
+      "source": "release-notes",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0097",
+      "gold_label": "current",
+      "path": "documents/doc-0097.md",
+      "published_at": "2027-05-24",
+      "source": "sales-ops",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0098",
+      "gold_label": "current",
+      "path": "documents/doc-0098.md",
+      "published_at": "2027-05-31",
+      "source": "support-portal",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0099",
+      "gold_label": "current",
+      "path": "documents/doc-0099.md",
+      "published_at": "2027-06-07",
+      "source": "finance-shared",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Cyberdyne Systems",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "45d",
+          "value_raw": "45 days"
+        }
+      ],
+      "doc_id": "doc-0100",
+      "gold_label": "current",
+      "path": "documents/doc-0100.md",
+      "published_at": "2027-06-14",
+      "source": "internal-wiki",
+      "title": "Cyberdyne Systems refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0101",
+      "gold_label": "current",
+      "path": "documents/doc-0101.md",
+      "published_at": "2027-06-21",
+      "source": "release-notes",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0102",
+      "gold_label": "current",
+      "path": "documents/doc-0102.md",
+      "published_at": "2027-06-28",
+      "source": "sales-ops",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0103",
+      "gold_label": "current",
+      "path": "documents/doc-0103.md",
+      "published_at": "2027-07-05",
+      "source": "support-portal",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0104",
+      "gold_label": "current",
+      "path": "documents/doc-0104.md",
+      "published_at": "2027-07-12",
+      "source": "finance-shared",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0105",
+      "gold_label": "current",
+      "path": "documents/doc-0105.md",
+      "published_at": "2027-07-19",
+      "source": "internal-wiki",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0106",
+      "gold_label": "current",
+      "path": "documents/doc-0106.md",
+      "published_at": "2027-07-26",
+      "source": "release-notes",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Acme Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-12-01",
+          "value_raw": "2025-12-01"
+        }
+      ],
+      "doc_id": "doc-0107",
+      "gold_label": "current",
+      "path": "documents/doc-0107.md",
+      "published_at": "2027-08-02",
+      "source": "sales-ops",
+      "title": "Acme Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0108",
+      "gold_label": "current",
+      "path": "documents/doc-0108.md",
+      "published_at": "2027-08-09",
+      "source": "support-portal",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0109",
+      "gold_label": "current",
+      "path": "documents/doc-0109.md",
+      "published_at": "2027-08-16",
+      "source": "finance-shared",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0110",
+      "gold_label": "current",
+      "path": "documents/doc-0110.md",
+      "published_at": "2027-08-23",
+      "source": "internal-wiki",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0111",
+      "gold_label": "current",
+      "path": "documents/doc-0111.md",
+      "published_at": "2027-08-30",
+      "source": "release-notes",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0112",
+      "gold_label": "current",
+      "path": "documents/doc-0112.md",
+      "published_at": "2027-09-06",
+      "source": "sales-ops",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0113",
+      "gold_label": "current",
+      "path": "documents/doc-0113.md",
+      "published_at": "2027-09-13",
+      "source": "support-portal",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "refund_window",
+          "attribute_label": "refund window",
+          "entity": "Stark Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "7d",
+          "value_raw": "7 days"
+        }
+      ],
+      "doc_id": "doc-0114",
+      "gold_label": "current",
+      "path": "documents/doc-0114.md",
+      "published_at": "2027-09-20",
+      "source": "finance-shared",
+      "title": "Stark Industries refund window update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0115",
+      "gold_label": "current",
+      "path": "documents/doc-0115.md",
+      "published_at": "2027-09-27",
+      "source": "internal-wiki",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0116",
+      "gold_label": "current",
+      "path": "documents/doc-0116.md",
+      "published_at": "2027-10-04",
+      "source": "release-notes",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0117",
+      "gold_label": "current",
+      "path": "documents/doc-0117.md",
+      "published_at": "2027-10-11",
+      "source": "sales-ops",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0118",
+      "gold_label": "current",
+      "path": "documents/doc-0118.md",
+      "published_at": "2027-10-18",
+      "source": "support-portal",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0119",
+      "gold_label": "current",
+      "path": "documents/doc-0119.md",
+      "published_at": "2027-10-25",
+      "source": "finance-shared",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0120",
+      "gold_label": "current",
+      "path": "documents/doc-0120.md",
+      "published_at": "2027-11-01",
+      "source": "internal-wiki",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Soylent",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.15",
+          "value_raw": "$0.15"
+        }
+      ],
+      "doc_id": "doc-0121",
+      "gold_label": "current",
+      "path": "documents/doc-0121.md",
+      "published_at": "2027-11-08",
+      "source": "release-notes",
+      "title": "Soylent pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0122",
+      "gold_label": "current",
+      "path": "documents/doc-0122.md",
+      "published_at": "2027-11-15",
+      "source": "sales-ops",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0123",
+      "gold_label": "current",
+      "path": "documents/doc-0123.md",
+      "published_at": "2027-11-22",
+      "source": "support-portal",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0124",
+      "gold_label": "current",
+      "path": "documents/doc-0124.md",
+      "published_at": "2027-11-29",
+      "source": "finance-shared",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0125",
+      "gold_label": "current",
+      "path": "documents/doc-0125.md",
+      "published_at": "2027-12-06",
+      "source": "internal-wiki",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0126",
+      "gold_label": "current",
+      "path": "documents/doc-0126.md",
+      "published_at": "2027-12-13",
+      "source": "release-notes",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0127",
+      "gold_label": "current",
+      "path": "documents/doc-0127.md",
+      "published_at": "2027-12-20",
+      "source": "sales-ops",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0128",
+      "gold_label": "current",
+      "path": "documents/doc-0128.md",
+      "published_at": "2027-12-27",
+      "source": "support-portal",
+      "title": "Umbrella Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0129",
+      "gold_label": "current",
+      "path": "documents/doc-0129.md",
+      "published_at": "2028-01-03",
+      "source": "finance-shared",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0130",
+      "gold_label": "current",
+      "path": "documents/doc-0130.md",
+      "published_at": "2028-01-10",
+      "source": "internal-wiki",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0131",
+      "gold_label": "current",
+      "path": "documents/doc-0131.md",
+      "published_at": "2028-01-17",
+      "source": "release-notes",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0132",
+      "gold_label": "current",
+      "path": "documents/doc-0132.md",
+      "published_at": "2028-01-24",
+      "source": "sales-ops",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0133",
+      "gold_label": "current",
+      "path": "documents/doc-0133.md",
+      "published_at": "2028-01-31",
+      "source": "support-portal",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0134",
+      "gold_label": "current",
+      "path": "documents/doc-0134.md",
+      "published_at": "2028-02-07",
+      "source": "finance-shared",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Tyrell Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2.50",
+          "value_raw": "$2.50"
+        }
+      ],
+      "doc_id": "doc-0135",
+      "gold_label": "current",
+      "path": "documents/doc-0135.md",
+      "published_at": "2028-02-14",
+      "source": "internal-wiki",
+      "title": "Tyrell Corp pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0136",
+      "gold_label": "current",
+      "path": "documents/doc-0136.md",
+      "published_at": "2028-02-21",
+      "source": "release-notes",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0137",
+      "gold_label": "current",
+      "path": "documents/doc-0137.md",
+      "published_at": "2028-02-28",
+      "source": "sales-ops",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0138",
+      "gold_label": "current",
+      "path": "documents/doc-0138.md",
+      "published_at": "2028-03-06",
+      "source": "support-portal",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0139",
+      "gold_label": "current",
+      "path": "documents/doc-0139.md",
+      "published_at": "2028-03-13",
+      "source": "finance-shared",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0140",
+      "gold_label": "current",
+      "path": "documents/doc-0140.md",
+      "published_at": "2028-03-20",
+      "source": "internal-wiki",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0141",
+      "gold_label": "current",
+      "path": "documents/doc-0141.md",
+      "published_at": "2028-03-27",
+      "source": "release-notes",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "ravi menon",
+          "value_raw": "Ravi Menon"
+        }
+      ],
+      "doc_id": "doc-0142",
+      "gold_label": "current",
+      "path": "documents/doc-0142.md",
+      "published_at": "2028-04-03",
+      "source": "sales-ops",
+      "title": "Hooli integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0143",
+      "gold_label": "current",
+      "path": "documents/doc-0143.md",
+      "published_at": "2028-04-10",
+      "source": "support-portal",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0144",
+      "gold_label": "current",
+      "path": "documents/doc-0144.md",
+      "published_at": "2028-04-17",
+      "source": "finance-shared",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0145",
+      "gold_label": "current",
+      "path": "documents/doc-0145.md",
+      "published_at": "2028-04-24",
+      "source": "internal-wiki",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0146",
+      "gold_label": "current",
+      "path": "documents/doc-0146.md",
+      "published_at": "2028-05-01",
+      "source": "release-notes",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0147",
+      "gold_label": "current",
+      "path": "documents/doc-0147.md",
+      "published_at": "2028-05-08",
+      "source": "sales-ops",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0148",
+      "gold_label": "current",
+      "path": "documents/doc-0148.md",
+      "published_at": "2028-05-15",
+      "source": "support-portal",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Vehement Capital",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.50",
+          "value_raw": "$0.50"
+        }
+      ],
+      "doc_id": "doc-0149",
+      "gold_label": "current",
+      "path": "documents/doc-0149.md",
+      "published_at": "2028-05-22",
+      "source": "finance-shared",
+      "title": "Vehement Capital starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0150",
+      "gold_label": "current",
+      "path": "documents/doc-0150.md",
+      "published_at": "2028-05-29",
+      "source": "internal-wiki",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0151",
+      "gold_label": "current",
+      "path": "documents/doc-0151.md",
+      "published_at": "2028-06-05",
+      "source": "release-notes",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0152",
+      "gold_label": "current",
+      "path": "documents/doc-0152.md",
+      "published_at": "2028-06-12",
+      "source": "sales-ops",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0153",
+      "gold_label": "current",
+      "path": "documents/doc-0153.md",
+      "published_at": "2028-06-19",
+      "source": "support-portal",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0154",
+      "gold_label": "current",
+      "path": "documents/doc-0154.md",
+      "published_at": "2028-06-26",
+      "source": "finance-shared",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0155",
+      "gold_label": "current",
+      "path": "documents/doc-0155.md",
+      "published_at": "2028-07-03",
+      "source": "internal-wiki",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Wayne Enterprises",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "nina petrov",
+          "value_raw": "Nina Petrov"
+        }
+      ],
+      "doc_id": "doc-0156",
+      "gold_label": "current",
+      "path": "documents/doc-0156.md",
+      "published_at": "2028-07-10",
+      "source": "release-notes",
+      "title": "Wayne Enterprises integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0157",
+      "gold_label": "current",
+      "path": "documents/doc-0157.md",
+      "published_at": "2028-07-17",
+      "source": "sales-ops",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0158",
+      "gold_label": "current",
+      "path": "documents/doc-0158.md",
+      "published_at": "2028-07-24",
+      "source": "support-portal",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0159",
+      "gold_label": "current",
+      "path": "documents/doc-0159.md",
+      "published_at": "2028-07-31",
+      "source": "finance-shared",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0160",
+      "gold_label": "current",
+      "path": "documents/doc-0160.md",
+      "published_at": "2028-08-07",
+      "source": "internal-wiki",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0161",
+      "gold_label": "current",
+      "path": "documents/doc-0161.md",
+      "published_at": "2028-08-14",
+      "source": "release-notes",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0162",
+      "gold_label": "current",
+      "path": "documents/doc-0162.md",
+      "published_at": "2028-08-21",
+      "source": "sales-ops",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "pro_price",
+          "attribute_label": "pro plan price",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "1.00",
+          "value_raw": "$1.00"
+        }
+      ],
+      "doc_id": "doc-0163",
+      "gold_label": "current",
+      "path": "documents/doc-0163.md",
+      "published_at": "2028-08-28",
+      "source": "support-portal",
+      "title": "Initech pro plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0164",
+      "gold_label": "current",
+      "path": "documents/doc-0164.md",
+      "published_at": "2028-09-04",
+      "source": "finance-shared",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0165",
+      "gold_label": "current",
+      "path": "documents/doc-0165.md",
+      "published_at": "2028-09-11",
+      "source": "internal-wiki",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0166",
+      "gold_label": "current",
+      "path": "documents/doc-0166.md",
+      "published_at": "2028-09-18",
+      "source": "release-notes",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0167",
+      "gold_label": "current",
+      "path": "documents/doc-0167.md",
+      "published_at": "2028-09-25",
+      "source": "sales-ops",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0168",
+      "gold_label": "current",
+      "path": "documents/doc-0168.md",
+      "published_at": "2028-10-02",
+      "source": "support-portal",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0169",
+      "gold_label": "current",
+      "path": "documents/doc-0169.md",
+      "published_at": "2028-10-09",
+      "source": "finance-shared",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "24h",
+          "value_raw": "24 hours"
+        }
+      ],
+      "doc_id": "doc-0170",
+      "gold_label": "current",
+      "path": "documents/doc-0170.md",
+      "published_at": "2028-10-16",
+      "source": "internal-wiki",
+      "title": "Initech support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0171",
+      "gold_label": "current",
+      "path": "documents/doc-0171.md",
+      "published_at": "2028-10-23",
+      "source": "release-notes",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0172",
+      "gold_label": "current",
+      "path": "documents/doc-0172.md",
+      "published_at": "2028-10-30",
+      "source": "sales-ops",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0173",
+      "gold_label": "current",
+      "path": "documents/doc-0173.md",
+      "published_at": "2028-11-06",
+      "source": "support-portal",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0174",
+      "gold_label": "current",
+      "path": "documents/doc-0174.md",
+      "published_at": "2028-11-13",
+      "source": "finance-shared",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0175",
+      "gold_label": "current",
+      "path": "documents/doc-0175.md",
+      "published_at": "2028-11-20",
+      "source": "internal-wiki",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Wonka Industries",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.08",
+          "value_raw": "$0.08"
+        }
+      ],
+      "doc_id": "doc-0176",
+      "gold_label": "current",
+      "path": "documents/doc-0176.md",
+      "published_at": "2028-11-27",
+      "source": "release-notes",
+      "title": "Wonka Industries starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0177",
+      "gold_label": "current",
+      "path": "documents/doc-0177.md",
+      "published_at": "2028-12-04",
+      "source": "sales-ops",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0178",
+      "gold_label": "current",
+      "path": "documents/doc-0178.md",
+      "published_at": "2028-12-11",
+      "source": "support-portal",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0179",
+      "gold_label": "current",
+      "path": "documents/doc-0179.md",
+      "published_at": "2028-12-18",
+      "source": "finance-shared",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0180",
+      "gold_label": "current",
+      "path": "documents/doc-0180.md",
+      "published_at": "2028-12-25",
+      "source": "internal-wiki",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0181",
+      "gold_label": "current",
+      "path": "documents/doc-0181.md",
+      "published_at": "2029-01-01",
+      "source": "release-notes",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "launch_date",
+          "attribute_label": "launch date",
+          "entity": "Umbrella Corp",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "2025-04-01",
+          "value_raw": "2025-04-01"
+        }
+      ],
+      "doc_id": "doc-0182",
+      "gold_label": "current",
+      "path": "documents/doc-0182.md",
+      "published_at": "2029-01-08",
+      "source": "sales-ops",
+      "title": "Umbrella Corp launch date update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0183",
+      "gold_label": "current",
+      "path": "documents/doc-0183.md",
+      "published_at": "2029-01-15",
+      "source": "support-portal",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0184",
+      "gold_label": "current",
+      "path": "documents/doc-0184.md",
+      "published_at": "2029-01-22",
+      "source": "finance-shared",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0185",
+      "gold_label": "current",
+      "path": "documents/doc-0185.md",
+      "published_at": "2029-01-29",
+      "source": "internal-wiki",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0186",
+      "gold_label": "current",
+      "path": "documents/doc-0186.md",
+      "published_at": "2029-02-05",
+      "source": "release-notes",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0187",
+      "gold_label": "current",
+      "path": "documents/doc-0187.md",
+      "published_at": "2029-02-12",
+      "source": "sales-ops",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "support_sla",
+          "attribute_label": "support response SLA",
+          "entity": "Globex",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "12h",
+          "value_raw": "12 hours"
+        }
+      ],
+      "doc_id": "doc-0188",
+      "gold_label": "current",
+      "path": "documents/doc-0188.md",
+      "published_at": "2029-02-19",
+      "source": "support-portal",
+      "title": "Globex support response SLA update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0189",
+      "gold_label": "current",
+      "path": "documents/doc-0189.md",
+      "published_at": "2029-02-26",
+      "source": "finance-shared",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0190",
+      "gold_label": "current",
+      "path": "documents/doc-0190.md",
+      "published_at": "2029-03-05",
+      "source": "internal-wiki",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0191",
+      "gold_label": "current",
+      "path": "documents/doc-0191.md",
+      "published_at": "2029-03-12",
+      "source": "release-notes",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0192",
+      "gold_label": "current",
+      "path": "documents/doc-0192.md",
+      "published_at": "2029-03-19",
+      "source": "sales-ops",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0193",
+      "gold_label": "current",
+      "path": "documents/doc-0193.md",
+      "published_at": "2029-03-26",
+      "source": "support-portal",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "integration_owner",
+          "attribute_label": "integration owner",
+          "entity": "Initech",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "tom falk",
+          "value_raw": "Tom Falk"
+        }
+      ],
+      "doc_id": "doc-0194",
+      "gold_label": "current",
+      "path": "documents/doc-0194.md",
+      "published_at": "2029-04-02",
+      "source": "finance-shared",
+      "title": "Initech integration owner update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0195",
+      "gold_label": "current",
+      "path": "documents/doc-0195.md",
+      "published_at": "2029-04-09",
+      "source": "internal-wiki",
+      "title": "Hooli starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0196",
+      "gold_label": "current",
+      "path": "documents/doc-0196.md",
+      "published_at": "2029-04-16",
+      "source": "release-notes",
+      "title": "Hooli starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0197",
+      "gold_label": "current",
+      "path": "documents/doc-0197.md",
+      "published_at": "2029-04-23",
+      "source": "sales-ops",
+      "title": "Hooli starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0198",
+      "gold_label": "current",
+      "path": "documents/doc-0198.md",
+      "published_at": "2029-04-30",
+      "source": "support-portal",
+      "title": "Hooli starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": true,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0199",
+      "gold_label": "current",
+      "path": "documents/doc-0199.md",
+      "published_at": "2029-05-07",
+      "source": "finance-shared",
+      "title": "Hooli starter plan price update"
+    },
+    {
+      "claims": [
+        {
+          "attribute": "starter_price",
+          "attribute_label": "starter plan price",
+          "entity": "Hooli",
+          "explicit_supersession": false,
+          "prior_value": null,
+          "stance": "assert",
+          "structured": false,
+          "value_norm": "0.04",
+          "value_raw": "$0.04"
+        }
+      ],
+      "doc_id": "doc-0200",
+      "gold_label": "current",
+      "path": "documents/doc-0200.md",
+      "published_at": "2029-05-14",
+      "source": "internal-wiki",
+      "title": "Hooli starter plan price update"
+    }
+  ],
+  "questions": [
+    {
+      "attribute": "starter_price",
+      "entity": "Acme Corp",
+      "expected": "0.07",
+      "kind": "answerable",
+      "qid": "q-001",
+      "question": "What is the current starter plan price for Acme Corp?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Initech",
+      "expected": "2025-08-15",
+      "kind": "answerable",
+      "qid": "q-002",
+      "question": "What is the current launch date for Initech?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Globex",
+      "expected": "2025-07-01",
+      "kind": "answerable",
+      "qid": "q-003",
+      "question": "What is the current launch date for Globex?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Soylent",
+      "expected": "2025-05-15",
+      "kind": "answerable",
+      "qid": "q-004",
+      "question": "What is the current launch date for Soylent?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Cyberdyne Systems",
+      "expected": "nina petrov",
+      "kind": "answerable",
+      "qid": "q-005",
+      "question": "What is the current integration owner for Cyberdyne Systems?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Wonka Industries",
+      "expected": "grace kim",
+      "kind": "answerable",
+      "qid": "q-006",
+      "question": "What is the current integration owner for Wonka Industries?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Stark Industries",
+      "expected": "2.50",
+      "kind": "answerable",
+      "qid": "q-007",
+      "question": "What is the current starter plan price for Stark Industries?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Hooli",
+      "expected": "14d",
+      "kind": "answerable",
+      "qid": "q-008",
+      "question": "What is the current refund window for Hooli?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Umbrella Corp",
+      "expected": "0.05",
+      "kind": "answerable",
+      "qid": "q-009",
+      "question": "What is the current starter plan price for Umbrella Corp?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Vehement Capital",
+      "expected": "0.40",
+      "kind": "answerable",
+      "qid": "q-010",
+      "question": "What is the current pro plan price for Vehement Capital?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Tyrell Corp",
+      "expected": "24h",
+      "kind": "answerable",
+      "qid": "q-011",
+      "question": "What is the current support response SLA for Tyrell Corp?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Globex",
+      "expected": "0.06",
+      "kind": "answerable",
+      "qid": "q-012",
+      "question": "What is the current starter plan price for Globex?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Vehement Capital",
+      "expected": "30d",
+      "kind": "answerable",
+      "qid": "q-013",
+      "question": "What is the current refund window for Vehement Capital?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Initech",
+      "expected": "2.50",
+      "kind": "answerable",
+      "qid": "q-014",
+      "question": "What is the current starter plan price for Initech?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Cyberdyne Systems",
+      "expected": "48h",
+      "kind": "answerable",
+      "qid": "q-015",
+      "question": "What is the current support response SLA for Cyberdyne Systems?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Hooli",
+      "expected": "48h",
+      "kind": "answerable",
+      "qid": "q-016",
+      "question": "What is the current support response SLA for Hooli?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Globex",
+      "expected": "nina petrov",
+      "kind": "answerable",
+      "qid": "q-017",
+      "question": "What is the current integration owner for Globex?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Acme Corp",
+      "expected": "marcus webb",
+      "kind": "answerable",
+      "qid": "q-018",
+      "question": "What is the current integration owner for Acme Corp?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Wonka Industries",
+      "expected": "CONTESTED",
+      "kind": "contested",
+      "qid": "q-019",
+      "question": "What is the current support response SLA for Wonka Industries?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Wonka Industries",
+      "expected": "CONTESTED",
+      "kind": "contested",
+      "qid": "q-020",
+      "question": "What is the current launch date for Wonka Industries?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Acme Corp",
+      "expected": "0.50",
+      "kind": "answerable",
+      "qid": "q-021",
+      "question": "What is the current pro plan price for Acme Corp?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Stark Industries",
+      "expected": "dana cole",
+      "kind": "answerable",
+      "qid": "q-022",
+      "question": "What is the current integration owner for Stark Industries?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Soylent",
+      "expected": "48h",
+      "kind": "answerable",
+      "qid": "q-023",
+      "question": "What is the current support response SLA for Soylent?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Hooli",
+      "expected": "0.12",
+      "kind": "answerable",
+      "qid": "q-024",
+      "question": "What is the current pro plan price for Hooli?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Cyberdyne Systems",
+      "expected": "45d",
+      "kind": "answerable",
+      "qid": "q-025",
+      "question": "What is the current refund window for Cyberdyne Systems?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Acme Corp",
+      "expected": "2025-12-01",
+      "kind": "answerable",
+      "qid": "q-026",
+      "question": "What is the current launch date for Acme Corp?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Stark Industries",
+      "expected": "7d",
+      "kind": "answerable",
+      "qid": "q-027",
+      "question": "What is the current refund window for Stark Industries?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Soylent",
+      "expected": "0.15",
+      "kind": "answerable",
+      "qid": "q-028",
+      "question": "What is the current pro plan price for Soylent?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Umbrella Corp",
+      "expected": "0.08",
+      "kind": "answerable",
+      "qid": "q-029",
+      "question": "What is the current pro plan price for Umbrella Corp?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Tyrell Corp",
+      "expected": "2.50",
+      "kind": "answerable",
+      "qid": "q-030",
+      "question": "What is the current pro plan price for Tyrell Corp?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Hooli",
+      "expected": "ravi menon",
+      "kind": "answerable",
+      "qid": "q-031",
+      "question": "What is the current integration owner for Hooli?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Vehement Capital",
+      "expected": "0.50",
+      "kind": "answerable",
+      "qid": "q-032",
+      "question": "What is the current starter plan price for Vehement Capital?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Wayne Enterprises",
+      "expected": "nina petrov",
+      "kind": "answerable",
+      "qid": "q-033",
+      "question": "What is the current integration owner for Wayne Enterprises?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Initech",
+      "expected": "1.00",
+      "kind": "answerable",
+      "qid": "q-034",
+      "question": "What is the current pro plan price for Initech?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Initech",
+      "expected": "24h",
+      "kind": "answerable",
+      "qid": "q-035",
+      "question": "What is the current support response SLA for Initech?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Wonka Industries",
+      "expected": "0.08",
+      "kind": "answerable",
+      "qid": "q-036",
+      "question": "What is the current starter plan price for Wonka Industries?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Umbrella Corp",
+      "expected": "2025-04-01",
+      "kind": "answerable",
+      "qid": "q-037",
+      "question": "What is the current launch date for Umbrella Corp?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Globex",
+      "expected": "12h",
+      "kind": "answerable",
+      "qid": "q-038",
+      "question": "What is the current support response SLA for Globex?"
+    },
+    {
+      "attribute": "integration_owner",
+      "entity": "Initech",
+      "expected": "tom falk",
+      "kind": "answerable",
+      "qid": "q-039",
+      "question": "What is the current integration owner for Initech?"
+    },
+    {
+      "attribute": "starter_price",
+      "entity": "Hooli",
+      "expected": "0.04",
+      "kind": "answerable",
+      "qid": "q-040",
+      "question": "What is the current starter plan price for Hooli?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Stark Industries",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-041",
+      "question": "What is the current pro plan price for Stark Industries?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Wonka Industries",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-042",
+      "question": "What is the current pro plan price for Wonka Industries?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Stark Industries",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-043",
+      "question": "What is the current support response SLA for Stark Industries?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Acme Corp",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-044",
+      "question": "What is the current refund window for Acme Corp?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Cyberdyne Systems",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-045",
+      "question": "What is the current pro plan price for Cyberdyne Systems?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Vehement Capital",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-046",
+      "question": "What is the current launch date for Vehement Capital?"
+    },
+    {
+      "attribute": "pro_price",
+      "entity": "Northwind Traders",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-047",
+      "question": "What is the current pro plan price for Northwind Traders?"
+    },
+    {
+      "attribute": "support_sla",
+      "entity": "Contoso",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-048",
+      "question": "What is the current support response SLA for Contoso?"
+    },
+    {
+      "attribute": "refund_window",
+      "entity": "Fabrikam",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-049",
+      "question": "What is the current refund window for Fabrikam?"
+    },
+    {
+      "attribute": "launch_date",
+      "entity": "Litware",
+      "expected": "UNKNOWN",
+      "kind": "unanswerable",
+      "qid": "q-050",
+      "question": "What is the current launch date for Litware?"
+    }
+  ],
+  "seed": 1337
+}
