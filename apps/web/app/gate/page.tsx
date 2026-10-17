@@ -67,7 +67,7 @@ export default function Cut() {
         <input
           value={question}
           onChange={(event) => setQuestion(event.target.value)}
-          placeholder="What is the current integration owner for Hooli?"
+          placeholder="What is the current starter plan price for Acme Corp?"
           className="flex-1 rounded border border-edge bg-ink px-3 py-2 font-mono text-sm outline-none focus:border-current"
         />
         <button
