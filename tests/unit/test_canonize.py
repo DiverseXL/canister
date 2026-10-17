@@ -111,3 +111,20 @@ def test_single_assertion_is_canon_by_corroboration() -> None:
     decision = resolve("ck", [a("only", "30d")])
     assert decision.decision == "CANON"
     assert decision.selected_value == "30d"
+
+
+def test_three_step_revision_chain_resolves_to_latest() -> None:
+    # A revision chain: A is asserted, then superseded by B, then superseded by C.
+    assertions = [
+        a("doc-a", "0.15", date="2025-01-01", stance="assert"),
+        a("doc-b", "0.10", date="2025-03-01", stance="supersede", explicit=True, prior="0.15"),
+        a("doc-c", "0.05", date="2025-06-01", stance="supersede", explicit=True, prior="0.10"),
+    ]
+    decision = resolve("acme::starter_price", assertions)
+    assert decision.decision == "CANON"
+    assert decision.selected_value == "0.05"
+    assert decision.priority == 1
+    assert decision.reason == "explicit_supersession"
+    assert set(decision.superseded_assertion_ids) == {"doc-a", "doc-b"}
+    assert decision.evidence_assertion_ids == ("doc-c",)
+
