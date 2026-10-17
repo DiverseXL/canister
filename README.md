@@ -7,6 +7,8 @@ Search finds what is *relevant*. It cannot tell what is still *true*. Canister p
 
 Between every arm of the experiment the model, the prompt, the corpus and the 10-document budget are identical. The only thing that changes is what the model is allowed to read.
 
+Design inspired by Canon (Enoch208/canon).
+
 ## Results at a glance
 
 Every number below is produced by a script in this repository on a **synthetic, seeded corpus** that we generate. See [Honesty: limitations](#honesty-limitations) before reading anything into them.
@@ -45,17 +47,19 @@ npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3
 3. [Architecture](#architecture)
 4. [How a claim gets resolved](#how-a-claim-gets-resolved)
 5. [How FalkorDB is used](#how-falkordb-is-used)
-6. [Engineering decisions](#engineering-decisions)
-7. [Measured results](#measured-results)
-8. [Stress test: where it breaks](#stress-test-where-it-breaks)
-9. [Use it as a component](#use-it-as-a-component)
-10. [The console](#the-console)
-11. [Honesty: limitations](#honesty-limitations)
-12. [Tech stack](#tech-stack)
-13. [Project layout](#project-layout)
-14. [Run it locally](#run-it-locally)
-15. [Tests](#tests)
-16. [Attribution](#attribution)
+6. [Cypher the product depends on](#cypher-the-product-depends-on)
+7. [Engineering decisions](#engineering-decisions)
+8. [Measured results](#measured-results)
+9. [Stress test: where it breaks](#stress-test-where-it-breaks)
+10. [Use it as a component](#use-it-as-a-component)
+11. [The console](#the-console)
+12. [Honesty: limitations](#honesty-limitations)
+13. [AI use disclosure](#ai-use-disclosure)
+14. [Tech stack](#tech-stack)
+15. [Project layout](#project-layout)
+16. [Run it locally](#run-it-locally)
+17. [Tests](#tests)
+18. [Attribution](#attribution)
 
 ## The problem
 
@@ -138,6 +142,131 @@ Things learned the hard way, now built into the code:
 - **Query timeouts.** Removing the `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` overrides from `docker-compose.yml` fixed spurious "Query timed out" errors.
 - **Client edges.** `graph.delete()` errors on an empty key, so it is guarded with `list_graphs()`. Re-creating an index raises "already indexed", which `ensure_schema` tolerates.
 - **Restart persistence** is verified, not assumed: `verify` restarts the container and compares node counts before and after (552 and 552).
+
+## Cypher the product depends on
+
+Every Cypher statement the product ships, quoted from the source. The API and MCP services contain no Cypher of their own; they call into `packages/graph`. Whitespace is insignificant to Cypher, so the line breaks below are cosmetic; token order and parameters are exact and nothing is rewritten.
+
+### Graph data model
+
+Node labels: `Entity`, `ClaimKey`, `Proposition`, `Assertion`, `Artifact`, `CanonEvent`.
+
+| From | Relationship | To |
+|---|---|---|
+| `Entity` | `HAS_CLAIM` | `ClaimKey` |
+| `ClaimKey` | `HAS_VALUE` | `Proposition` |
+| `Assertion` | `ASSERTS` | `Proposition` |
+| `Assertion` | `IN_ARTIFACT` | `Artifact` |
+| `CanonEvent` | `SELECTS` | `Proposition` |
+| `CanonEvent` | `SUPERSEDES` | `CanonEvent` |
+
+Key properties per label:
+
+| Label | Properties |
+|---|---|
+| `Entity` | `id`, `name` |
+| `ClaimKey` | `id`, `key`, `entity`, `attribute`, `attribute_label` |
+| `Proposition` | `id`, `value`, `value_norm`, `value_type` |
+| `Assertion` | `id`, `claim_key_id`, `stance`, `explicit`, `prior_value`, `span_start`, `span_end`, `quote`, `structured`, `published_at`, `source` |
+| `Artifact` | `id`, `doc_id`, `title`, `source`, `published_at`, `content_sha256`, `path` |
+| `CanonEvent` | `id`, `claim_key_id`, `decision`, `priority`, `reason`, `selected_value`, `as_of`, `evidence_count`, `current` |
+
+Indexes (`packages/graph/src/canister_graph/schema.py`, `INDEXES`): `Entity(id)`, `ClaimKey(id)`, `Proposition(id)`, `Assertion(id)`, `Artifact(id)`, `Artifact(doc_id)`, `CanonEvent(id)`, `CanonEvent(claim_key_id)`.
+
+### Writes: idempotent `MERGE`
+
+Source: `packages/graph/src/canister_graph/writer.py`.
+
+```cypher
+// WRITE_ARTIFACT — upsert one source document node (GraphWriter.write_artifact)
+MERGE (a:Artifact {id:$id}) SET a.doc_id=$doc_id, a.title=$title, a.source=$source, a.published_at=$published_at, a.content_sha256=$sha, a.path=$path
+```
+
+```cypher
+// WRITE_ASSERTION — upsert the entity, claim key, proposition, assertion and their links (GraphWriter.write_assertion)
+MERGE (e:Entity {id:$eid}) SET e.name=$ename
+MERGE (ck:ClaimKey {id:$ckid}) SET ck.key=$ckkey, ck.entity=$ename, ck.attribute=$attr, ck.attribute_label=$label
+MERGE (e)-[:HAS_CLAIM]->(ck)
+MERGE (p:Proposition {id:$pid}) SET p.value=$value, p.value_norm=$value_norm, p.value_type=$vtype
+MERGE (ck)-[:HAS_VALUE]->(p)
+MERGE (art:Artifact {id:$aid})
+MERGE (as:Assertion {id:$asid}) SET as.claim_key_id=$ckid, as.stance=$stance, as.explicit=$explicit, as.prior_value=$prior, as.span_start=$ss, as.span_end=$se, as.quote=$quote, as.structured=$structured, as.published_at=$published_at, as.source=$source
+MERGE (as)-[:ASSERTS]->(p)
+MERGE (as)-[:IN_ARTIFACT]->(art)
+```
+
+```cypher
+// WRITE_CANON_EVENT — upsert the current canon decision for a claim key (GraphWriter.write_canon_event)
+MERGE (ce:CanonEvent {id:$id}) SET ce.claim_key_id=$ck, ce.decision=$dec, ce.priority=$prio, ce.reason=$reason, ce.selected_value=$val, ce.as_of=$asof, ce.evidence_count=$n, ce.current=true
+```
+
+```cypher
+// CLEAR_OTHER_CURRENT — mark every other canon event for the key as not current (GraphWriter.write_canon_event)
+MATCH (ce:CanonEvent {id:$id})
+MATCH (prev:CanonEvent)
+WHERE prev.claim_key_id=$ck AND prev.id <> $id
+SET prev.current=false
+```
+
+```cypher
+// LINK_SUPERSEDES — link the new event to the most recent previous event (supersession chain) (GraphWriter.write_canon_event)
+MATCH (ce:CanonEvent {id:$id})
+MATCH (prev:CanonEvent)
+WHERE prev.claim_key_id=$ck AND prev.id <> $id
+WITH ce, prev ORDER BY prev.as_of DESC, prev.id DESC LIMIT 1
+MERGE (ce)-[:SUPERSEDES]->(prev)
+```
+
+```cypher
+// LINK_SELECTS — link the event to the proposition it selected (GraphWriter.write_canon_event)
+MATCH (ce:CanonEvent {id:$id}) MATCH (p:Proposition {id:$pid}) MERGE (ce)-[:SELECTS]->(p)
+```
+
+### Reads
+
+```cypher
+// READ_CLAIM_KEYS — list every claim key (GraphWriter.claim_keys)
+MATCH (ck:ClaimKey) RETURN ck.id
+```
+
+```cypher
+// READ_ASSERTIONS — every assertion for a claim key plus its artifact metadata (residue read) (GraphWriter.assertions_for)
+MATCH (ck:ClaimKey {id:$ckid})-[:HAS_VALUE]->(p:Proposition)<-[:ASSERTS]-(a:Assertion)-[:IN_ARTIFACT]->(art:Artifact) RETURN a.id, a.stance, a.explicit, a.prior_value, p.id, p.value_norm, art.published_at, art.source
+```
+
+```cypher
+// READ_KEY_INFO — claim keys with entity, attribute and label, for relevance matching (GraphClaimProvider._all_keys)
+MATCH (ck:ClaimKey) RETURN ck.id, ck.entity, ck.attribute, ck.attribute_label
+```
+
+```cypher
+// READ_STATE — the current canon decision for a claim key (GraphClaimProvider.claim_state)
+MATCH (ce:CanonEvent {claim_key_id:$ck}) WHERE ce.current=true RETURN ce.decision, ce.selected_value, ce.priority, ce.reason ORDER BY ce.as_of DESC, ce.id DESC LIMIT 1
+```
+
+```cypher
+// READ_DOC_VALUES — which claim keys a document asserts and with what value (residue read for context labels) (GraphClaimProvider.doc_claim_values)
+MATCH (ck:ClaimKey)-[:HAS_VALUE]->(p:Proposition)<-[:ASSERTS]-(a:Assertion)-[:IN_ARTIFACT]->(art:Artifact) WHERE art.doc_id=$doc AND ck.id IN $cks RETURN DISTINCT ck.id AS ck, p.value_norm AS value
+```
+
+### Counts
+
+```cypher
+// COUNT_NODES — total node count (GraphWriter.count_nodes)
+MATCH (n) RETURN count(n) AS c
+```
+
+```cypher
+// COUNT_RELS — total relationship count (GraphWriter.count_relationships)
+MATCH ()-[r]->() RETURN count(r) AS c
+```
+
+### Schema DDL
+
+```cypher
+// ensure_schema — one index per (label, property) pair in INDEXES, repeated (canister_graph.schema.ensure_schema)
+CREATE INDEX FOR (n:<label>) ON (n.<property>)
+```
 
 ## Engineering decisions
 
@@ -298,6 +427,10 @@ The console defaults to port 3000. Docker Compose also maps FalkorDB's browser t
 - **No resurrection handling.** There are no reliable timestamps, so a retired value reasserted later cannot be ordered against its supersession, and Canister does not claim to detect it.
 - **Single-node FalkorDB.** Scale and concurrency were not tested.
 - **`not_run`:** the fail-safe rule that marks a claim `CONTESTED` when a supersession cue is present but no new value was extracted, model-assisted extraction, model-judged answer scoring, and any deployment-scale benchmark.
+
+## AI use disclosure
+
+This project was built with AI coding assistants: Claude for design and planning, and an OpenCode agent running DeepSeek for implementation. The author directed the design and verified the results, including every number reported here.
 
 ## Tech stack
 
