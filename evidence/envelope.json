@@ -10,7 +10,7 @@
         "current_recall_mean": 1.0,
         "questions": 50,
         "superseded_leak_questions": 18,
-        "superseded_leak_total": 42,
+        "superseded_leak_total": 43,
         "unanswerable_correct_rate": 1.0
       },
       "temporal": {
@@ -41,7 +41,7 @@
     "platform": "Windows-11-10.0.26100-SP0",
     "python": "3.12.10"
   },
-  "generated_at_utc": "2026-10-16T19:48:45+00:00",
+  "generated_at_utc": "2026-10-17T00:57:52+00:00",
   "graph": {
     "artifacts": 200,
     "assertions": 200,

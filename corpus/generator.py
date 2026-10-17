@@ -1,6 +1,6 @@
 """Seeded, reproducible synthetic company corpus generator.
 
-Produces 200 documents with 18 planted conflicts (including one 8-vs-1
+Produces 200 documents with 18 planted conflicts (including one 9-vs-1
 majority-adversarial case), 2 CONTESTED cases and 10 unanswerable questions.
 Gold labels are written to ``corpus/out/gold.json``.
 
@@ -17,7 +17,14 @@ from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 
-from canister_extraction import ATTRIBUTES, ENTITIES, PEOPLE, Attribute, normalize_value
+from canister_extraction import (
+    ATTRIBUTE_BY_KEY,
+    ATTRIBUTES,
+    ENTITIES,
+    PEOPLE,
+    Attribute,
+    normalize_value,
+)
 
 SEED = 1337
 N_DOCS = 200
@@ -25,6 +32,14 @@ N_CONFLICT = 18
 N_CONTESTED = 2
 N_ANSWERABLE_KEYS = 40
 N_UNANSWERABLE = 10
+
+# The majority-adversarial case: many documents assert one value, a single later
+# document supersedes it. Kept explicit so the example is fixed and legible.
+MAJORITY_ENTITY = "Acme Corp"
+MAJORITY_ATTRIBUTE = "starter_price"
+MAJORITY_OLD = "$0.15"
+MAJORITY_NEW = "$0.07"
+MAJORITY_DOCS = 9
 
 MONEY = [0.04, 0.05, 0.06, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.40, 0.50, 0.75, 1.00, 1.20, 2.50]
 DAYS = [7, 14, 21, 30, 45, 60, 90]
@@ -146,10 +161,16 @@ def render_document(doc: Document) -> str:
 def build(out_dir: Path) -> dict:
     rng = random.Random(SEED)
 
-    combos = [(e, a) for e in ENTITIES for a in ATTRIBUTES]
+    majority_attr = ATTRIBUTE_BY_KEY[MAJORITY_ATTRIBUTE]
+    combos = [
+        (e, a)
+        for e in ENTITIES
+        for a in ATTRIBUTES
+        if not (e == MAJORITY_ENTITY and a.key == MAJORITY_ATTRIBUTE)
+    ]
     rng.shuffle(combos)
-    key_combos = combos[:N_ANSWERABLE_KEYS]
-    unused = combos[N_ANSWERABLE_KEYS:]
+    key_combos = [(MAJORITY_ENTITY, majority_attr)] + combos[: N_ANSWERABLE_KEYS - 1]
+    unused = combos[N_ANSWERABLE_KEYS - 1 :]
 
     kinds = ["majority"] + ["conflict"] * (N_CONFLICT - 1) + ["contested"] * N_CONTESTED
     kinds += ["stable"] * (N_ANSWERABLE_KEYS - len(kinds))
@@ -211,7 +232,8 @@ def build(out_dir: Path) -> dict:
     for (entity, attr), kind in zip(key_combos, kinds, strict=True):
         base = raw_value(attr, rng)
         if kind == "majority":
-            for _ in range(8):
+            base = MAJORITY_OLD
+            for _ in range(MAJORITY_DOCS):
                 style = rng.random()
                 add_doc(
                     entity,
@@ -223,7 +245,7 @@ def build(out_dir: Path) -> dict:
                     structured=style > 0.7,
                 )
                 state["date"] += 1
-            new = different_value(attr, base, rng)
+            new = MAJORITY_NEW
             add_doc(
                 entity,
                 attr,
@@ -286,7 +308,7 @@ def build(out_dir: Path) -> dict:
             state["date"] += 7
             claim_keys.append(_claim(entity, attr, kind, None, None))
         else:  # stable
-            count = 7 if state["stable"] < 16 else 6
+            count = 7 if state["stable"] < 15 else 6
             state["stable"] += 1
             for _ in range(count):
                 style = rng.random()

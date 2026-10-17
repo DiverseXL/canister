@@ -35,26 +35,26 @@ def a(
 
 
 def test_explicit_supersession_beats_majority() -> None:
-    # The 8-vs-1 adversarial case from the brief.
-    assertions = [a(f"old-{i}", "0.08", date=f"2025-01-{i + 1:02d}") for i in range(8)]
+    # The 9-vs-1 adversarial case from the brief.
+    assertions = [a(f"old-{i}", "0.15", date=f"2025-01-{i + 1:02d}") for i in range(9)]
     assertions.append(
-        a("new", "0.06", date="2025-06-01", stance="supersede", explicit=True, prior="0.08")
+        a("new", "0.07", date="2025-06-01", stance="supersede", explicit=True, prior="0.15")
     )
     decision = resolve("acme::starter_price", assertions)
     assert decision.decision == "CANON"
-    assert decision.selected_value == "0.06"
+    assert decision.selected_value == "0.07"
     assert decision.priority == 1
     assert decision.reason == "explicit_supersession"
-    assert len(decision.superseded_assertion_ids) == 8
+    assert len(decision.superseded_assertion_ids) == 9
 
 
 def test_temporal_change_beats_majority() -> None:
-    # Same 8-vs-1 but the later artifact relies on semantics + metadata, not the
+    # Same 9-vs-1 but the later artifact relies on semantics + metadata, not the
     # word "supersedes".
-    assertions = [a(f"old-{i}", "0.08", date=f"2025-01-{i + 1:02d}") for i in range(8)]
-    assertions.append(a("new", "0.06", date="2025-06-01", stance="supersede", prior="0.08"))
+    assertions = [a(f"old-{i}", "0.15", date=f"2025-01-{i + 1:02d}") for i in range(9)]
+    assertions.append(a("new", "0.07", date="2025-06-01", stance="supersede", prior="0.15"))
     decision = resolve("acme::starter_price", assertions)
-    assert decision.selected_value == "0.06"
+    assert decision.selected_value == "0.07"
     assert decision.priority == 2
     assert decision.reason == "temporal_order_and_semantics"
 
@@ -78,10 +78,10 @@ def test_corroboration_unanimous_is_canon() -> None:
 
 
 def test_no_signal_is_contested_never_majority() -> None:
-    # 8 artifacts say 0.08, one later artifact contradicts without any change
+    # 9 artifacts say 0.15, one later artifact contradicts without any change
     # language. Corroboration is a tie-break only: this is CONTESTED.
-    assertions = [a(f"old-{i}", "0.08", date=f"2025-01-{i + 1:02d}") for i in range(8)]
-    assertions.append(a("new", "0.06", date="2025-06-01"))
+    assertions = [a(f"old-{i}", "0.15", date=f"2025-01-{i + 1:02d}") for i in range(9)]
+    assertions.append(a("new", "0.07", date="2025-06-01"))
     decision = resolve("ck", assertions)
     assert decision.decision == "CONTESTED"
     assert decision.selected_value is None

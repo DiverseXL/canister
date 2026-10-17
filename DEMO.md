@@ -26,7 +26,7 @@ Point at: **9 passed, 0 failed, 0 not_run** — including `restart_persistence`
 make benchmark
 ```
 
-Point at: **superseded_leak_total 42 → 0** and **questions 18 → 0**, while
+Point at: **superseded_leak_total 43 → 0** and **questions 18 → 0**, while
 `context_size_mean` stays `10.0` and `current_recall_mean` stays `1.0`. Same BM25,
 same 10-doc budget; only the context topology changed.
 
@@ -49,9 +49,9 @@ make controls
 
 Point at, in order:
 
-- **random-removal**: baseline 42, random 27, temporal 0 — removing *the superseded*
+- **random-removal**: baseline 43, random 26, temporal 0 — removing *the superseded*
   docs is the mechanism, not removing any docs.
-- **mechanism split**: cut-only already reaches 0; pin-only stays at 42 — so cutting
+- **mechanism split**: cut-only already reaches 0; pin-only stays at 43 — so cutting
   removes the leak and pinning only holds the budget at 10.
 - **safety envelope**: 32/32 non-conflict contexts byte-identical to flat, 0 removed
   outside conflicts, 0 pins outside conflicts — the graph touches only conflicts.

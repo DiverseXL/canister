@@ -15,8 +15,8 @@ Every number below is produced by a script in this repository on a **synthetic, 
 
 | Measurement | Baseline (BM25 only) | Canister |
 |---|---|---|
-| Superseded documents reaching present-tense context (18 conflict questions, deterministic) | **42** | **0** |
-| Same count with the same number of documents removed *at random* | 27 | n/a |
+| Superseded documents reaching present-tense context (18 conflict questions, deterministic) | **43** | **0** |
+| Same count with the same number of documents removed *at random* | 26 | n/a |
 | Historical questions that recover the retired evidence | n/a | **18 / 18** |
 | Non-conflict contexts left byte-identical (safety envelope) | n/a | **32 / 32** |
 | Documents removed or pinned outside the conflict set | n/a | **0** |
@@ -61,7 +61,7 @@ npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3
 
 A company's knowledge is not a pile of facts. It is a pile of *claims with lifetimes*. A price is right on Monday, replaced on Wednesday, historically true on Friday, and harmful if an agent quotes it as current a month later.
 
-Retrieval is built to maximise relevance, and that creates a specific failure. The retired document and the current document were written by the same people, about the same system, in the same vocabulary, so the retired one ranks just as well, and often better because it has had more time to be repeated. On our corpus, plain BM25 leaks **42 superseded documents into the top 10 across 18 conflict questions.** The agent then reads old truth as if it were new.
+Retrieval is built to maximise relevance, and that creates a specific failure. The retired document and the current document were written by the same people, about the same system, in the same vocabulary, so the retired one ranks just as well, and often better because it has had more time to be repeated. On our corpus, plain BM25 leaks **43 superseded documents into the top 10 across 18 conflict questions.** The agent then reads old truth as if it were new.
 
 Canister treats "this used to be true" as a first-class state that sits next to relevance, so that retired truth stays visible as history and unreachable as present.
 
@@ -105,7 +105,7 @@ Canonization runs in a fixed order, and the order is the whole point. It is enfo
 
 1. **Explicit supersession.** Language such as "changed from X to Y" or "the old figure is retired". It is the only signal allowed to beat corroboration.
 2. **Reliable temporal ordering.** Used only when metadata and semantics agree.
-3. **Corroboration.** A tie-break and nothing more. Majority never overrides supersession. Test: eight documents asserting `$0.08` against one later document stating the price changed to `$0.06` must resolve to `$0.06`. This is re-proven live by every `verify` run.
+3. **Corroboration.** A tie-break and nothing more. Majority never overrides supersession. Test: nine documents asserting `$0.15` against one later document stating the price changed to `$0.07` must resolve to `$0.07`. This is re-proven live by every `verify` run.
 4. **No signal.** The claim is `CONTESTED`. Canister never manufactures an ordering.
 
 At question time, `ground()` maps the question to claim keys (entity must appear in the question and every token of the attribute label must be present), looks up the claim neighbourhood, labels each retrieved document, then filters, backfills and pins.
@@ -152,14 +152,14 @@ Things learned the hard way, now built into the code:
 
 ## Measured results
 
-Corpus: 200 documents, 40 claim keys, 18 planted conflicts (index 0 is the 8-versus-1 majority case), 2 contested claims, 10 unanswerable questions, 50 questions in total. Seed 1337. All rows are deterministic.
+Corpus: 200 documents, 40 claim keys, 18 planted conflicts (index 0 is the 9-versus-1 majority case), 2 contested claims, 10 unanswerable questions, 50 questions in total. Seed 1337. All rows are deterministic.
 
 ### Does the graph remove the right documents?
 
 | Arm | Superseded docs in context | Context size |
 |---|---|---|
-| Baseline (BM25 top 10) | 42 across 18 questions | 10 |
-| Random removal (same count removed, seeded per question) | 27 | 10 |
+| Baseline (BM25 top 10) | 43 across 18 questions | 10 |
+| Random removal (same count removed, seeded per question) | 26 | 10 |
 | Temporal gate | 0 | 10 |
 
 Random removal helps on 10 of the 18 conflict questions, and the gate helps on all 18. A random cut sometimes lands on a retired document by chance; the gate cuts the right one every time, because the graph tells it which one that is.
@@ -168,9 +168,9 @@ Random removal helps on 10 of the 18 conflict questions, and the gate helps on a
 
 | Arm | Superseded in context | Current gold in context | Context size |
 |---|---|---|---|
-| Baseline | 42 | 18 | 10 |
+| Baseline | 43 | 18 | 10 |
 | Cut only | 0 | 18 | 10 |
-| Pin only | 42 | 18 | 10 |
+| Pin only | 43 | 18 | 10 |
 | Full gate | 0 | 18 | 10 |
 
 Over the 18 conflict questions, every arm keeps all 18 current-gold documents and exactly 10 documents. Suppression is what stops retired evidence from reaching the model; pinning recovers current evidence the retriever ranked out. Source: `evidence/controls.json` (`mechanism_split.arms.*.superseded_in_context`, `mechanism_split.arms.*.current_gold_in_context`, `mechanism_split.arms.*.context_size_mean`).
@@ -182,10 +182,10 @@ Superseded documents reaching context, by retrieval depth. Both arms saw exactly
 | top-k | Baseline superseded in context | Temporal gate superseded in context |
 |---|---|---|
 | 5 | 39 | 0 |
-| 10 | 42 | 0 |
-| 20 | 42 | 0 |
+| 10 | 43 | 0 |
+| 20 | 43 | 0 |
 
-The baseline leak rises from 39 at top-k 5 to 42 at top-k 10 and stays at 42 at top-k 20; the gate holds at 0 at every depth. Source: `evidence/controls.json` (`top_k_sweep."5"/"10"/"20".baseline.leak_total`, `top_k_sweep."5"/"10"/"20".temporal.leak_total`, `top_k_sweep."5"/"10"/"20".*.size_all_k`).
+The baseline leak rises from 39 at top-k 5 to 43 at top-k 10 and stays at 43 at top-k 20; the gate holds at 0 at every depth. Source: `evidence/controls.json` (`top_k_sweep."5"/"10"/"20".baseline.leak_total`, `top_k_sweep."5"/"10"/"20".temporal.leak_total`, `top_k_sweep."5"/"10"/"20".*.size_all_k`).
 
 ### Historical mode
 
@@ -340,7 +340,7 @@ npm --prefix apps/web install             # console deps (once)
 npm --prefix apps/web run dev             # console on :3000 (or :3001)
 ```
 
-`verify` checks: write and read, idempotent re-ingest, the 8-versus-1 majority adversarial case, supersession, contested, unknown, residue traversal, the grounding record, and persistence across a real container restart.
+`verify` checks: write and read, idempotent re-ingest, the 9-versus-1 majority adversarial case, supersession, contested, unknown, residue traversal, the grounding record, and persistence across a real container restart.
 
 `.env.example` contains no required secrets. Nothing in this repository needs a paid service or an API key.
 

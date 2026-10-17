@@ -19,15 +19,15 @@
     {
       "detail": {
         "priority": 1,
-        "selected": "omar haddad"
+        "selected": "0.07"
       },
       "name": "majority_adversarial",
       "status": "pass"
     },
     {
       "detail": {
-        "old": "0.25",
-        "selected": "0.12"
+        "old": "2025-03-01",
+        "selected": "2025-08-15"
       },
       "name": "supersession",
       "status": "pass"
@@ -50,8 +50,8 @@
       "detail": {
         "chain": [
           [
-            "0.12",
-            "0.25"
+            "2025-08-15",
+            "2025-03-01"
           ]
         ],
         "events": 2
@@ -64,7 +64,7 @@
         "cut_set": 30,
         "final_size": 10,
         "pinned": [],
-        "sha256": "5fd6f112df4a085b"
+        "sha256": "9db6d3e197529b11"
       },
       "name": "ground_receipt",
       "status": "pass"

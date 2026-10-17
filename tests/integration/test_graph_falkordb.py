@@ -171,11 +171,11 @@ def test_majority_adversarial_on_graph(graph) -> None:
             "starter_price",
             "starter plan price",
             "money",
-            "$0.08",
-            "0.08",
+            "$0.15",
+            "0.15",
             date=f"2025-01-{i + 1:02d}",
         )
-        for i in range(8)
+        for i in range(9)
     ]
     docs.append(
         make_doc(
@@ -184,11 +184,11 @@ def test_majority_adversarial_on_graph(graph) -> None:
             "starter_price",
             "starter plan price",
             "money",
-            "$0.06",
-            "0.06",
+            "$0.07",
+            "0.07",
             stance="supersede",
             explicit=True,
-            prior="0.08",
+            prior="0.15",
             date="2025-06-01",
         )
     )
@@ -196,9 +196,9 @@ def test_majority_adversarial_on_graph(graph) -> None:
     decisions = writer.canonize_all()
     majority = [d for d in decisions if d.claim_key == ids.claim_key_id("Globex", "starter_price")]
     assert len(majority) == 1
-    assert majority[0].selected_value == "0.06"
+    assert majority[0].selected_value == "0.07"
     assert majority[0].priority == 1
-    assert len(majority[0].superseded_assertion_ids) == 8
+    assert len(majority[0].superseded_assertion_ids) == 9
 
 
 def test_contested_on_graph(graph) -> None:

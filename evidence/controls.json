@@ -16,8 +16,8 @@
         "all_recovered": true,
         "qid": "q-001",
         "retired_doc_cut": false,
-        "retired_recovered": 8,
-        "retired_total": 8
+        "retired_recovered": 9,
+        "retired_total": 9
       },
       {
         "all_recovered": true,
@@ -151,7 +151,7 @@
         "context_size_all_ten": true,
         "context_size_mean": 10.0,
         "current_gold_in_context": 18,
-        "superseded_in_context": 42
+        "superseded_in_context": 43
       },
       "cut_only": {
         "context_size_all_ten": true,
@@ -169,7 +169,7 @@
         "context_size_all_ten": true,
         "context_size_mean": 10.0,
         "current_gold_in_context": 18,
-        "superseded_in_context": 42
+        "superseded_in_context": 43
       }
     },
     "budget": 10,
@@ -180,10 +180,10 @@
   "random_removal_control": {
     "rows": [
       {
-        "baseline_leak": 8,
-        "n_removed": 8,
+        "baseline_leak": 9,
+        "n_removed": 9,
         "qid": "q-001",
-        "random_leak": 2,
+        "random_leak": 1,
         "temporal_leak": 0
       },
       {
@@ -307,11 +307,11 @@
       }
     ],
     "summary": {
-      "baseline_leak_total": 42,
-      "docs_removed_total": 42,
+      "baseline_leak_total": 43,
+      "docs_removed_total": 43,
       "questions": 18,
       "random_beats_baseline": 10,
-      "random_leak_total": 27,
+      "random_leak_total": 26,
       "temporal_beats_baseline": 18,
       "temporal_leak_total": 0
     }
@@ -322,12 +322,12 @@
     "interventions": [
       {
         "claim_keys": [
-          "ck_f7eee6ecf3595afe3897198ea116bf50"
+          "ck_b8882b4b5296aafbb8577e5c6379d4d1"
         ],
         "claim_kind": "majority",
         "conflict": true,
         "decisions": {
-          "ck_f7eee6ecf3595afe3897198ea116bf50": {
+          "ck_b8882b4b5296aafbb8577e5c6379d4d1": {
             "decision": "CANON",
             "reason": "explicit_supersession"
           }
@@ -336,24 +336,25 @@
         "pinned_current": [],
         "qid": "q-001",
         "removed_from_base_ranking": [
-          "doc-0004",
-          "doc-0005",
-          "doc-0007",
-          "doc-0002",
-          "doc-0008",
           "doc-0001",
+          "doc-0007",
+          "doc-0008",
           "doc-0003",
-          "doc-0006"
+          "doc-0005",
+          "doc-0002",
+          "doc-0004",
+          "doc-0006",
+          "doc-0009"
         ]
       },
       {
         "claim_keys": [
-          "ck_6b4c4e25df22b75b0fdf09b86072f87d"
+          "ck_77f47f0c6fa4377d509ceb9762b0db26"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_6b4c4e25df22b75b0fdf09b86072f87d": {
+          "ck_77f47f0c6fa4377d509ceb9762b0db26": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -362,18 +363,18 @@
         "pinned_current": [],
         "qid": "q-002",
         "removed_from_base_ranking": [
-          "doc-0010",
-          "doc-0011"
+          "doc-0011",
+          "doc-0012"
         ]
       },
       {
         "claim_keys": [
-          "ck_dda9127c76d5c72e66e3c8306e434a04"
+          "ck_4382c12030448dfa2c857ee304c0f2f2"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_dda9127c76d5c72e66e3c8306e434a04": {
+          "ck_4382c12030448dfa2c857ee304c0f2f2": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -382,18 +383,18 @@
         "pinned_current": [],
         "qid": "q-003",
         "removed_from_base_ranking": [
-          "doc-0013",
-          "doc-0014"
+          "doc-0014",
+          "doc-0015"
         ]
       },
       {
         "claim_keys": [
-          "ck_4c47435407da742a7e88868ea0e59287"
+          "ck_cf3ec0065c30338b748ea173dfea94ec"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_4c47435407da742a7e88868ea0e59287": {
+          "ck_cf3ec0065c30338b748ea173dfea94ec": {
             "decision": "CANON",
             "reason": "explicit_supersession"
           }
@@ -402,18 +403,18 @@
         "pinned_current": [],
         "qid": "q-004",
         "removed_from_base_ranking": [
-          "doc-0016",
-          "doc-0017"
+          "doc-0017",
+          "doc-0018"
         ]
       },
       {
         "claim_keys": [
-          "ck_7a99c8c0e4c0773f43935ad621507097"
+          "ck_72cb3e324aeecf9599eeac6dbaf36bc1"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_7a99c8c0e4c0773f43935ad621507097": {
+          "ck_72cb3e324aeecf9599eeac6dbaf36bc1": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -423,17 +424,17 @@
         "qid": "q-005",
         "removed_from_base_ranking": [
           "doc-0020",
-          "doc-0019"
+          "doc-0021"
         ]
       },
       {
         "claim_keys": [
-          "ck_4d3858fef7c1e5d0e3b66052b088ab05"
+          "ck_ab1c958b5e099bc4fa857e7c2cecd886"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_4d3858fef7c1e5d0e3b66052b088ab05": {
+          "ck_ab1c958b5e099bc4fa857e7c2cecd886": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -442,18 +443,18 @@
         "pinned_current": [],
         "qid": "q-006",
         "removed_from_base_ranking": [
-          "doc-0022",
-          "doc-0023"
+          "doc-0023",
+          "doc-0024"
         ]
       },
       {
         "claim_keys": [
-          "ck_7cbb92ac3566ad233ffa190d398e32b0"
+          "ck_47bead70230b6b9e6aeede13d2e8357b"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_7cbb92ac3566ad233ffa190d398e32b0": {
+          "ck_47bead70230b6b9e6aeede13d2e8357b": {
             "decision": "CANON",
             "reason": "explicit_supersession"
           }
@@ -462,18 +463,18 @@
         "pinned_current": [],
         "qid": "q-007",
         "removed_from_base_ranking": [
-          "doc-0025",
-          "doc-0026"
+          "doc-0026",
+          "doc-0027"
         ]
       },
       {
         "claim_keys": [
-          "ck_af279733c2a46936d884ccd3823a4b85"
+          "ck_5b8f05c6ac1d4007fc5b295ff7502481"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_af279733c2a46936d884ccd3823a4b85": {
+          "ck_5b8f05c6ac1d4007fc5b295ff7502481": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -482,68 +483,8 @@
         "pinned_current": [],
         "qid": "q-008",
         "removed_from_base_ranking": [
-          "doc-0029",
-          "doc-0028"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_7ce0cdc3c1db5e2f90afdc984bf163f1"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_7ce0cdc3c1db5e2f90afdc984bf163f1": {
-            "decision": "CANON",
-            "reason": "temporal_order_and_semantics"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-009",
-        "removed_from_base_ranking": [
-          "doc-0031",
-          "doc-0032"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_4e2b0d96b2b781626291566730b0b8fd"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_4e2b0d96b2b781626291566730b0b8fd": {
-            "decision": "CANON",
-            "reason": "explicit_supersession"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-010",
-        "removed_from_base_ranking": [
-          "doc-0034",
-          "doc-0035"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_78dcc16dd1e6abae55d046bfc4978d98"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_78dcc16dd1e6abae55d046bfc4978d98": {
-            "decision": "CANON",
-            "reason": "temporal_order_and_semantics"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-011",
-        "removed_from_base_ranking": [
-          "doc-0038",
-          "doc-0037"
+          "doc-0030",
+          "doc-0029"
         ]
       },
       {
@@ -560,90 +501,10 @@
         },
         "kind": "answerable",
         "pinned_current": [],
-        "qid": "q-012",
+        "qid": "q-009",
         "removed_from_base_ranking": [
-          "doc-0040",
-          "doc-0041"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_4ad01649c5f12314b61821ebc0790af9"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_4ad01649c5f12314b61821ebc0790af9": {
-            "decision": "CANON",
-            "reason": "explicit_supersession"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-013",
-        "removed_from_base_ranking": [
-          "doc-0043",
-          "doc-0044"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_52ee0f34f8cd36d58d9ed8263a278c16"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_52ee0f34f8cd36d58d9ed8263a278c16": {
-            "decision": "CANON",
-            "reason": "temporal_order_and_semantics"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-014",
-        "removed_from_base_ranking": [
-          "doc-0046",
-          "doc-0047"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_bc15cb8da5046a328a3fe27231099671"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_bc15cb8da5046a328a3fe27231099671": {
-            "decision": "CANON",
-            "reason": "temporal_order_and_semantics"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-015",
-        "removed_from_base_ranking": [
-          "doc-0050",
-          "doc-0049"
-        ]
-      },
-      {
-        "claim_keys": [
-          "ck_308be89bb82387f86922aee09b060bef"
-        ],
-        "claim_kind": "conflict",
-        "conflict": true,
-        "decisions": {
-          "ck_308be89bb82387f86922aee09b060bef": {
-            "decision": "CANON",
-            "reason": "explicit_supersession"
-          }
-        },
-        "kind": "answerable",
-        "pinned_current": [],
-        "qid": "q-016",
-        "removed_from_base_ranking": [
-          "doc-0053",
-          "doc-0052"
+          "doc-0032",
+          "doc-0033"
         ]
       },
       {
@@ -655,6 +516,146 @@
         "decisions": {
           "ck_2498f6879d2b2e8f64b2d9bfca8f2491": {
             "decision": "CANON",
+            "reason": "explicit_supersession"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-010",
+        "removed_from_base_ranking": [
+          "doc-0036",
+          "doc-0035"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_c438f1456f902199ab91ef5819399a32"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_c438f1456f902199ab91ef5819399a32": {
+            "decision": "CANON",
+            "reason": "temporal_order_and_semantics"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-011",
+        "removed_from_base_ranking": [
+          "doc-0038",
+          "doc-0039"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_be0815c4936606fe104b847133b18902"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_be0815c4936606fe104b847133b18902": {
+            "decision": "CANON",
+            "reason": "temporal_order_and_semantics"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-012",
+        "removed_from_base_ranking": [
+          "doc-0041",
+          "doc-0042"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_6764dbf01851d6fc696da115f75d7f5e"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_6764dbf01851d6fc696da115f75d7f5e": {
+            "decision": "CANON",
+            "reason": "explicit_supersession"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-013",
+        "removed_from_base_ranking": [
+          "doc-0044",
+          "doc-0045"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_a0f0a10fdc83c7aa77866616c1550f1a"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_a0f0a10fdc83c7aa77866616c1550f1a": {
+            "decision": "CANON",
+            "reason": "temporal_order_and_semantics"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-014",
+        "removed_from_base_ranking": [
+          "doc-0048",
+          "doc-0047"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_83eb0cbf5f8d769772a91400a68b786c"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_83eb0cbf5f8d769772a91400a68b786c": {
+            "decision": "CANON",
+            "reason": "temporal_order_and_semantics"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-015",
+        "removed_from_base_ranking": [
+          "doc-0050",
+          "doc-0051"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_78dcc16dd1e6abae55d046bfc4978d98"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_78dcc16dd1e6abae55d046bfc4978d98": {
+            "decision": "CANON",
+            "reason": "explicit_supersession"
+          }
+        },
+        "kind": "answerable",
+        "pinned_current": [],
+        "qid": "q-016",
+        "removed_from_base_ranking": [
+          "doc-0053",
+          "doc-0054"
+        ]
+      },
+      {
+        "claim_keys": [
+          "ck_73866365a7060e1b4c158d2f1ea8baa3"
+        ],
+        "claim_kind": "conflict",
+        "conflict": true,
+        "decisions": {
+          "ck_73866365a7060e1b4c158d2f1ea8baa3": {
+            "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
         },
@@ -662,18 +663,18 @@
         "pinned_current": [],
         "qid": "q-017",
         "removed_from_base_ranking": [
-          "doc-0055",
-          "doc-0056"
+          "doc-0056",
+          "doc-0057"
         ]
       },
       {
         "claim_keys": [
-          "ck_a67ce9532305fcc1b1c5e90360a51bb6"
+          "ck_1fa378421b2f36773a44ee77c72d1055"
         ],
         "claim_kind": "conflict",
         "conflict": true,
         "decisions": {
-          "ck_a67ce9532305fcc1b1c5e90360a51bb6": {
+          "ck_1fa378421b2f36773a44ee77c72d1055": {
             "decision": "CANON",
             "reason": "temporal_order_and_semantics"
           }
@@ -682,8 +683,8 @@
         "pinned_current": [],
         "qid": "q-018",
         "removed_from_base_ranking": [
-          "doc-0058",
-          "doc-0059"
+          "doc-0059",
+          "doc-0060"
         ]
       }
     ],
@@ -692,23 +693,23 @@
     "pins_outside_conflicts": 0
   },
   "tenant_isolation": {
-    "claim_key_attribute": "integration_owner",
-    "claim_key_entity": "Hooli",
-    "expected_tenant_a": "omar haddad",
-    "expected_tenant_b": "zara sentinel",
+    "claim_key_attribute": "starter_price",
+    "claim_key_entity": "Acme Corp",
+    "expected_tenant_a": "0.07",
+    "expected_tenant_b": "9.99",
     "isolated": true,
-    "question": "What is the current integration owner for Hooli?",
+    "question": "What is the current starter plan price for Acme Corp?",
     "tenant_a": "canister_controls_a",
     "tenant_a_nodes": 552,
-    "tenant_a_value": "omar haddad",
+    "tenant_a_value": "0.07",
     "tenant_b": "canister_controls_b",
     "tenant_b_nodes": 556,
-    "tenant_b_value": "zara sentinel"
+    "tenant_b_value": "9.99"
   },
   "top_k_sweep": {
     "10": {
       "baseline": {
-        "leak_total": 42,
+        "leak_total": 43,
         "size_all_k": true
       },
       "temporal": {
@@ -718,7 +719,7 @@
     },
     "20": {
       "baseline": {
-        "leak_total": 42,
+        "leak_total": 43,
         "size_all_k": true
       },
       "temporal": {
