@@ -29,3 +29,106 @@ body {
 .label-not_in_claim_graph {
   @apply text-slate-500;
 }
+
+/* --- Landing page design tokens ------------------------------------------*/
+/* Overlays `color-scheme: dark` (already set above) with the landing palette.
+   Additive only: nothing here redefines an existing token, so the console
+   pages keep their exact colors. */
+:root {
+  --lp-bg: #060607;
+  --lp-panel: #0b0b0d;
+  --lp-line: rgba(255, 255, 255, 0.09);
+  --lp-ink: #ececee;
+  --lp-mute: #8b8b94;
+  --lp-retired: #d6685f;
+  --lp-current: var(--lp-ink);
+  color-scheme: dark;
+}
+
+/* --- Landing page shell --------------------------------------------------*/
+.landing {
+  font-family: var(--font-landing-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  font-weight: 400;
+  color: var(--lp-ink);
+  background: var(--lp-bg);
+}
+
+.landing .display {
+  font-family: var(--font-landing-syne), "Segoe UI", Arial, sans-serif;
+  font-weight: 800;
+}
+
+.landing .label {
+  font-family: var(--font-landing-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Retired values are struck through in the retired colour; current values
+   sit in ink. */
+.landing .value-retired {
+  color: var(--lp-retired);
+  text-decoration: line-through;
+}
+
+.landing .value-current {
+  color: var(--lp-current);
+  text-decoration: none;
+}
+
+/* Big display headline word drawn as an outline. */
+.landing .outline-word {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--lp-ink);
+}
+
+@supports not (-webkit-text-stroke: 1px #000) {
+  .landing .outline-word {
+    color: var(--lp-ink);
+  }
+}
+
+/* Visible keyboard focus on every link and button. */
+.landing a:focus-visible,
+.landing button:focus-visible {
+  outline: 2px solid var(--lp-ink);
+  outline-offset: 3px;
+}
+
+.landing .skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.landing .skip-link:focus,
+.landing .skip-link:focus-visible {
+  left: 1rem;
+  top: 1rem;
+  z-index: 50;
+  background: var(--lp-ink);
+  color: var(--lp-bg);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.landing main {
+  scroll-margin-top: 2rem;
+}
+
+/* prefers-reduced-motion: neuter every transition/animation on the landing.
+   No scroll-triggered animations are defined anywhere. */
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

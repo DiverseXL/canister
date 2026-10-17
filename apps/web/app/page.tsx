@@ -1,94 +1,48 @@
-"use client";
+import { JetBrains_Mono, Syne } from "next/font/google";
 
-import { useEffect, useState } from "react";
+import Footer from "@/components/footer";
+import Frame from "@/components/frame";
+import Nav from "@/components/nav";
+import Section from "@/components/section";
 
-import { API_BASE, apiGet, type ClaimsResponse } from "@/lib/api";
+const display = Syne({
+  weight: "800",
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Segoe UI", "Arial", "sans-serif"],
+  variable: "--font-landing-syne",
+});
 
-export default function Overview() {
-  const [health, setHealth] = useState<Record<string, unknown> | null>(null);
-  const [claims, setClaims] = useState<ClaimsResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
+const mono = JetBrains_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+  variable: "--font-landing-mono",
+});
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setHealth(await apiGet("/health"));
-        setClaims(await apiGet("/claims"));
-      } catch (err) {
-        setError(err instanceof Error ? err.message : String(err));
-      }
-    })();
-  }, []);
-
-  const counts: Record<string, number> = {};
-  for (const claim of claims?.claims ?? []) {
-    counts[claim.decision] = (counts[claim.decision] ?? 0) + 1;
-  }
-
+export default function Landing() {
   return (
-    <div className="space-y-8">
-      <section>
-        <h1 className="text-2xl font-semibold text-white">Overview</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Live from <span className="font-mono">{API_BASE}</span>. Nothing on this
-          page is hardcoded.
-        </p>
-      </section>
-
-      {error && (
-        <div className="card border-retired text-retired">
-          Could not reach the API: {error}
-        </div>
-      )}
-
-      <section className="grid gap-4 sm:grid-cols-3">
-        <div className="card">
-          <div className="text-xs uppercase tracking-wide text-slate-400">
-            Graph reachable
-          </div>
-          <div className="mt-1 text-2xl font-semibold">
-            {health ? String(health.graph_reachable) : "…"}
-          </div>
-        </div>
-        <div className="card">
-          <div className="text-xs uppercase tracking-wide text-slate-400">
-            Tenant
-          </div>
-          <div className="mt-1 font-mono text-2xl font-semibold">
-            {claims?.tenant_id ?? "…"}
-          </div>
-        </div>
-        <div className="card">
-          <div className="text-xs uppercase tracking-wide text-slate-400">
-            Claim keys
-          </div>
-          <div className="mt-1 text-2xl font-semibold">
-            {claims?.count ?? "…"}
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-3">
-        {["CANON", "CONTESTED", "UNKNOWN"].map((decision) => (
-          <div key={decision} className="card">
-            <div className="text-xs uppercase tracking-wide text-slate-400">
-              {decision}
-            </div>
-            <div className="mt-1 text-2xl font-semibold">
-              {claims ? (counts[decision] ?? 0) : "…"}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section className="card">
-        <div className="text-xs uppercase tracking-wide text-slate-400">
-          Response sha256 (claims)
-        </div>
-        <div className="mt-1 break-all font-mono text-sm text-slate-300">
-          {claims?.sha256 ?? "…"}
-        </div>
-      </section>
+    <div
+      className={`landing min-h-screen bg-lp-bg p-3 md:p-5 ${display.variable} ${mono.variable}`}
+    >
+      <a href="#main" className="skip-link label">
+        Skip to content
+      </a>
+      <Frame>
+        <Nav />
+        <main id="main">
+          <Section>
+            <h1 className="display text-[clamp(2.75rem,8vw,6.75rem)] leading-[0.95] tracking-[-0.01em] text-lp-ink">
+              Retired facts still rank.{" "}
+              <span className="block">
+                We keep them <span className="outline-word">out.</span>
+              </span>
+            </h1>
+          </Section>
+        </main>
+        <Footer />
+      </Frame>
     </div>
   );
 }
