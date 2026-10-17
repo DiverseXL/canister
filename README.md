@@ -15,7 +15,7 @@ Design inspired by Canon (Enoch208/canon).
 
 Every number below is produced by a script in this repository on a **synthetic, seeded corpus** that we generate. See [Honesty: limitations](#honesty-limitations) before reading anything into them.
 
-evidence/run_manifest.json records the commit the evidence came from, the FalkorDB image digest and a SHA-256 of every result file. It was generated at commit 76d63bed718f1be1e96c317792128278a81bb62d. Recheck any checkout with uv run python scripts/manifest.py --check.
+`evidence/run_manifest.json` records the commit the evidence came from, the FalkorDB image digest and a SHA-256 of every result file. The commit is recorded inside `evidence/run_manifest.json` and can be re-checked with `uv run python scripts/manifest.py --check`.
 
 | Measurement | Baseline (BM25 only) | Canister |
 |---|---|---|
