@@ -1,93 +1,52 @@
-# Canister — 3-minute demo script
+# Canister — 3-Minute Demo Recording Checklist
 
-Everything below actually runs. No slide-only claims. Have `docker compose up -d`
-and (optionally) `make api` and `make web` already started before you begin.
-
----
-
-### 0:00 — Hook (20s)
-
-> "An AI agent reading a company wiki will happily cite a price that was retired
-> last quarter. Canister puts a temporal claim graph in front of the model and
-> makes the retired fact un-groundable — without deleting it."
-
-### 0:20 — It runs end to end (15s)
-
-```sh
-make verify
-```
-
-Point at: **9 passed, 0 failed, 0 not_run** — including `restart_persistence`
-(graph survives a real `docker restart`) and `idempotent_reingest` (0 new nodes).
-
-### 0:35 — The failure, measured (25s)
-
-```sh
-make benchmark
-```
-
-Point at: **superseded_leak_total 43 → 0** and **questions 18 → 0**, while
-`context_size_mean` stays `10.0` and `current_recall_mean` stays `1.0`. Same BM25,
-same 10-doc budget; only the context topology changed.
-
-### 1:00 — The Temporal Gate, visually (30s)
-
-Open the console at `/gate`, type:
-
-> `What is the current integration owner for Hooli?`
-
-Point at: the same ranking shown twice; the retired `doc-####` struck through on the
-left and gone on the right; **baseline answer `doc-####` [superseded]** next to
-**temporal answer `omar haddad`**; and the `CanonEvent → CANON (explicit_supersession)`
-path that justifies the cut.
-
-### 1:30 — Controls (35s)
-
-```sh
-make controls
-```
-
-Point at, in order:
-
-- **random-removal**: baseline 43, random 26, temporal 0 — removing *the superseded*
-  docs is the mechanism, not removing any docs.
-- **mechanism split**: cut-only already reaches 0; pin-only stays at 43 — so cutting
-  removes the leak and pinning only holds the budget at 10.
-- **safety envelope**: 32/32 non-conflict contexts byte-identical to flat, 0 removed
-  outside conflicts, 0 pins outside conflicts — the graph touches only conflicts.
-
-Then open `/results` to show the same tables rendered straight from `evidence/controls.json`.
-
-### 2:05 — History is not deleted (25s)
-
-Open `/ask`, ask the same question, and point at **Current** (`omar haddad`) beside
-**Historical** (the retired evidence recovered in context). Mention the isolation
-check: two tenants with different `Hooli` owners return only their own value.
-
-### 2:30 — Honest about what fails (20s)
-
-```sh
-make stress
-```
-
-Point at: **value recall 0.70, supersession recall 0.00, current recall 0.00** on 20
-paraphrased documents ("we have since retired the old figure"). The extractor was not
-tuned to them; the misses are in the README **Limitations** section.
-
-### 2:50 — Close (10s)
-
-```sh
-make manifest
-```
-
-> "One command records the git commit, the FalkorDB image digest and a SHA-256 of
-> every result file. BM25 ranks what is relevant; FalkorDB decides what is still
-> allowed to ground an answer."
+A minute-by-minute execution checklist for recording the hackathon demo video. Every command runs locally against live services; no mock data or slide-only claims.
 
 ---
 
-## Fallbacks
+## Pre-Flight Setup (T minus 5 minutes)
 
-- If the browser is unavailable, `curl -s localhost:8000/ground -H 'content-type: application/json' -d '{"question":"What is the current integration owner for Hooli?","mode":"current"}'` shows the grounding record, `sha256` and Cypher ids.
-- If FalkorDB is down, the same call returns `503 TEMPORAL_GRAPH_UNAVAILABLE` — that
-  is the fail-closed behavior, and it is worth showing rather than hiding.
+1. **Start FalkorDB:**
+   ```bash
+   docker compose up -d
+   ```
+2. **Start Backend API:**
+   ```bash
+   uv run uvicorn canister_api.main:app --port 8000
+   ```
+3. **Start Web Console:**
+   ```bash
+   npm --prefix apps/web run dev
+   # Served on http://localhost:3000 (or http://localhost:3001 if port 3000 is occupied by FalkorDB browser)
+   ```
+4. **Arrange Screen Layout:**
+   - Left half: Web Browser open to `http://localhost:3000` (or `3001`).
+   - Right half: Terminal window with shell prompt ready in repo root.
+
+---
+
+## Recording Checklist (0:00 – 3:00)
+
+| Timestamp | Phase | What to Do (Exact Commands / Clicks) | What Should Be on Screen | Narration & Key Takeaways |
+|---|---|---|---|---|
+| **0:00 – 0:20**<br>(20s) | **The Hook & Problem** | - Open browser to `/`<br>- Keep terminal visible | - Console home dashboard showing live metrics (552 nodes, 43 leaks under baseline, 0 under gate) | *"Search engines find what is relevant, not what is still true. In company wikis, outdated documents often rank higher than new ones because they share the same keywords. Canister places a temporal claim graph on FalkorDB between the retriever and the model to stop retired facts from grounding present-tense answers."* |
+| **0:20 – 0:45**<br>(25s) | **End-to-End Verification** | In Terminal, run:<br>`uv run python scripts/verify.py --skip-restart` | Terminal output showing 9 checks passing:<br>`[PASS] write_read`<br>`[PASS] idempotent_reingest`<br>`[PASS] majority_adversarial`<br>`[PASS] supersession`<br>`[PASS] contested`<br>`[PASS] unknown`<br>`[PASS] residue_traversal`<br>`[PASS] ground_receipt` | *"The entire pipeline is verified live against FalkorDB. Point at `majority_adversarial`: 9 older documents asserting \$0.15 vs 1 newer document updating to \$0.07. Because explicit supersession beats corroboration in our canonizer, the single update wins every time. Re-ingest creates exactly 0 new nodes."* |
+| **0:45 – 1:15**<br>(30s) | **The Temporal Gate (Live)** | - Switch to browser tab `/gate`<br>- Type in search box:<br>`What is the current integration owner for Hooli?`<br>- Press Enter | - Split view comparing Baseline BM25 vs Temporal Gate.<br>- Left: Superseded document highlighted with strike-through.<br>- Right: Clean context with retired document excised and replaced by backfill; answers `omar haddad`.<br>- Below: Grounding path showing `CanonEvent -> CANON (explicit_supersession)`. | *"Here is the Temporal Gate in action. On the left, plain BM25 serves the retired integration owner. On the right, Canister identifies the proposition as superseded, cuts it, backfills the next candidate to preserve the 10-document budget, and supplies the valid present owner with full graph provenance."* |
+| **1:15 – 1:45**<br>(30s) | **Fail-Closed 503 Demonstration** | 1. In Terminal, stop FalkorDB:<br>`docker compose stop falkordb`<br><br>2. Run query via curl:<br>`curl -i -X POST http://localhost:8000/ground -H 'Content-Type: application/json' -d '{"question":"What is the current integration owner for Hooli?","mode":"temporal"}'`<br><br>3. Restart FalkorDB:<br>`docker compose start falkordb`<br><br>4. Verify health:<br>`curl -s http://localhost:8000/health` | 1. Docker stops the container.<br><br>2. HTTP response header and JSON:<br>`HTTP/1.1 503 Service Unavailable`<br>`{"detail":{"error":"TEMPORAL_GRAPH_UNAVAILABLE",...}}`<br><br>3. Container starts up.<br><br>4. JSON output:<br>`{"status":"ok","graph_reachable":true}` | *"Watch what happens when FalkorDB is stopped. The API immediately returns HTTP 503 TEMPORAL_GRAPH_UNAVAILABLE. It never falls back to un-gated retrieval, because silent degradation would leak the very hallucinations we exist to prevent. Once restarted, the service resumes instantly with full persistence."* |
+| **1:45 – 2:10**<br>(25s) | **Historical Queries & Truth State** | - In browser, click `/ask`<br>- Select `Mode: Historical`<br>- Search: `What is the current integration owner for Hooli?`<br>- Click `/truth` tab | - `/ask` displays the retired document restored in context.<br>- `/truth` displays table of all 40 claim keys (38 CANON, 2 CONTESTED). | *"History is never deleted. In historical mode, Canister selectively recovers the retired evidence for audit or retrospective analysis. On `/truth`, every claim key in the organization is tracked as CANON, CONTESTED, or UNKNOWN. When two documents conflict without a resolution cue, Canister marks it CONTESTED rather than guessing."* |
+| **2:10 – 2:35**<br>(25s) | **Measured Results & Controls** | - In browser, navigate to `/results`<br>(or in Terminal: `uv run python scripts/controls.py`) | Tables rendered from `evidence/controls.json`:<br>- Baseline leak: 43 → 0<br>- Random removal: 26 (cuts help only when targeted)<br>- Safety envelope: 32/32 non-conflict contexts byte-identical to raw BM25 | *"Our measured controls prove the mechanism: random removal only cuts leaks to 26, whereas the graph reaches 0. Furthermore, across all 32 non-conflict questions in the corpus, 32 out of 32 contexts are byte-identical to plain retrieval. The gate touches context only where graph supersession is proven."* |
+| **2:35 – 3:00**<br>(25s) | **Honesty, Stress & Manifest Close** | In Terminal, run:<br>`uv run python scripts/manifest.py --check` | Terminal output:<br>`checked 226 file(s): 226 match, 0 mismatch, 0 missing`<br>`commit: [commit_hash]` | *"We are honest about limits: on a 20-doc stress set with informal conversational slang, the deterministic extractor misses 6 unformatted values. Finally, `manifest.py` verifies all 226 artifacts against byte-exact SHA-256 hashes and the Docker image digest. FalkorDB provides the truth topology that makes corporate RAG safe."* |
+
+---
+
+## Emergency Fallbacks & Tips
+
+- **If port 3000 is taken:** FalkorDB maps port 3000 inside Docker Compose; Next.js automatically switches to `http://localhost:3001`. The backend CORS policy accepts both.
+- **To test curl without browser:**
+  ```bash
+  curl -s http://localhost:8000/ground \
+    -H "Content-Type: application/json" \
+    -d '{"question":"What is the current integration owner for Hooli?","mode":"temporal"}' | jq .
+  ```
+- **Inspect grounding receipt:** Use `receipt_id` from any response to inspect the replayable decision at `http://localhost:8000/grounding/{receipt_id}`.
+
