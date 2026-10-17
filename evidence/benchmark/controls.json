@@ -1,0 +1,1759 @@
+{
+  "generated_by": "scripts/benchmark_controls.py",
+  "generated_at_utc": "2026-10-17T19:12:17+00:00",
+  "model": "none (deterministic)",
+  "note": "No model is in the loop. Retrieval is FTS5 bm25 top_k=10 served from a frozen per-question candidate cache (LIMIT 40); exactly 10 documents in every context (asserted); top-5/top-10/top-20 are prefixes of the same cache list. Question->claim matching uses the frozen rule in evidence/benchmark/matching.json.",
+  "conditions": {
+    "retrieval": "sqlite FTS5 bm25 via var/benchmark/bm25_cache.jsonl (LIMIT 40)",
+    "top_k": 10,
+    "candidate_limit": 40,
+    "exactly_k_documents": true,
+    "tenant": "bench",
+    "dedupe": "index already holds the first copy of the 4 duplicate doc ids"
+  },
+  "corpus_size_indexed": 511958,
+  "index_file": "var/benchmark/corpus_index.sqlite3",
+  "index_sha256": "b175c9a39f440a84bba720b418b0363f53169882a6f67433df405ddd890d58c7",
+  "search": {
+    "cache_file": "var/benchmark/bm25_cache.jsonl",
+    "candidate_limit": 40,
+    "cache_entries": 118,
+    "queries_issued": 118,
+    "total_search_seconds": 464.307,
+    "queries_issued_by_controls": 0,
+    "cache_lookups_by_controls": 390
+  },
+  "git_commit": "1a5cd950736c7a183c732dfd080823b5d8f4c5b3",
+  "claims_in_graph": 19,
+  "gate_can_only_act_on": "19 claims held by tenant 'bench'",
+  "all_19": {
+    "questions": 19,
+    "baseline": {
+      "superseded_in_context_total": 15,
+      "current_in_context_total": 18
+    },
+    "gate": {
+      "superseded_in_context_total": 0,
+      "current_in_context_total": 18
+    },
+    "random_removal": {
+      "superseded_in_context_total": 13,
+      "current_in_context_total": 16,
+      "docs_removed_total": 15
+    },
+    "gate_removed_total": 15,
+    "gate_cleans_questions": 15,
+    "random_cleans_questions": 2,
+    "mechanism": {
+      "baseline": {
+        "superseded_in_context": 15,
+        "current_in_context": 18,
+        "context_size_all_k": true
+      },
+      "cut_only": {
+        "superseded_in_context": 0,
+        "current_in_context": 18,
+        "context_size_all_k": true
+      },
+      "pin_only": {
+        "superseded_in_context": 15,
+        "current_in_context": 18,
+        "context_size_all_k": true
+      },
+      "full": {
+        "superseded_in_context": 0,
+        "current_in_context": 18,
+        "context_size_all_k": true
+      }
+    },
+    "sweep": {
+      "5": {
+        "baseline_superseded": 15,
+        "gate_superseded": 0
+      },
+      "10": {
+        "baseline_superseded": 15,
+        "gate_superseded": 0
+      },
+      "20": {
+        "baseline_superseded": 15,
+        "gate_superseded": 0
+      }
+    },
+    "historical_mode": {
+      "retired_in_context_questions": 16,
+      "retired_cut_questions": 0
+    },
+    "expected_recall": {
+      "expected_docs_total": 38,
+      "baseline_found": 33,
+      "gate_found": 18,
+      "baseline_recall": 0.8684,
+      "gate_recall": 0.4737
+    }
+  },
+  "non_composite_13": {
+    "questions": 13,
+    "baseline": {
+      "superseded_in_context_total": 10,
+      "current_in_context_total": 12
+    },
+    "gate": {
+      "superseded_in_context_total": 0,
+      "current_in_context_total": 12
+    },
+    "random_removal": {
+      "superseded_in_context_total": 8,
+      "current_in_context_total": 11,
+      "docs_removed_total": 10
+    },
+    "gate_removed_total": 10,
+    "gate_cleans_questions": 10,
+    "random_cleans_questions": 2,
+    "mechanism": {
+      "baseline": {
+        "superseded_in_context": 10,
+        "current_in_context": 12,
+        "context_size_all_k": true
+      },
+      "cut_only": {
+        "superseded_in_context": 0,
+        "current_in_context": 12,
+        "context_size_all_k": true
+      },
+      "pin_only": {
+        "superseded_in_context": 10,
+        "current_in_context": 12,
+        "context_size_all_k": true
+      },
+      "full": {
+        "superseded_in_context": 0,
+        "current_in_context": 12,
+        "context_size_all_k": true
+      }
+    },
+    "sweep": {
+      "5": {
+        "baseline_superseded": 10,
+        "gate_superseded": 0
+      },
+      "10": {
+        "baseline_superseded": 10,
+        "gate_superseded": 0
+      },
+      "20": {
+        "baseline_superseded": 10,
+        "gate_superseded": 0
+      }
+    },
+    "historical_mode": {
+      "retired_in_context_questions": 10,
+      "retired_cut_questions": 0
+    },
+    "expected_recall": {
+      "expected_docs_total": 26,
+      "baseline_found": 22,
+      "gate_found": 12,
+      "baseline_recall": 0.8462,
+      "gate_recall": 0.4615
+    }
+  },
+  "headline": {
+    "description": "Headline measures for all 19 conflict entries and for the 13 non-composite entries next to the all-19 numbers; the 6 composite entries are excluded from the non-composite group.",
+    "all_19": {
+      "questions": 19,
+      "baseline_superseded_in_context": 15,
+      "gate_superseded_in_context": 0,
+      "random_superseded_in_context": 13,
+      "baseline_current_in_context": 18,
+      "gate_current_in_context": 18,
+      "random_current_in_context": 16,
+      "gate_cleans_questions": 15,
+      "random_cleans_questions": 2,
+      "expected_recall": {
+        "expected_docs_total": 38,
+        "baseline_found": 33,
+        "gate_found": 18,
+        "baseline_recall": 0.8684,
+        "gate_recall": 0.4737
+      }
+    },
+    "non_composite_13": {
+      "questions": 13,
+      "baseline_superseded_in_context": 10,
+      "gate_superseded_in_context": 0,
+      "random_superseded_in_context": 8,
+      "baseline_current_in_context": 12,
+      "gate_current_in_context": 12,
+      "random_current_in_context": 11,
+      "gate_cleans_questions": 10,
+      "random_cleans_questions": 2,
+      "expected_recall": {
+        "expected_docs_total": 26,
+        "baseline_found": 22,
+        "gate_found": 12,
+        "baseline_recall": 0.8462,
+        "gate_recall": 0.4615
+      }
+    },
+    "composite_excluded": 6
+  },
+  "envelope_seed": 20261017,
+  "per_question": [
+    {
+      "question_id": "qst_0411",
+      "composite": false,
+      "claim_key": "streamly-ai/dp-132-usw::interactive_burst_reservation_pct",
+      "claim_key_id": "ck_12f96c7c76aff6f1d640f51e1b500838",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0412",
+      "composite": false,
+      "claim_key": "prompt-heuristics::price_normalization_correctness_pct_temp0",
+      "claim_key_id": "ck_6a1e47d4073c803b321d1351c457b5d8",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0414",
+      "composite": false,
+      "claim_key": "inc-9821::gpu_node_root_cause",
+      "claim_key_id": "ck_56bafe50dabd485c3b7b18f7d18da8c0",
+      "baseline": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 0,
+      "random_removal": {
+        "n_removed": 0,
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": false,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 1,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0415",
+      "composite": true,
+      "claim_key": "eval-runner::deterministic_decoding_params",
+      "claim_key_id": "ck_435c7faf39fe6d62dfae90de98293f15",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0416",
+      "composite": true,
+      "claim_key": "copperfield-nimbus::dedicated_sizing_qps_concurrency",
+      "claim_key_id": "ck_038da54d1f9599234e25dcf155caba78",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0417",
+      "composite": true,
+      "claim_key": "redwood-private/backup-manifest::signing",
+      "claim_key_id": "ck_1ca40c462f6361741d379d4466cea666",
+      "baseline": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 0,
+      "random_removal": {
+        "n_removed": 0,
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 1,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0418",
+      "composite": false,
+      "claim_key": "slo-impact-classifier::score_tier_thresholds",
+      "claim_key_id": "ck_11dec75f9b34d8e2f1886c0990aadb03",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0419",
+      "composite": true,
+      "claim_key": "unified-capacity-transition::migration_start_endpoint",
+      "claim_key_id": "ck_25ef857955eab732f1b5409c61cb2ba5",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 0,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0420",
+      "composite": false,
+      "claim_key": "exp-002::cross_region_egress_rate",
+      "claim_key_id": "ck_335f8a9dbddf3b7eadaebf3ef7c071ca",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0421",
+      "composite": false,
+      "claim_key": "warm-pool-handoff::handshake_token_ttl",
+      "claim_key_id": "ck_93e89b9d821ffb023054db4ca2dd1ffa",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0422",
+      "composite": true,
+      "claim_key": "audit-log-export::beyond_retention_access",
+      "claim_key_id": "ck_3c5d6cc458bc3b01efa915cbb8e6f596",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0423",
+      "composite": false,
+      "claim_key": "keycard-audit::access_log_export_window_months",
+      "claim_key_id": "ck_6af53feecf1f8303df04989a2100f760",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0424",
+      "composite": false,
+      "claim_key": "interactive-latency-canvas::prompt_len_bucket_cutoffs",
+      "claim_key_id": "ck_a541a0d35e0f6d3344ecfc63a2d6671b",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0425",
+      "composite": true,
+      "claim_key": "playback-manifest-v1::integrity_field",
+      "claim_key_id": "ck_545caec9b8ae06fc1eb4d884b3778673",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0426",
+      "composite": false,
+      "claim_key": "optimize-cohort-gates::rollback_trigger_thresholds",
+      "claim_key_id": "ck_d9eb9bf1cafbfde3d054b69940f05803",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0427",
+      "composite": false,
+      "claim_key": "clearedge-health-2027::po_fingerprint_and_delivery",
+      "claim_key_id": "ck_2835769eaf52b2501d13f5c701351683",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0428",
+      "composite": false,
+      "claim_key": "hosted-pricing::volume_discount_token_breakpoints",
+      "claim_key_id": "ck_37acd22d1d70e0215601de5b34d7dd99",
+      "baseline": {
+        "superseded_in_context": 0,
+        "current_in_context": 0,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 0,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 0,
+      "random_removal": {
+        "n_removed": 0,
+        "superseded_in_context": 0,
+        "current_in_context": 0,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 0,
+          "current_in_context": 0,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 0,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 0,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 0,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 0,
+          "gate_current": 0
+        },
+        "10": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 0,
+          "gate_current": 0
+        },
+        "20": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 0,
+          "gate_current": 0
+        }
+      },
+      "history": {
+        "retired_in_context": false,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 0,
+        "gate_found": 0
+      }
+    },
+    {
+      "question_id": "qst_0429",
+      "composite": false,
+      "claim_key": "openai-compat-v9::tool_signal_enable_flag",
+      "claim_key_id": "ck_8984e7bfad936075b7dd96f7824ca74e",
+      "baseline": {
+        "superseded_in_context": 1,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 1,
+      "random_removal": {
+        "n_removed": 1,
+        "superseded_in_context": 1,
+        "current_in_context": 0,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 1,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 1,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": true,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 2,
+        "gate_found": 1
+      }
+    },
+    {
+      "question_id": "qst_0430",
+      "composite": false,
+      "claim_key": "hosted-marketplace::byok_availability",
+      "claim_key_id": "ck_4b79da8bae31574360655c3de5216fb3",
+      "baseline": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "gate": {
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "docs_removed_by_gate": 0,
+      "random_removal": {
+        "n_removed": 0,
+        "superseded_in_context": 0,
+        "current_in_context": 1,
+        "context_size": 10
+      },
+      "mechanism": {
+        "baseline": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "cut_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "pin_only": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        },
+        "full": {
+          "superseded_in_context": 0,
+          "current_in_context": 1,
+          "context_size": 10
+        }
+      },
+      "sweep": {
+        "5": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 0,
+          "gate_current": 1
+        },
+        "10": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        },
+        "20": {
+          "baseline_superseded": 0,
+          "gate_superseded": 0,
+          "baseline_current": 1,
+          "gate_current": 1
+        }
+      },
+      "history": {
+        "retired_in_context": false,
+        "retired_cut": false
+      },
+      "expected_recall": {
+        "expected_count": 2,
+        "baseline_found": 1,
+        "gate_found": 1
+      }
+    }
+  ],
+  "envelope_scope": "sample of 100, not all 500",
+  "safety_envelope": {
+    "scope": "sample of 100, not all 500",
+    "sample_seed": 20261017,
+    "question_ids": [
+      "qst_0003",
+      "qst_0007",
+      "qst_0016",
+      "qst_0020",
+      "qst_0037",
+      "qst_0042",
+      "qst_0044",
+      "qst_0045",
+      "qst_0063",
+      "qst_0070",
+      "qst_0071",
+      "qst_0079",
+      "qst_0082",
+      "qst_0084",
+      "qst_0085",
+      "qst_0089",
+      "qst_0091",
+      "qst_0092",
+      "qst_0094",
+      "qst_0095",
+      "qst_0124",
+      "qst_0130",
+      "qst_0144",
+      "qst_0148",
+      "qst_0149",
+      "qst_0151",
+      "qst_0155",
+      "qst_0157",
+      "qst_0158",
+      "qst_0162",
+      "qst_0165",
+      "qst_0166",
+      "qst_0168",
+      "qst_0169",
+      "qst_0176",
+      "qst_0181",
+      "qst_0185",
+      "qst_0188",
+      "qst_0194",
+      "qst_0195",
+      "qst_0196",
+      "qst_0204",
+      "qst_0206",
+      "qst_0214",
+      "qst_0215",
+      "qst_0219",
+      "qst_0220",
+      "qst_0225",
+      "qst_0231",
+      "qst_0238",
+      "qst_0245",
+      "qst_0249",
+      "qst_0252",
+      "qst_0254",
+      "qst_0261",
+      "qst_0263",
+      "qst_0268",
+      "qst_0269",
+      "qst_0272",
+      "qst_0282",
+      "qst_0284",
+      "qst_0285",
+      "qst_0289",
+      "qst_0290",
+      "qst_0291",
+      "qst_0293",
+      "qst_0301",
+      "qst_0321",
+      "qst_0340",
+      "qst_0347",
+      "qst_0353",
+      "qst_0364",
+      "qst_0370",
+      "qst_0386",
+      "qst_0391",
+      "qst_0393",
+      "qst_0394",
+      "qst_0397",
+      "qst_0401",
+      "qst_0404",
+      "qst_0406",
+      "qst_0407",
+      "qst_0410",
+      "qst_0413",
+      "qst_0424",
+      "qst_0435",
+      "qst_0439",
+      "qst_0441",
+      "qst_0450",
+      "qst_0456",
+      "qst_0457",
+      "qst_0459",
+      "qst_0464",
+      "qst_0471",
+      "qst_0472",
+      "qst_0474",
+      "qst_0481",
+      "qst_0483",
+      "qst_0485",
+      "qst_0486"
+    ],
+    "questions_total": 100,
+    "non_conflict_questions": 99,
+    "contexts_byte_identical": 99,
+    "contexts_byte_identical_all_non_conflict": true,
+    "size_all_k": true,
+    "expected_documents_removed_outside_conflicts": 0,
+    "documents_removed_outside_conflicts": 0,
+    "pins_outside_conflicts": 0,
+    "interventions": [
+      {
+        "question_id": "qst_0424",
+        "question_type": "conflicting_info",
+        "conflict": true,
+        "claim_keys": [
+          "ck_a541a0d35e0f6d3344ecfc63a2d6671b"
+        ],
+        "removed": [
+          "dsid_f039509796f842cd84ba3bfb895c7132"
+        ],
+        "added": [
+          "dsid_7ac4915792d84235a2417a62190fea66"
+        ],
+        "pinned": []
+      }
+    ]
+  },
+  "info_not_found": {
+    "from_matching_json": true,
+    "total": 20,
+    "matched_any_count": 0,
+    "matched_any_by_id": [],
+    "answer_quality_result": false,
+    "note": "lexical matching only; no model is in the loop, so this is not an answer-quality result"
+  },
+  "expected_recall_note": "Expected-document recall drops by design under the gate: each conflict question's expected_doc_ids contains the retired document, which the gate cuts.",
+  "surprises": {
+    "retired_doc_absent_from_baseline_top10": [
+      "qst_0414",
+      "qst_0417",
+      "qst_0428",
+      "qst_0430"
+    ]
+  }
+}

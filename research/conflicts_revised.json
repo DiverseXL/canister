@@ -1,0 +1,955 @@
+{
+  "source_questions": "var/benchmark/questions.jsonl",
+  "source_documents": "var/benchmark/all_documents.zip",
+  "question_type": "conflicting_info",
+  "question_count": 19,
+  "excluded_count": 1,
+  "conventions": {
+    "entity": "The subject the disputed fact is about (product/system/service/feature).",
+    "attribute": "The specific property, policy, or quantity in dispute.",
+    "claim_key": "entity::attribute, lowercase, space/separator normalized.",
+    "old_value": "The value superseded by the newer source (the 'earlier' figure in the gold answer).",
+    "new_value": "The current/applied value (the one the gold answer says to use).",
+    "old_span": "Verbatim substring of the older source document that states old_value.",
+    "new_span": "Verbatim substring of the newer source document that states new_value.",
+    "supersession_sentence": "Verbatim sentence in the newer document that explicitly marks the change; UNSURE if no explicit marker exists.",
+    "temporal_quality": "T1 = BOTH documents of the pair carry structured date metadata AND the newer document's date is day-precision (a full date in the filename or a dated header field) so it can order the pair on its own; T2 = anything less (structured metadata absent from either document, or present but year-only in the newer document), with in-text dates treated as corroboration only; T3 = no ordering signal.",
+    "expected_state": "CANON if a clear supersession makes new_value canon; CONTESTED if the conflict is unresolved; UNSURE if not determinable from the text.",
+    "old_value_literal": "The single number/name/phrase from old_value that distinguishes it; must appear verbatim inside old_span.",
+    "new_value_literal": "The single number/name/phrase from new_value that distinguishes it; must appear verbatim inside new_span.",
+    "new_doc_mentions_old_value": "true if old_value_literal also occurs in the newer document's text (the superseded value is re-stated there); false otherwise.",
+    "composite": "true if the newer document extends the older value (adds/refines it, or keeps the older value valid/supported) rather than contradicting it; false for a straight replacement.",
+    "seeding": "Seeding writes one assertion per document: the newer document asserts the new value only. The old value is never seeded as a claim from the newer document; new_doc_mentions_old_value only flags that the newer document also references it."
+  },
+  "excluded": [
+    {
+      "question_id": "qst_0413",
+      "reason": "old_doc_id and new_doc_id are the same (dsid_6df52fdb96ae4edcb76464738bca3340), one of the 4 duplicate ids collapsed by the FTS index. The pair is two versions of JIRA INT-7832 sharing one doc_id, so there is no distinct old/new document pair to seed."
+    }
+  ],
+  "results_reporting": {
+    "reportable_with_composite": true,
+    "reportable_without_composite": true,
+    "entries_total": 19,
+    "composite_count": 6,
+    "non_composite_count": 13,
+    "note": "The inventory can be reported over all entries (composite ones included) or over the non-composite subset (straight replacements) only; the counts below are the entry counts for each."
+  },
+  "questions": [
+    {
+      "question_id": "qst_0411",
+      "entity": "Streamly AI dedicated pool dp-132-usw",
+      "attribute": "interactive burst-credit reservation reserved for priority=high routes (%)",
+      "claim_key": "streamly-ai/dp-132-usw::interactive_burst_reservation_pct",
+      "old_value": "20% of interactive burst credits reserved exclusively for priority=high routes",
+      "new_value": "30% of interactive burst credits reserved exclusively for priority=high routes",
+      "old_doc_id": "dsid_5f3a672da4974781a5577b0f3d4993e9",
+      "new_doc_id": "dsid_8ffbd9fe82df457ca67d4fbc9ff1090c",
+      "old_span": "adjust per-route burst allocation to reserve 20% of interactive burst credits exclusively for priority=high routes on dp-132-usw",
+      "new_span": "Updated reservation target: reserve 30% (previous internal suggestion was 20%) of interactive burst credits exclusively for priority=high routes.",
+      "supersession_sentence": "Updated reservation target: reserve 30% (previous internal suggestion was 20%) of interactive burst credits exclusively for priority=high routes.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "Newer SRE debug notes (drive, 2026-03-12+) explicitly call the 20% a prior internal suggestion and set the applied target to 30%.",
+      "old_value_literal": "20%",
+      "new_value_literal": "30%",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "streamly",
+          "dp-132-usw"
+        ],
+        "attribute_terms": [
+          "interactive",
+          "burst",
+          "reservation",
+          "pct"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0412",
+      "entity": "Redwood prompt heuristics (extraction, temp=0.0, strict JSON)",
+      "attribute": "price-normalization correctness (%)",
+      "claim_key": "prompt-heuristics::price_normalization_correctness_pct_temp0",
+      "old_value": "~89%",
+      "new_value": "~96%",
+      "old_doc_id": "dsid_89c0c31e220c4777b15c3c6ff0eff61d",
+      "new_doc_id": "dsid_a2bf755670ad44e09b42c11e9d73e5d3",
+      "old_span": "Temp=0.0 + JSON constraint -> extraction normalized numbers 89% correct",
+      "new_span": "Temp=0.0 + strict JSON + canonicalization rules: price normalization correctness ~96% (previously ~89% without canonicalization).",
+      "supersession_sentence": "Temp=0.0 + strict JSON + canonicalization rules: price normalization correctness ~96% (previously ~89% without canonicalization).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "Consolidated 2026 page reports ~96% and explicitly contrasts the earlier ~89% scratchpad result; the delta is attributed to adding canonicalization.",
+      "old_value_literal": "89%",
+      "new_value_literal": "96%",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "extraction",
+          "strict",
+          "json"
+        ],
+        "attribute_terms": [
+          "price",
+          "normalization",
+          "correctness",
+          "pct"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0414",
+      "entity": "INC-9821 degraded GPU node",
+      "attribute": "root cause (OOM vs driver/kernel launch stalls)",
+      "claim_key": "inc-9821::gpu_node_root_cause",
+      "old_value": "possible GPU OOM or degraded kernel",
+      "new_value": "intermittent driver/kernel launch stalls (no sustained OOM)",
+      "old_doc_id": "dsid_5611f05242ae4e6b9ae68d3c3e91bd54",
+      "new_doc_id": "dsid_0c1f1c83e8d44d2fa3a9f6c7b2d7b9f1",
+      "old_span": "one failing shard (GPU OOM or degraded kernel) causing head-of-line blocking",
+      "new_span": "primary node issue was intermittent driver/kernel launch stalls (no sustained OOM)",
+      "supersession_sentence": "Correction after deeper node telemetry review: primary node issue was intermittent driver/kernel launch stalls (no sustained OOM).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The jira 2026-09-01 correction explicitly retracts the earlier gmail sitrep hypothesis of OOM/degraded kernel and fixes the cause as driver/kernel launch stalls.",
+      "old_value_literal": "OOM",
+      "new_value_literal": "driver/kernel launch stalls",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": true,
+          "date_column": false,
+          "full_date": true
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "inc-9821",
+          "degraded",
+          "gpu",
+          "node"
+        ],
+        "attribute_terms": [
+          "gpu",
+          "node",
+          "root",
+          "cause"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0415",
+      "entity": "eval runner deterministic mode (--deterministic true)",
+      "attribute": "enforced decoding settings",
+      "claim_key": "eval-runner::deterministic_decoding_params",
+      "old_value": "do_sample=false, temperature=0, top_k=1, explicit generator",
+      "new_value": "do_sample=false, temperature=0.0, top_k=1, top_p=1.0, num_beams=1, explicit torch.Generator, stable batching order",
+      "old_doc_id": "dsid_1d487c52d79a44c2b40eb19a0db51122",
+      "new_doc_id": "dsid_05841423a55e4c35abd276d9899b7134",
+      "old_span": "enforce `do_sample=False`, `temperature=0`, `top_k=1`, and `generator` usage",
+      "new_span": "- `do_sample = false`\n- `temperature = 0.0`\n- `top_k = 1`\n- `top_p = 1.0`\n- `num_beams = 1` (unless the suite explicitly tests beam search)\n- Explicit generator passed into generation APIs\n- Stable batching order (no data-loader shuffling; stable sort by example_id)",
+      "supersession_sentence": "The original debugging thread identified sampling parameters and missing explicit generators as primary contributors. The current harness incorporates the same core ideas, with the following updates:",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026 confluence standard keeps the earlier requirements but hard-enforces the full parameter set (adds top_p, num_beams) plus stable batching; the slack thread only listed the reduced set.",
+      "old_value_literal": "temperature=0",
+      "new_value_literal": "num_beams = 1",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "newer confluence standard extends the earlier slack parameter list, keeping the old params and adding top_p, num_beams and stable batching.",
+      "match_terms": {
+        "entity_terms": [
+          "eval",
+          "runner",
+          "deterministic"
+        ],
+        "attribute_terms": [
+          "deterministic",
+          "decoding",
+          "params"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0416",
+      "entity": "Copperfield Nimbus Dedicated sizing",
+      "attribute": "baseline/growth/peak QPS and peak concurrent chat sessions",
+      "claim_key": "copperfield-nimbus::dedicated_sizing_qps_concurrency",
+      "old_value": "baseline 50 QPS, 6-month growth 120 QPS, peak 220 QPS, 120 concurrent sessions",
+      "new_value": "baseline 60 QPS, 6-month growth 140 QPS, peak 260 QPS, ~150 concurrent sessions",
+      "old_doc_id": "dsid_8ca703d991844bd195b4b8fdc16040fd",
+      "new_doc_id": "dsid_3c3ab5813b264367877e0d02f652ca32",
+      "old_span": "- Current production-ish load (post-trial projection): baseline 50 QPS, expected growth to 120 QPS within 6 months, peak 220 QPS during daytime syncs.\n- Concurrency: planning for 120 concurrent sessions at peak (chat sessions with active KV cache).",
+      "new_span": "- Baseline: 60 QPS\n- Expected growth (6 months): 140 QPS\n- Peak: 260 QPS (daytime sync + product launches)",
+      "supersession_sentence": "2026-03-12 to 2026-03-18 - Updated sizing inputs: baseline 60 QPS, growth 140 QPS, peak 260 QPS; concurrency 150 peak.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "Updated sizing inputs from the 2026-03 follow-up supersede the earlier workshop projections and raise peak concurrency to ~150 (drive line 19).",
+      "old_value_literal": "220 QPS",
+      "new_value_literal": "260 QPS",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "newer follow-up extends the earlier workshop projections with updated baseline/growth/peak QPS and adds the ~150 peak-session figure.",
+      "match_terms": {
+        "entity_terms": [
+          "copperfield",
+          "nimbus",
+          "dedicated",
+          "sizing"
+        ],
+        "attribute_terms": [
+          "dedicated",
+          "sizing",
+          "qps",
+          "concurrency"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0417",
+      "entity": "Redwood Private on-prem backup manifest signing",
+      "attribute": "recommended signing mechanism",
+      "claim_key": "redwood-private/backup-manifest::signing",
+      "old_value": "GPG signatures",
+      "new_value": "Sigstore/cosign (offline key mode)",
+      "old_doc_id": "dsid_aa97b7293f9f4f3c8180f645e4fe5911",
+      "new_doc_id": "dsid_10a589a5ee9048d9a33deb4156037171",
+      "old_span": "[07:55] Nina Gomez: When you say sign, is that GPG?\n\n[07:58] Markus Klein: For on-prem bundle distribution, yes, we ship signed artifacts with a checksum manifest, and you verify signatures offline.",
+      "new_span": "As of Private Toolkit v1.8+, manifests can be signed using *Sigstore/cosign (offline key mode)*. (Older deployments may still use GPG signatures; both are supported during migration.)",
+      "supersession_sentence": "As of Private Toolkit v1.8+, manifests can be signed using *Sigstore/cosign (offline key mode)*. (Older deployments may still use GPG signatures; both are supported during migration.)",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2025 fireflies call answers the GPG question affirmatively; the 2026-03-10 guide (change log: 'Updated signatures guidance to cosign') makes cosign the primary recommendation, keeping GPG only for migration.",
+      "old_value_literal": "GPG",
+      "new_value_literal": "Sigstore/cosign",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": true,
+          "date_column": false,
+          "full_date": true
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "newer guide extends the signing options by adding Sigstore/cosign while explicitly retaining GPG for migration.",
+      "match_terms": {
+        "entity_terms": [
+          "redwood",
+          "private",
+          "backup",
+          "signing"
+        ],
+        "attribute_terms": [
+          "signing"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0418",
+      "entity": "SLO-to-customer-impact classifier",
+      "attribute": "combined-score-to-tier thresholds",
+      "claim_key": "slo-impact-classifier::score_tier_thresholds",
+      "old_value": "Score >= 80 -> Tier 1; 60-79 -> Tier 2; 30-59 -> Tier 3; < 30 -> Tier 4",
+      "new_value": "Score >= 85 -> Tier 1; 70-84 -> Tier 2; 35-69 -> Tier 3; < 35 -> Tier 4 (v2)",
+      "old_doc_id": "dsid_981f4a0281054f9aaaec7887156eebc4",
+      "new_doc_id": "dsid_b837e1140d1a4c3d8efd2f42d9b6a799",
+      "old_span": "Score >= 80 -> Tier 1; 60–79 -> Tier 2; 30–59 -> Tier 3; < 30 -> Tier 4",
+      "new_span": "Combined score maps to Tier (v2 thresholds): Score >= 85 -> Tier 1; 70–84 -> Tier 2; 35–69 -> Tier 3; < 35 -> Tier 4.",
+      "supersession_sentence": "2026-03-16 — Updated classifier thresholds to v2, added confidence gating, tightened Tier1 notification SLA to 10 min, and reduced Tier4 escalation window to 4 hours (review: Sasha Kim).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026-03-16 github PR (canonical doc, change log) supersedes the confluence page's v1 thresholds with the v2 mapping.",
+      "old_value_literal": ">= 80",
+      "new_value_literal": ">= 85",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "slo",
+          "customer",
+          "impact",
+          "classifier"
+        ],
+        "attribute_terms": [
+          "score",
+          "tier",
+          "thresholds"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0419",
+      "entity": "Unified Capacity Transition migration API",
+      "attribute": "start endpoint",
+      "claim_key": "unified-capacity-transition::migration_start_endpoint",
+      "old_value": "POST /v1/migration/start",
+      "new_value": "POST /v1/capacity/migrations/start",
+      "old_doc_id": "dsid_db1c1f64721b468dafb35c2e0080a8f8",
+      "new_doc_id": "dsid_113f5cc6931640c3b82adcc07142d829",
+      "old_span": "/v1/migration/estimate, /v1/migration/start, /v1/migration/status, /v1/migration/rollback",
+      "new_span": "POST /v1/capacity/migrations/start",
+      "supersession_sentence": "- API endpoints renamed to fit the new \"capacity migration\" namespace; legacy endpoints will be supported temporarily via alias.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2027-07-29 drive draft renames the endpoints into the capacity-migrations namespace and keeps /v1/migration/* only as a temporary legacy alias for the 2027-06 PRD.",
+      "old_value_literal": "/v1/migration/start",
+      "new_value_literal": "/v1/capacity/migrations/start",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": true
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "newer draft extends the API into a new namespace and keeps the old endpoint as a temporary legacy alias.",
+      "match_terms": {
+        "entity_terms": [
+          "unified",
+          "capacity",
+          "transition",
+          "migration"
+        ],
+        "attribute_terms": [
+          "migration",
+          "start",
+          "endpoint"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0420",
+      "entity": "EXP-002 eu-west->us-east cross-region egress cost penalty",
+      "attribute": "egress rate and measurement basis",
+      "claim_key": "exp-002::cross_region_egress_rate",
+      "old_value": "+$0.05 / 1k tokens (~+$180/hour at 1000 rps)",
+      "new_value": "+$0.085 / GiB (~+$160-$260/hour at 1000 rps)",
+      "old_doc_id": "dsid_4e65166659394a90922be6a5c7b110a8",
+      "new_doc_id": "dsid_7b2f4b37dfb642e19d78c5f9d2c43f16",
+      "old_span": "cross-region-eu->us | +$0.05 / 1k tokens (egress)",
+      "new_span": "cross-region-eu->us | egress: +$0.085 / GiB (bill)",
+      "supersession_sentence": "- Cross-region routing cost model updated: egress is now tracked per \"GiB\" from the provider bill and attributed back to request traces by sampled bytes",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026-02-27 working notes switch the catalog to GiB-based billing (+$0.085/GiB with sampled-byte trace attribution), replacing the 2025-12-08 token-based +$0.05/1k estimate.",
+      "old_value_literal": "$0.05",
+      "new_value_literal": "$0.085",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "exp-002",
+          "egress",
+          "cost"
+        ],
+        "attribute_terms": [
+          "cross",
+          "region",
+          "egress",
+          "rate"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0421",
+      "entity": "GPU warm-pool cross-account handoff handshake token",
+      "attribute": "default token TTL",
+      "claim_key": "warm-pool-handoff::handshake_token_ttl",
+      "old_value": "180 seconds (3 minutes)",
+      "new_value": "120 seconds (2 minutes)",
+      "old_doc_id": "dsid_b8ab9778e36543159da49dba3ad9c76d",
+      "new_doc_id": "dsid_9f2e6aa7f6c14b1db1c6f922a1d4b4d7",
+      "old_span": "Handshake tokens are single-use and TTL-limited (default 180s)",
+      "new_span": "Handshake tokens now default to TTL 120 seconds (was 180s) due to replay-risk hardening.",
+      "supersession_sentence": "Handshake tokens now default to TTL 120 seconds (was 180s) due to replay-risk hardening.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2025-11-03 runbook refresh lowers the default TTL to 120s for replay-risk hardening; the older runbook states 180s.",
+      "old_value_literal": "180",
+      "new_value_literal": "120 seconds",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "gpu",
+          "warm-pool",
+          "handoff",
+          "handshake",
+          "token"
+        ],
+        "attribute_terms": [
+          "handshake",
+          "token",
+          "ttl"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0422",
+      "entity": "audit-log export beyond retention cutoff",
+      "attribute": "mechanism to access records older than retention",
+      "claim_key": "audit-log-export::beyond_retention_access",
+      "old_value": "super-admin retention override",
+      "new_value": "explicit Legal Hold via legal_hold_id (tenants with Legal Hold enabled)",
+      "old_doc_id": "dsid_9cde32cd0645459b80ec513df27d1eb6",
+      "new_doc_id": "dsid_8733ed2132dc4232b2797c1d9a167cb9",
+      "old_span": "Exports respect tenant-level retention and cannot retrieve records older than retention cutoff unless super-admin override is used (and is itself audited)",
+      "new_span": "- The previous “super-admin retention override” is deprecated.\n- New approach (2026-03 update): retrieval beyond standard retention requires an explicit Legal Hold, represented by a legal_hold_id, and is only allowed for tenants with Legal Hold enabled.\n- All uses of legal_hold_id are logged to the immutable audit stream with ticket reference.",
+      "supersession_sentence": "- The previous “super-admin retention override” is deprecated.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026-03 confluence spec (ADR-EXPORT-005) deprecates the super-admin override and replaces it with a logged legal_hold_id workflow; the linear ticket is the prior design.",
+      "old_value_literal": "super-admin override",
+      "new_value_literal": "legal_hold_id",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "newer spec extends beyond-retention access with the legal_hold_id workflow on top of (and replacing) the deprecated override.",
+      "match_terms": {
+        "entity_terms": [
+          "audit",
+          "log",
+          "retention",
+          "cutoff"
+        ],
+        "attribute_terms": [
+          "beyond",
+          "retention",
+          "access"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0423",
+      "entity": "office keycard audit access-log export",
+      "attribute": "months of access logs to export",
+      "claim_key": "keycard-audit::access_log_export_window_months",
+      "old_value": "18 months",
+      "new_value": "12 months",
+      "old_doc_id": "dsid_c5288dd4874345adb80f4a71c9a18773",
+      "new_doc_id": "dsid_03b2db544a6d4cf886fb9869058a05f2",
+      "old_span": "they suggested exporting access logs for the last 18 months",
+      "new_span": "Security requested we export access logs for the last 12 months (not 18) for the initial cross-check; they will expand the window only if anomalies are found.",
+      "supersession_sentence": "Security requested we export access logs for the last 12 months (not 18) for the initial cross-check; they will expand the window only if anomalies are found.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The newer JIRA INT-2043 records Security's 12-month request and explicitly refutes the earlier 18-month figure from the linear ENG-4721 note.",
+      "old_value_literal": "18 months",
+      "new_value_literal": "12 months",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "office",
+          "keycard",
+          "audit"
+        ],
+        "attribute_terms": [
+          "access",
+          "log",
+          "export",
+          "window",
+          "months"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0424",
+      "entity": "Interactive Latency Canvas prompt_len_bucket",
+      "attribute": "short/medium/long cutoffs",
+      "claim_key": "interactive-latency-canvas::prompt_len_bucket_cutoffs",
+      "old_value": "short <64, medium 64-512, long >512",
+      "new_value": "short <128, medium 128-1024, long >1024 (token-based)",
+      "old_doc_id": "dsid_f039509796f842cd84ba3bfb895c7132",
+      "new_doc_id": "dsid_7f2a6f2d2de34f94a5b6f3d5d0d1f6a2",
+      "old_span": "short(<64), medium(64-512), long(>512)",
+      "new_span": "- `short`: `<128`\n- `medium`: `128–1024`\n- `long`: `>1024`",
+      "supersession_sentence": "To reduce cardinality and align with token-based capacity planning, prompt length buckets are defined in **tokens** (not characters):",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 'UPDATED' token-based buckets in the design guide supersede the linear ticket's earlier char-based short(<64)/medium(64-512)/long(>512).",
+      "old_value_literal": "64",
+      "new_value_literal": "128",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "interactive",
+          "latency",
+          "canvas",
+          "prompt_len_bucket"
+        ],
+        "attribute_terms": [
+          "prompt_len_bucket",
+          "cutoffs"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0425",
+      "entity": "Deterministic Playback Manifest v1",
+      "attribute": "how signing/integrity is represented",
+      "claim_key": "playback-manifest-v1::integrity_field",
+      "old_value": "optional embedded signature blob (OIDC/JWKS) field",
+      "new_value": "optional integrity field (none|sha256-only|sigstore-oidc) plus integrity_ref URI",
+      "old_doc_id": "dsid_834de01417d04878b4257f0f03ccbb88",
+      "new_doc_id": "dsid_2f9c99fc8ec74495b4b08c49a6083ba8",
+      "old_span": "- signature: optional signed blob for integrity verification (OIDC/JWKS compatible)",
+      "new_span": "- `integrity` (optional): a compact string describing integrity mechanism. v1 runners support:\n  - `none`\n  - `sha256-only` (checksums required; no signature)\n  - `sigstore-oidc` (signature envelope stored separately; manifest contains reference)",
+      "supersession_sentence": "> Update vs. early draft: `signature` is no longer a direct embedded blob in v1. Use `integrity` plus `integrity_ref` (see below) to avoid copying large envelopes into tickets.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "Manifest v1 replaces the draft's embedded signature blob with an optional `integrity` enum plus an `integrity_ref` URI.",
+      "old_value_literal": "signature",
+      "new_value_literal": "integrity",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": true,
+      "composite_reason": "v1 extends the draft manifest schema with an integrity enum plus integrity_ref URI, retaining the optional-integrity concept.",
+      "match_terms": {
+        "entity_terms": [
+          "deterministic",
+          "playback",
+          "manifest",
+          "v1"
+        ],
+        "attribute_terms": [
+          "integrity",
+          "field"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0426",
+      "entity": "Optimize cohort-driven gates automated rollback triggers",
+      "attribute": "safety-sentinel / composite-quality / business-KPI thresholds",
+      "claim_key": "optimize-cohort-gates::rollback_trigger_thresholds",
+      "old_value": "safety >0.5%; 50% traffic revert on >3% quality for 10 min; full rollback on >5% KPI for 5 min",
+      "new_value": "safety >0.3% for 5 min; cohort-level divert on >3% quality for 10 min; full rollback on >4% KPI for 10 min",
+      "old_doc_id": "dsid_c90bd544f3b5437fba711492db31aeea",
+      "new_doc_id": "dsid_553e1651575a416dae6b92d019d2f9f4",
+      "old_span": "Automated rollback triggers implemented: (a) immediate throttle if a safety sentinel > 0.5% absolute regression, (b) automatic 50% traffic revert if composite quality score drops >3% sustained for 10 minutes, (c) full rollback if business KPI regression >5% for 5 minutes",
+      "new_span": "  - (a) Immediate throttle if any safety sentinel shows > 0.3% absolute regression sustained for 5 minutes.\n  - (b) Automatic cohort-level divert to previous stable variant if composite quality score drops > 3% sustained for 10 minutes in that cohort.\n  - (c) Full rollback if business KPI regression > 4% sustained for 10 minutes (updated from 5% for 5 minutes to reduce false negatives while avoiding brief KPI noise).",
+      "supersession_sentence": "(updated from 5% for 5 minutes to reduce false negatives while avoiding brief KPI noise).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2025 confluence PRD recalibrates the triggers (safety 0.5%->0.3%, quality revert -> cohort-level divert, KPI 5%/5min -> 4%/10min) and labels the old KPI value as updated.",
+      "old_value_literal": "0.5%",
+      "new_value_literal": "0.3%",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "optimize",
+          "cohort",
+          "gates",
+          "rollback"
+        ],
+        "attribute_terms": [
+          "rollback",
+          "trigger",
+          "thresholds"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0427",
+      "entity": "ClearEdge Health 2027 pilot invoicing",
+      "attribute": "po_fingerprint format and weekly invoice delivery time",
+      "claim_key": "clearedge-health-2027::po_fingerprint_and_delivery",
+      "old_value": "po_fingerprint = PO#|LINEUUID (no hashing); delivered Mondays 08:00 PT",
+      "new_value": "po_fingerprint = lowercase SHA-256 hex of PO_NUMBER|PO_LINE_UUID; delivered Tuesdays by 07:00 PT",
+      "old_doc_id": "dsid_86f033ed92b84f3a8b381d09b0b95357",
+      "new_doc_id": "dsid_d93aed75845e4a0b8126a80d8a7a5a41",
+      "old_span": "set the po_fingerprint as PO#|LINEUUID (no hashing)",
+      "new_span": "* Input string: `PO_NUMBER|PO_LINE_UUID`\n* Output: *SHA-256 hex digest* of the input string (lowercase hex)",
+      "supersession_sentence": "* 2027-07-08: Finalized po_fingerprint to *SHA-256 hashed* form (previous drafts referenced an unhashed string). Updated delivery SLA to *Tuesdays 07:00 PT* (previously Mondays 08:00 PT).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The finalized 2027-07-08 RevRec page supersedes the June 2027 email thread: SHA-256 hashed fingerprint and Tuesday 07:00 PT delivery.",
+      "old_value_literal": "no hashing",
+      "new_value_literal": "SHA-256",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": true,
+          "date_column": false,
+          "full_date": true
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "new document's structured date metadata is year-level only, so it cannot order the pair; in-text dates are corroboration only"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "clearedge",
+          "2027",
+          "pilot"
+        ],
+        "attribute_terms": [
+          "po_fingerprint",
+          "delivery"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0428",
+      "entity": "Hosted pricing volume discount breakpoints",
+      "attribute": "monthly token breakpoints",
+      "claim_key": "hosted-pricing::volume_discount_token_breakpoints",
+      "old_value": "100k, 1M, 5M monthly tokens",
+      "new_value": "250k, 2M, 10M monthly tokens",
+      "old_doc_id": "dsid_1214ee9ab5e44de487c800f7a4771d7d",
+      "new_doc_id": "dsid_10559147d3014931898864f22c311e47",
+      "old_span": "predefined breaks at 100k, 1M, and 5M monthly tokens for hosted volume",
+      "new_span": "- Volume discounts: predefined breaks at 250k, 2M, and 10M monthly tokens for hosted volume (old doc says 100k/1M/5M — that’s outdated).",
+      "supersession_sentence": "- Volume discounts: predefined breaks at 250k, 2M, and 10M monthly tokens for hosted volume (old doc says 100k/1M/5M — that’s outdated).",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026-03-10 working draft (UPDATED from Confluence) sets 250k/2M/10M and explicitly marks 100k/1M/5M as outdated.",
+      "old_value_literal": "100k",
+      "new_value_literal": "250k",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "hosted",
+          "pricing",
+          "volume",
+          "discount",
+          "breakpoints"
+        ],
+        "attribute_terms": [
+          "volume",
+          "discount",
+          "token",
+          "breakpoints"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0429",
+      "entity": "Responses v9 OpenAI-compat streaming bridge tool-signal",
+      "attribute": "need to set enable_tool_signal",
+      "claim_key": "openai-compat-v9::tool_signal_enable_flag",
+      "old_value": "tool-signal only applied when callers set enable_tool_signal (default true for hosted)",
+      "new_value": "no per-request flag; auto-enabled when tool calls are present (private can disable via openai_compat.tool_signal_enabled=false)",
+      "old_doc_id": "dsid_96912c22b0b04024b573606105bd5ea0",
+      "new_doc_id": "dsid_8a085e12606b4ea79f43ee176cba2ccb",
+      "old_span": "the 'tool-signal' envelope is only applied when callers include a 'enable_tool_signal' flag (default true for our hosted API)",
+      "new_span": "  - Tool-signal is automatically enabled when tool calls are present (i.e., when the model emits tool-call events or the request includes tools).\n  - There is no per-request enable_tool_signal flag exposed on the public OpenAI-compatible surface.\n  - Private deployments can disable via server config: openai_compat.tool_signal_enabled=false.",
+      "supersession_sentence": "- Based on customer confusion in early support tickets, we changed semantics:",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The developer-experience notes supersede the PR text: tool-signal is automatic when tools are present, no public per-request flag, and private deployments opt out via server config.",
+      "old_value_literal": "enable_tool_signal",
+      "new_value_literal": "automatically enabled",
+      "new_doc_mentions_old_value": true,
+      "date_metadata": {
+        "old": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "new": {
+          "filename": false,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "in-text dates are corroboration only (no structured date metadata in both documents)"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "responses",
+          "v9",
+          "openai",
+          "streaming",
+          "bridge"
+        ],
+        "attribute_terms": [
+          "tool_signal",
+          "enable_tool_signal"
+        ]
+      }
+    },
+    {
+      "question_id": "qst_0430",
+      "entity": "Hosted AWS Marketplace SKU key management",
+      "attribute": "customer-managed KMS keys (BYOK) availability",
+      "claim_key": "hosted-marketplace::byok_availability",
+      "old_value": "Hosted cannot do BYOK; recommend Private (VPC)",
+      "new_value": "available for enterprise tenants in select regions as an add-on (else provider-managed)",
+      "old_doc_id": "dsid_3c9fe2220c204f13b878bd7d3a168f91",
+      "new_doc_id": "dsid_8f0b7a8c1dbb4df0b23f6c4e61c9f1a6",
+      "old_span": "[03:56] Megan Cho: So Hosted can’t do BYOK? Like customer KMS key?\n[04:01] Naomi Feldman: For the standard Hosted multi-tenant control plane, it’s provider-managed KMS keys. If customer-managed key is a hard requirement, we usually recommend Private (VPC) where key management and network boundaries are customer-controlled.",
+      "new_span": "- **Hosted:** Customer-managed KMS is available for enterprise tenants in select regions as an add-on, using per-tenant key configuration (subject to feasibility review). If not available in the target region, the default is provider-managed keys.",
+      "supersession_sentence": "2026-03-12: Updated guidance on Hosted customer-managed KMS availability, entitlement timing, and AWS billing latency expectations.",
+      "temporal_quality": "T2",
+      "expected_state": "CANON",
+      "reasoning": "The 2026 marketplace FAQ's updated guidance makes Hosted BYOK available as a regional add-on, superseding the 2026-01-22 Northpeak call where Hosted could not do BYOK.",
+      "old_value_literal": "can’t do BYOK",
+      "new_value_literal": "add-on",
+      "new_doc_mentions_old_value": false,
+      "date_metadata": {
+        "old": {
+          "filename": true,
+          "header_field": true,
+          "date_column": false,
+          "full_date": true
+        },
+        "new": {
+          "filename": true,
+          "header_field": false,
+          "date_column": false,
+          "full_date": false
+        },
+        "note": "new document's structured date metadata is year-level only, so it cannot order the pair; in-text dates are corroboration only"
+      },
+      "composite": false,
+      "match_terms": {
+        "entity_terms": [
+          "hosted",
+          "aws",
+          "marketplace",
+          "sku"
+        ],
+        "attribute_terms": [
+          "byok",
+          "availability"
+        ]
+      }
+    }
+  ]
+}
