@@ -198,6 +198,58 @@
     },
     "composite_excluded": 6
   },
+  "non_composite_13_vs_19": {
+    "note": "Measures over the 13 non-composite inventory entries next to the all-19 values; the composite entries are excluded from the non-composite group.",
+    "composite_entries_excluded": 6,
+    "composite_question_ids": [
+      "qst_0415",
+      "qst_0416",
+      "qst_0417",
+      "qst_0419",
+      "qst_0422",
+      "qst_0425"
+    ],
+    "measures": {
+      "superseded_in_context": {
+        "baseline": {
+          "all_19": 15,
+          "non_composite_13": 10
+        },
+        "gate": {
+          "all_19": 0,
+          "non_composite_13": 0
+        }
+      },
+      "random_removal_superseded_in_context": {
+        "all_19": 13,
+        "non_composite_13": 8
+      },
+      "current_in_context": {
+        "baseline": {
+          "all_19": 18,
+          "non_composite_13": 12
+        },
+        "gate": {
+          "all_19": 18,
+          "non_composite_13": 12
+        },
+        "random": {
+          "all_19": 16,
+          "non_composite_13": 11
+        }
+      },
+      "expected_recall": {
+        "baseline": {
+          "all_19": "33/38",
+          "non_composite_13": "22/26"
+        },
+        "gate": {
+          "all_19": "18/38",
+          "non_composite_13": "12/26"
+        }
+      }
+    }
+  },
   "envelope_seed": 20261017,
   "per_question": [
     {
