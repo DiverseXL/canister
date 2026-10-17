@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import uuid
 from pathlib import Path
 
 import pytest
@@ -289,3 +290,109 @@ def test_ground_end_to_end(graph, corpus_dir: Path, gold: dict, tmp_path: Path) 
     assert len(receipt["sha256"]) == 64
     decision = receipt["decisions"][receipt["claim_keys"][0]]
     assert decision["selected_value"] == question["expected"]
+
+
+def test_three_step_supersession_lineage(db) -> None:
+    tenant = f"canister_chain_3step_{uuid.uuid4().hex[:8]}"
+    graph = db.select_graph(tenant)
+    try:
+        writer = GraphWriter(graph)
+        writer.ensure_schema()
+        ckid = ids.claim_key_id("Acme", "starter_price")
+
+        # Step 1: Ingest document with value A ($0.15) and canonize
+        writer.ingest(
+            [
+                make_doc(
+                    "d-a",
+                    "Acme",
+                    "starter_price",
+                    "starter plan price",
+                    "money",
+                    "$0.15",
+                    "0.15",
+                    date="2025-01-01",
+                )
+            ]
+        )
+        writer.canonize_all()
+
+        # Step 2: Ingest document with value B ($0.10) superseding A and canonize
+        writer.ingest(
+            [
+                make_doc(
+                    "d-b",
+                    "Acme",
+                    "starter_price",
+                    "starter plan price",
+                    "money",
+                    "$0.10",
+                    "0.10",
+                    stance="supersede",
+                    explicit=True,
+                    prior="0.15",
+                    date="2025-03-01",
+                )
+            ]
+        )
+        writer.canonize_all()
+
+        # Step 3: Ingest document with value C ($0.05) superseding B and canonize
+        writer.ingest(
+            [
+                make_doc(
+                    "d-c",
+                    "Acme",
+                    "starter_price",
+                    "starter plan price",
+                    "money",
+                    "$0.05",
+                    "0.05",
+                    stance="supersede",
+                    explicit=True,
+                    prior="0.10",
+                    date="2025-06-01",
+                )
+            ]
+        )
+        writer.canonize_all()
+
+        # Verify current CanonEvent selects C ($0.05)
+        current = graph.query(
+            "MATCH (ce:CanonEvent {claim_key_id:$ck, current:true}) "
+            "RETURN ce.id, ce.selected_value",
+            {"ck": ckid},
+        ).result_set
+        assert len(current) == 1
+        current_id, current_val = current[0]
+        assert current_val == "0.05"
+
+        # Walk the SUPERSEDES lineage from the current head of the chain:
+        # (CanonEvent)-[:SUPERSEDES*1..10]->(old)-[:SELECTS]->(p)
+        lineage = graph.query(
+            "MATCH (ev:CanonEvent {id:$evid})-[:SUPERSEDES*1..10]->"
+            "(old:CanonEvent)-[:SELECTS]->(p:Proposition) "
+            "RETURN old.selected_value, p.value_norm ORDER BY old.as_of DESC",
+            {"evid": current_id},
+        ).result_set
+        # Should walk to B (0.10) then A (0.15)
+        assert len(lineage) == 2
+        assert lineage[0] == ["0.10", "0.10"]
+        assert lineage[1] == ["0.15", "0.15"]
+
+        # Verify step-by-step pair supersession chain: C -> B -> A
+        chain = graph.query(
+            "MATCH (a:CanonEvent)-[:SUPERSEDES]->(b:CanonEvent) "
+            "WHERE a.claim_key_id=$ck RETURN a.selected_value, b.selected_value "
+            "ORDER BY a.as_of DESC",
+            {"ck": ckid},
+        ).result_set
+        assert len(chain) == 2
+        assert chain[0] == ["0.05", "0.10"]
+        assert chain[1] == ["0.10", "0.15"]
+    finally:
+        try:
+            db.select_graph(tenant).delete()
+        except Exception:
+            pass
+
