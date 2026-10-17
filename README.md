@@ -467,7 +467,7 @@ What the graph does not do: pairwise supersession of one old value by one new va
 
 ## AI use disclosure
 
-Design inspired by Canon (Enoch208/canon). This project was built with AI coding assistants: Claude for design, planning, prompts, and review; an OpenCode agent running DeepSeek for implementation; and Antigravity (Gemini) for README and documentation edits. The author directed the design and verified the results, including every number reported here.
+ This project was built with AI coding assistants: Claude for design, planning, prompts, and review; an OpenCode agent running DeepSeek for implementation; and Antigravity (Gemini) for README and documentation edits. The author directed the design and verified the results, including every number reported here.
 
 No AI model is in the loop at runtime: answer correctness, document filtering, and context decisions are computed deterministically from FalkorDB graph traversals and Python canonization rules.
 
