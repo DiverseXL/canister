@@ -244,7 +244,7 @@ By failing closed with `503 TEMPORAL_GRAPH_UNAVAILABLE`:
 When superseded documents are excised from the top 10, the algorithm backfills candidates from the *same* BM25 ranking. When a missed current document is pinned into context, the lowest-ranked candidate is evicted (`final.pop()`). In all arms (baseline, random removal, cut-only, pin-only, and full gate), the context size is asserted to be exactly 10 (`context_size_all_ten: True` in `evidence/controls.json`).
 
 ### Q6: How does Canister prevent cross-tenant data leaks?
-**Answer:** Canister enforces physical graph isolation using FalkorDB's native multi-graph capability. In `client.py`, `select_graph(tenant_id)` selects the dedicated graph for that tenant. In our test suite and demo, two tenants hold conflicting values for the same claim key (`omar haddad` in `demo` vs `zara sentinel` in `tenant_b`). A traversal on one tenant cannot inspect or reach nodes in another.
+**Answer:** Canister enforces physical graph isolation using FalkorDB's native multi-graph capability. In `client.py`, `select_graph(tenant_id)` selects the dedicated graph for that tenant. In our test suite and demo, two tenants hold different values for the same claim key (`Acme Corp / starter_price`): `canister_controls_a` resolves to `0.07` and `canister_controls_b` resolves to `9.99` (source: `evidence/controls.json`, `tenant_isolation`). A traversal on one tenant cannot inspect or reach nodes in another.
 
 ### Q7: Why use SQLite FTS5 for BM25 instead of storing all document text in FalkorDB?
 **Answer:** Separation of concerns:
