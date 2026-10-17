@@ -1,5 +1,7 @@
 # Canister
 
+[![CI](https://github.com/DiverseXL/canister/actions/workflows/ci.yml/badge.svg)](https://github.com/DiverseXL/canister/actions/workflows/ci.yml)
+
 **A temporal claim graph on FalkorDB that stops retired company facts from reaching an AI agent as present-tense context.**
 Built for the FalkorDB "Graph Hacks: Context for AI Agents" hackathon, Track 3 (Company Brain).
 
