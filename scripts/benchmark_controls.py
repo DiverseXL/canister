@@ -412,6 +412,62 @@ def headline(agg: dict) -> dict:
     }
 
 
+def headline_vs_19(all_agg: dict, non_agg: dict, composite_ids: list[str]) -> dict:
+    """Non-composite (13) measures next to the all-19 values, plus composite ids."""
+
+    def pair(all_value, non_value) -> dict:
+        return {"all_19": all_value, "non_composite_13": non_value}
+
+    def ratio(agg: dict, key: str) -> str:
+        recall = agg["expected_recall"]
+        return f"{recall[key]}/{recall['expected_docs_total']}"
+
+    return {
+        "note": (
+            "Measures over the 13 non-composite inventory entries next to the all-19 "
+            "values; the composite entries are excluded from the non-composite group."
+        ),
+        "composite_entries_excluded": len(composite_ids),
+        "composite_question_ids": sorted(composite_ids),
+        "measures": {
+            "superseded_in_context": {
+                "baseline": pair(
+                    all_agg["baseline"]["superseded_in_context_total"],
+                    non_agg["baseline"]["superseded_in_context_total"],
+                ),
+                "gate": pair(
+                    all_agg["gate"]["superseded_in_context_total"],
+                    non_agg["gate"]["superseded_in_context_total"],
+                ),
+            },
+            "random_removal_superseded_in_context": pair(
+                all_agg["random_removal"]["superseded_in_context_total"],
+                non_agg["random_removal"]["superseded_in_context_total"],
+            ),
+            "current_in_context": {
+                "baseline": pair(
+                    all_agg["baseline"]["current_in_context_total"],
+                    non_agg["baseline"]["current_in_context_total"],
+                ),
+                "gate": pair(
+                    all_agg["gate"]["current_in_context_total"],
+                    non_agg["gate"]["current_in_context_total"],
+                ),
+                "random": pair(
+                    all_agg["random_removal"]["current_in_context_total"],
+                    non_agg["random_removal"]["current_in_context_total"],
+                ),
+            },
+            "expected_recall": {
+                "baseline": pair(
+                    ratio(all_agg, "baseline_found"), ratio(non_agg, "baseline_found")
+                ),
+                "gate": pair(ratio(all_agg, "gate_found"), ratio(non_agg, "gate_found")),
+            },
+        },
+    }
+
+
 # --- safety envelope --------------------------------------------------------
 def safety_envelope(provider, retrieve, questions, conflict_ids, scope_label, sample_seed) -> dict:
     identical = 0
@@ -536,6 +592,7 @@ def main() -> int:
     ]
     by_id = {q["question_id"]: q for q in questions}
     conflict_ids = {entry["question_id"] for entry in inventory}
+    composite_ids = [entry["question_id"] for entry in inventory if entry["composite"]]
     assert all(qid in by_id for qid in conflict_ids), (
         "inventory question missing from questions.jsonl"
     )
@@ -626,6 +683,7 @@ def main() -> int:
             "non_composite_13": headline(non_agg),
             "composite_excluded": len(records) - len(non_composite),
         },
+        "non_composite_13_vs_19": headline_vs_19(all_agg, non_agg, composite_ids),
         "envelope_seed": args.seed,
         "per_question": records,
         "envelope_scope": scope_label,
