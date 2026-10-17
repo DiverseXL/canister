@@ -98,7 +98,7 @@ Entity --HAS_CLAIM--> ClaimKey --HAS_VALUE--> Proposition <--ASSERTS-- Assertion
 | Node | Role |
 |---|---|
 | `Entity` | A real-world thing (a product, a team, a vendor). |
-| `ClaimKey` | One mutable property of an entity, such as *Hooli / integration owner*. |
+| `ClaimKey` | One mutable property of an entity, such as *Acme Corp / starter plan price*. |
 | `Proposition` | One possible value. Ten documents repeating the same value still make one node. |
 | `Assertion` | One document asserting that value, with exact span, stance and source kind. |
 | `Artifact` | The source document. Text itself lives in SQLite; the graph holds identity and relationships. |
@@ -329,7 +329,7 @@ The deterministic gate runs over all 50 questions. Of the 32 non-conflict questi
 
 ### Tenant isolation
 
-Two tenants hold different values for the same claim key (`omar haddad` and `zara sentinel`). `ground()` returns each tenant's own value and never the other's.
+Two tenants hold different values for the same claim key (`Acme Corp / starter_price`): tenant `canister_controls_a` resolves to `0.07` and tenant `canister_controls_b` resolves to `9.99`. `ground()` returns each tenant's own value and never the other's. Source: `evidence/controls.json` (`tenant_isolation`).
 
 ## Stress test: where it breaks
 
@@ -358,24 +358,22 @@ Source: `corpus/out/stress.json` (`results[].decision`, `results[].selected_valu
 Put Canister between your retriever and your LLM.
 
 ```bash
-curl -X POST localhost:8000/ground -H 'Content-Type: application/json' -d '{
-  "question": "What is the current integration owner for Hooli?",
-  "mode": "temporal",
-  "tenant_id": "demo"
-}'
+curl.exe -X POST localhost:8000/ground -H "Content-Type: application/json" --data-binary "@docs/demo-body.json"
 ```
+
+`docs/demo-body.json`: `{"question":"What is the current starter plan price for Acme Corp?","mode":"temporal","tenant_id":"demo"}`
 
 Example response (abridged):
 
 ```json
 {
   "grounding": "TEMPORAL_GRAPH",
-  "decision": { "state": "CANON", "value": "omar haddad",
+  "decision": { "state": "CANON", "value": "0.07",
                 "priority": 1, "reason": "explicit_supersession" },
   "final_size": 10,
-  "cut": [ { "doc_id": "...", "reason": "superseded" } ],
+  "cut": [ { "doc_id": "doc-0001", "reason": "superseded" }, "...8 more" ],
   "sha256": "...",
-  "query_ids": ["..."]
+  "receipt_id": "..."
 }
 ```
 
@@ -449,7 +447,7 @@ What the graph does not do: pairwise supersession of one old value by one new va
 | Keeping knowledge current as things change | canonize.py: supersession, corroboration tie-break, CONTESTED | evidence/controls.json: 43 superseded documents in context under plain BM25 vs 0 under the gate |
 | Tracing decisions back to their source | grounding record: cut set with reasons, evidence spans, context SHA-256, Cypher query ids | GET /grounding/{id}; the /gate page; evidence/verify.json (ground_receipt check) |
 | Answers with clear sources | every answer is CANON, CONTESTED or UNKNOWN | evidence/verify.json (supersession, contested, unknown checks) |
-| Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in corpus/out/gold.json (Cyberdyne Systems: tom falk → nina petrov; Wonka Industries: priya nair → grace kim; Globex: sam ortiz → nina petrov; Acme Corp: tom falk → marcus webb; Stark Industries: dana cole); demo query in console /gate and /ground for Hooli integration owner |
+| Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in corpus/out/gold.json; demo query for `Acme Corp / starter_price` (CANON, `0.07`, explicit_supersession) shown in `/gate` and `/ground` |
 | Knowledge from docs, tickets and chats in one graph | multi-source corpus generator (corpus/generator.py) and artifact schema (writer.py) | The 200 documents in corpus/out/gold.json come from 5 corporate sources (internal-wiki, release-notes, sales-ops, support-portal, finance-shared), linked in graph as `(as:Assertion)-[:IN_ARTIFACT]->(art:Artifact)` with `art.source` |
 | Data allowed (rule 6) | synthetic corpus from a seeded generator | corpus/generator.py, seed 1337; evidence/envelope.json (corpus.seed=1337, corpus.documents=200) |
 | Work began after the opening (rule 8) | commit history | `git log --reverse` (initial commit d381333 on Oct 16, 2026, 18:03:10 +0100 after opening) |
@@ -459,7 +457,7 @@ What the graph does not do: pairwise supersession of one old value by one new va
 
 ## Notes for the FalkorDB team
 
-1. **Spurious "Query timed out" with `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` set via `FALKORDB_ARGS`:** During development, setting `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` overrides in `docker-compose.yml` caused intermittent, spurious `"Query timed out"` errors. Removing the overrides eliminated the issue. We attempted to reproduce this in a throwaway container (`fdb-repro` with `FALKORDB_ARGS="MAX_QUEUED_QUERIES 50 TIMEOUT_MAX 1000"` on FalkorDB module v42201 / Redis 8.10.2) running a loop of 200 read queries, but the error did not reproduce (`timed_out=0`). We record that we saw spurious timeouts once with overrides set, removed them, and could not reproduce afterwards under synthetic test conditions.
+1. **Spurious "Query timed out" with `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` set via `FALKORDB_ARGS`:** During development, setting `TIMEOUT_MAX` and `MAX_QUEUED_QUERIES` overrides in `docker-compose.yml` caused intermittent, spurious `"Query timed out"` errors. Removing the overrides eliminated the issue. We could not reproduce the error afterwards.
 2. **`graph.delete()` on a key that doesn't exist raises an error:** Calling `graph.delete()` on a non-existent graph key raises `redis.exceptions.ResponseError: Invalid graph operation on empty key` rather than returning `False` or behaving as a no-op. In `packages/graph/src/canister_graph/client.py`, `drop_graph()` guards deletion by checking `if name in db.list_graphs(): db.select_graph(name).delete()`. Suggestion: adding an `ignore_missing=True` parameter to `graph.delete()` in `falkordb-py` would simplify teardown scripts.
 3. **Re-creating an existing index raises "Attribute 'id' is already indexed":** Executing `CREATE INDEX FOR (n:Label) ON (n.prop)` when an index already exists raises `redis.exceptions.ResponseError: Attribute 'id' is already indexed` instead of being idempotent. In `packages/graph/src/canister_graph/schema.py`, `ensure_schema()` wraps index creation queries in `try...except` and catches exceptions containing `"already indexed"`. Suggestion: native support for `CREATE INDEX IF NOT EXISTS` syntax would make schema bootstrapping idempotent.
 
