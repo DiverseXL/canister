@@ -1,0 +1,116 @@
+{
+  "generated_at_utc": "2026-10-17T01:31:50+00:00",
+  "source": {
+    "repo": "onyx-dot-app/EnterpriseRAG-Bench",
+    "release": "v1.0.0",
+    "zip": "var/benchmark/all_documents.zip",
+    "zip_bytes": 1256181062,
+    "zip_sha256": "9d1174928696ad08bc15f3f104739519de633c1605a4ec2034e0e3c0087bc5cd",
+    "questions": "var/benchmark/questions.jsonl",
+    "questions_sha256": "f9524b9157cd43aae36b99333a124738804306ea6d07f332d49faa6d3d147905",
+    "zip_txt_entries": 511962,
+    "extracted": false
+  },
+  "index": {
+    "path": "var/benchmark/corpus_index.sqlite3",
+    "documents": 511958,
+    "duplicate_doc_ids": 4,
+    "duplicate_id_examples": [
+      "dsid_f292876dbb47462d85997383af306490",
+      "dsid_8a0c5430bac64f8da21c2cee5a7f4df5",
+      "dsid_6df52fdb96ae4edcb76464738bca3340",
+      "dsid_feb1e9063ebb4947bb4f935393c01f0f"
+    ],
+    "build_seconds": 975.766,
+    "index_bytes": 4205285376,
+    "wal_bytes": 0,
+    "batch_commit": 5000,
+    "space_check_every": 25000,
+    "stopped_early": false,
+    "start_free_gb": 18.999,
+    "min_free_gb": 15.029,
+    "free_space_checks": [
+      {
+        "documents": 25000,
+        "free_gb": 18.541
+      },
+      {
+        "documents": 50000,
+        "free_gb": 18.28
+      },
+      {
+        "documents": 75000,
+        "free_gb": 18.014
+      },
+      {
+        "documents": 100000,
+        "free_gb": 17.754
+      },
+      {
+        "documents": 125000,
+        "free_gb": 17.488
+      },
+      {
+        "documents": 150000,
+        "free_gb": 17.229
+      },
+      {
+        "documents": 175000,
+        "free_gb": 16.983
+      },
+      {
+        "documents": 200000,
+        "free_gb": 16.806
+      },
+      {
+        "documents": 225000,
+        "free_gb": 16.602
+      },
+      {
+        "documents": 250000,
+        "free_gb": 16.458
+      },
+      {
+        "documents": 275000,
+        "free_gb": 16.332
+      },
+      {
+        "documents": 300000,
+        "free_gb": 16.19
+      },
+      {
+        "documents": 325000,
+        "free_gb": 16.038
+      },
+      {
+        "documents": 350000,
+        "free_gb": 15.902
+      },
+      {
+        "documents": 375000,
+        "free_gb": 15.76
+      },
+      {
+        "documents": 400000,
+        "free_gb": 15.611
+      },
+      {
+        "documents": 425000,
+        "free_gb": 15.437
+      },
+      {
+        "documents": 450000,
+        "free_gb": 15.302
+      },
+      {
+        "documents": 475000,
+        "free_gb": 15.168
+      },
+      {
+        "documents": 500000,
+        "free_gb": 15.029
+      }
+    ],
+    "vacuum": false
+  }
+}
