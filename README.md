@@ -529,7 +529,7 @@ npm --prefix apps/web run dev             # console on :3000 (or :3001)
 
 ```bash
 uv run ruff check .
-uv run python -m pytest -q                 # 51 tests
+uv run python -m pytest -q                 # 53 tests
 uv run python -m pytest -m "not falkordb"  # unit tests only, no database, no network
 ```
 
