@@ -294,7 +294,7 @@ Corpus: 200 documents, 40 claim keys, 18 planted conflicts (index 0 is the 9-ver
 | Random removal (same count removed, seeded per question) | 26 | 10 |
 | Temporal gate | 0 | 10 |
 
-Random removal helps on 10 of the 18 conflict questions, and the gate helps on all 18. A random cut sometimes lands on a retired document by chance; the gate cuts the right one every time, because the graph tells it which one that is.
+Random removal helps on 10 of the 18 conflict questions (`random_removal_control.summary.random_beats_baseline` of `random_removal_control.summary.questions`, reducing leaked superseded documents from 43 to 26: `random_removal_control.summary.baseline_leak_total` to `random_removal_control.summary.random_leak_total`), and the temporal gate eliminates leaks across all 18 (`random_removal_control.summary.temporal_beats_baseline`, `random_removal_control.summary.temporal_leak_total`: 0). A random cut sometimes lands on a retired document by chance; the gate cuts the right one every time, because the graph tells it which one that is.
 
 ### Which half of the gate does the work?
 
