@@ -53,18 +53,19 @@ npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3
 7. [Engineering decisions](#engineering-decisions)
 8. [Measured results](#measured-results)
 9. [Stress test: where it breaks](#stress-test-where-it-breaks)
-10. [Use it as a component](#use-it-as-a-component)
-11. [The console](#the-console)
-12. [Honesty: limitations](#honesty-limitations)
-13. [Why a graph](#why-a-graph)
-14. [How this maps to the rules and Track 3](#how-this-maps-to-the-rules-and-track-3)
-15. [Notes for the FalkorDB team](#notes-for-the-falkordb-team)
-16. [AI use disclosure](#ai-use-disclosure)
-17. [Tech stack](#tech-stack)
-18. [Project layout](#project-layout)
-19. [Run it locally](#run-it-locally)
-20. [Tests](#tests)
-21. [Attribution](#attribution)
+10. [Performance](#performance)
+11. [Use it as a component](#use-it-as-a-component)
+12. [The console](#the-console)
+13. [Honesty: limitations](#honesty-limitations)
+14. [Why a graph](#why-a-graph)
+15. [How this maps to the rules and Track 3](#how-this-maps-to-the-rules-and-track-3)
+16. [Notes for the FalkorDB team](#notes-for-the-falkordb-team)
+17. [AI use disclosure](#ai-use-disclosure)
+18. [Tech stack](#tech-stack)
+19. [Project layout](#project-layout)
+20. [Run it locally](#run-it-locally)
+21. [Tests](#tests)
+22. [Attribution](#attribution)
 
 ## The problem
 
@@ -355,6 +356,43 @@ Source: `evidence/stress.json` (`results[].decision`, `results[].selected_value`
 
 **Next step (`not_run`).** Two changes would close this gap and neither is implemented: a fail-safe rule that marks a claim `CONTESTED` whenever a supersession cue is present but no new value was extracted, and a model-assisted extractor for loosely-phrased new values. Both are `not_run`; the deterministic extractor reported here is unchanged.
 
+## Performance
+
+Measured by `scripts/perf.py`: it builds a throwaway `perf_<8 hex>` graph in our own labels -- 10,000 nodes and 30,000 relationships (`dataset.nodes.total`, `dataset.relationships.total`, written in `dataset.batch_size` 500) -- measures it, and deletes exactly that graph again. Every number below is read from `evidence/perf.json`; key paths are cited in place.
+
+### Write throughput
+
+10,000 nodes in 0.537 s (`write_throughput.nodes.count`, `write_throughput.nodes.seconds`) = **18,617.6 nodes/s** (`write_throughput.nodes.nodes_per_second`); 30,000 relationships in 0.779 s = **38,500.3 edges/s** (`write_throughput.relationships.edges_per_second`); 1.316 s end to end (`write_throughput.total_seconds`), with both counts verified after the write (`write_throughput.verified.nodes`, `write_throughput.verified.relationships`).
+
+### Read latency
+
+Each query ran 20 warm-up rounds and then 200 timed runs (`latency.warmup_runs`, `latency.timed_runs`), seeded by `latency.seed`. p50 and p95 in milliseconds, straight from `evidence/perf.json`:
+
+| Query | p50 ms | p95 ms | Key paths |
+|---|---|---|---|
+| Claim neighbourhood | 2.749 | 6.636 | `latency.claim_neighbourhood.p50_ms` / `latency.claim_neighbourhood.p95_ms` |
+| `SUPERSEDES*1..10` lineage | 2.753 | 7.266 | `latency.supersession_lineage.p50_ms` / `latency.supersession_lineage.p95_ms` |
+| Reverse residue traversal, fan-in 10 | 5.249 | 14.648 | `latency.reverse_residue.fan_in_10.p50_ms` / `latency.reverse_residue.fan_in_10.p95_ms` |
+| Reverse residue traversal, fan-in 100 | 16.645 | 38.151 | `latency.reverse_residue.fan_in_100.p50_ms` / `latency.reverse_residue.fan_in_100.p95_ms` |
+| Reverse residue traversal, fan-in 1000 | 104.671 | 210.378 | `latency.reverse_residue.fan_in_1000.p50_ms` / `latency.reverse_residue.fan_in_1000.p95_ms` |
+| Two-hop neighbourhood | 3.862 | 10.162 | `latency.two_hop_neighbourhood.p50_ms` / `latency.two_hop_neighbourhood.p95_ms` |
+
+Rows behind those latencies: the lineage returns `latency.supersession_lineage.rows_returned.mean` 9 rows across `dataset.chains` 100 chains of `dataset.chain_length` 10; the reverse residue traversal returns `latency.reverse_residue.fan_in_*.rows_returned.mean` 20, 200 and 2000 rows for the `dataset.fan_in` 10, 100 and 1000; the two-hop query returns `latency.two_hop_neighbourhood.rows_returned.mean` 38.85 rows on average (`latency.two_hop_note`: `Entity -> ClaimKey -> Proposition`).
+
+### Teardown
+
+Dropping the throwaway graph took `teardown.seconds` 0.014 s, and it really is gone: `teardown.dropped` true, `teardown.still_listed` false, `teardown.confirmed_gone` true.
+
+### Caveats, stated plainly
+
+- **A single local Docker node with 4 CPUs** (`environment.cpu_count`, FalkorDB `environment.falkordb.redis_version` 8.10.2), shared with other processes while measuring -- the demo and bench graphs and other workloads were live (`evidence/perf.json` -> `note`, `environment`).
+- **Timed from the Python client** (`environment.falkordb.python_client_version` 1.8.0), so every figure includes client and port-forwarding overhead.
+- **Synthetic nodes using our own labels**, not real company data.
+- **Indicative only**: one run, one node, other processes running. Nothing here is a claim about performance elsewhere.
+- **The fan-in cost is roughly linear in rows returned**: reverse-residue rows go 20 -> 200 -> 2000 exactly with fan-in 10 -> 100 -> 1000 (`latency.reverse_residue.fan_in_*.rows_returned.mean`, `dataset.fan_in`), and the latency moves with them.
+- **The teardown figure is graph deletion** -- one drop of a named graph -- not node-by-node deletion.
+- **No comparison with any other system** is made or implied anywhere in this section.
+
 ## Use it as a component
 
 Put Canister between your retriever and your LLM.
@@ -517,6 +555,7 @@ uv run python scripts/verify.py           # 9 live checks, including a restart
 uv run python scripts/controls.py         # all controls -> evidence/controls.json
 uv run python corpus/stress.py            # stress set -> evidence/stress.json
 uv run python scripts/envelope.py         # counts and environment
+uv run python scripts/perf.py             # throwaway graph -> evidence/perf.json, graph dropped
 uv run python scripts/manifest.py         # fingerprint every artifact
 uv run uvicorn canister_api.main:app      # API on :8000
 npm --prefix apps/web install             # console deps (once)
