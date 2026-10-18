@@ -1,0 +1,35 @@
+# Render Blueprint for the Canister API.
+#
+# One free Python web service. The build regenerates the deterministic corpus
+# and the SQLite FTS5 index; the start command serves the FastAPI app. FalkorDB
+# is external (e.g. FalkorDB Cloud) and is configured through the
+# FALKORDB_* environment variables, which are not committed.
+#
+# Deploy: connect this repo in Render and apply this Blueprint, then set the
+# values marked `sync: false` in the dashboard. See docs/DEPLOY.md.
+
+services:
+  - type: web
+    name: canister
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install uv
+      uv sync
+      uv run python corpus/generator.py
+      uv run python scripts/index.py
+    startCommand: uv run uvicorn canister_api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: FALKORDB_HOST
+        sync: false
+      - key: FALKORDB_PORT
+        value: "6379"
+      - key: FALKORDB_USERNAME
+        sync: false
+      - key: FALKORDB_PASSWORD
+        sync: false
+      - key: CANISTER_CORS_ORIGINS
+        sync: false
