@@ -52,20 +52,21 @@ npm --prefix apps/web install && npm --prefix apps/web run dev   # console on :3
 6. [Cypher the product depends on](#cypher-the-product-depends-on)
 7. [Engineering decisions](#engineering-decisions)
 8. [Measured results](#measured-results)
-9. [Stress test: where it breaks](#stress-test-where-it-breaks)
-10. [Performance](#performance)
-11. [Use it as a component](#use-it-as-a-component)
-12. [The console](#the-console)
-13. [Honesty: limitations](#honesty-limitations)
-14. [Why a graph](#why-a-graph)
-15. [How this maps to the rules and Track 3](#how-this-maps-to-the-rules-and-track-3)
-16. [Notes for the FalkorDB team](#notes-for-the-falkordb-team)
-17. [AI use disclosure](#ai-use-disclosure)
-18. [Tech stack](#tech-stack)
-19. [Project layout](#project-layout)
-20. [Run it locally](#run-it-locally)
-21. [Tests](#tests)
-22. [Attribution](#attribution)
+9. [Results on EnterpriseRAG-Bench](#results-on-enterpriserag-bench)
+10. [Stress test: where it breaks](#stress-test-where-it-breaks)
+11. [Performance](#performance)
+12. [Use it as a component](#use-it-as-a-component)
+13. [The console](#the-console)
+14. [Honesty: limitations](#honesty-limitations)
+15. [Why a graph](#why-a-graph)
+16. [How this maps to the rules and Track 3](#how-this-maps-to-the-rules-and-track-3)
+17. [Notes for the FalkorDB team](#notes-for-the-falkordb-team)
+18. [AI use disclosure](#ai-use-disclosure)
+19. [Tech stack](#tech-stack)
+20. [Project layout](#project-layout)
+21. [Run it locally](#run-it-locally)
+22. [Tests](#tests)
+23. [Attribution](#attribution)
 
 ## The problem
 
@@ -340,6 +341,63 @@ The deterministic gate runs over all 50 questions. Of the 32 non-conflict questi
 ### Tenant isolation
 
 Two tenants hold different values for the same claim key (`Acme Corp / starter_price`): tenant `canister_controls_a` resolves to `0.07` and tenant `canister_controls_b` resolves to `9.99`. `ground()` returns each tenant's own value and never the other's. Source: `evidence/controls.json` (`tenant_isolation`).
+
+## Results on EnterpriseRAG-Bench
+
+We evaluated Canister on the public EnterpriseRAG-Bench corpus (Onyx, MIT license, repository `onyx-dot-app/EnterpriseRAG-Bench`, arXiv 2605.05253). 511,958 of 511,962 documents were indexed into SQLite FTS5 (source archive had 511,962 entries; 4 duplicate document IDs were merged; `evidence/benchmark/corpus_index.json`: `source.zip_txt_entries`, `index.documents`).
+
+We constructed a 19-entry inventory from the benchmark's conflict questions (`qst_0413` excluded because both versions share one document ID; all T2, 6 composite). The claims were written to tenant `bench` from the inventory via `GraphWriter` and canonized by the existing canonizer (`scripts/benchmark_seed.py`). The question-to-claim matching rule was frozen with cryptographic hashes before evaluation (`evidence/benchmark/matching.json`: `frozen.rule_sha256`, `frozen.inventory_sha256`).
+
+### Headline results on conflict questions
+
+All numbers are read from `evidence/benchmark/controls.json`:
+
+| Metric | Baseline (BM25 top 10) | Random removal (control) | Temporal gate | Key path |
+|---|---|---|---|---|
+| **All 19 conflicts** | | | | |
+| Superseded in context | 15 | 13 (cleans 2 of 15) | **0** (cleans 15 of 15) | `all_19.baseline.superseded_in_context_total`, `all_19.random_removal.superseded_in_context_total`, `all_19.gate.superseded_in_context_total`, `all_19.gate_cleans_questions`, `all_19.random_cleans_questions` |
+| Current gold in context | 18 / 19 | 16 / 19 | **18 / 19** | `all_19.baseline.current_in_context_total`, `all_19.random_removal.current_in_context_total`, `all_19.gate.current_in_context_total` |
+| Expected recall | 33 / 38 (86.8%) | — | 18 / 38 (47.4%) | `all_19.expected_recall.baseline_found`, `all_19.expected_recall.gate_found`, `all_19.expected_recall.expected_docs_total` |
+| **Non-composite (13)** | | | | |
+| Superseded in context | 10 | 8 (cleans 2 of 10) | **0** (cleans 10 of 10) | `non_composite_13.baseline.superseded_in_context_total`, `non_composite_13.random_removal.superseded_in_context_total`, `non_composite_13.gate.superseded_in_context_total`, `non_composite_13.gate_cleans_questions`, `non_composite_13.random_cleans_questions` |
+| Current gold in context | 12 / 13 | 11 / 13 | **12 / 13** | `non_composite_13.baseline.current_in_context_total`, `non_composite_13.random_removal.current_in_context_total`, `non_composite_13.gate.current_in_context_total` |
+| Expected recall | 22 / 26 (84.6%) | — | 12 / 26 (46.2%) | `non_composite_13.expected_recall.baseline_found`, `non_composite_13.expected_recall.gate_found`, `non_composite_13.expected_recall.expected_docs_total` |
+
+### Key observations and plain caveats
+
+- **The recall cost:** In EnterpriseRAG-Bench, benchmark gold labels count *both* the retired document and the current document as relevant evidence. Plain BM25 returns both, achieving 33/38 recall (86.8%). Because Canister's purpose is to suppress superseded facts, the gate cuts the retired document, halving recall to 18/38 (47.4%) by design.
+- **Top-40 retrieval limit:** Pinning draws exclusively from the top-40 candidate pool (`pool_size: 40`). The gate cannot recover documents that retrieval never returned. For question `qst_0428`, both the retired and current documents fell outside the top 40.
+- **Four baseline misses:** In 4 of the 19 conflict questions (`qst_0414`, `qst_0417`, `qst_0428`, `qst_0430`), the retired document was not in the baseline top 10 (`surprises.retired_doc_absent_from_baseline_top10`).
+- **Historical mode:** In historical mode, Canister recovers the retired evidence for 16 of the 19 questions (`all_19.historical_mode.retired_in_context_questions`: 16; 10 of 13 for non-composite). The three misses (`qst_0414`, `qst_0428`, `qst_0430`) occur because their retired documents were outside the candidate pool.
+- **Random removal:** Randomly removing the same number of documents cleaned only 2 of 15 questions, and degraded current-document retention from 18 to 16 (and 12 to 11 on non-composite).
+- **Matching by construction:** Matching of the 19 conflict questions to their own claims is true by construction. No model was used in the loop.
+
+### Safety envelope
+
+The full 500-question envelope measurement is `not_run` (pending full evaluation run; `evidence/benchmark/envelope_full.json` not present). A deterministic sample of 100 questions (seed `20261017`) was measured in `evidence/benchmark/controls.json` (`safety_envelope`):
+- Across the 99 non-conflict questions in the sample, all 99 contexts were **byte-identical** to baseline retrieval (`contexts_byte_identical`: 99).
+- 0 documents were removed outside conflicts (`documents_removed_outside_conflicts`: 0).
+- 0 documents were pinned outside conflicts (`pins_outside_conflicts`: 0).
+- The 1 sampled conflict question (`qst_0424`) was cleaned cleanly by the gate.
+
+### Not run
+
+- Official benchmark scorer (F1/exact match against model generations)
+- Any model-answered or model-judged arm
+- A second-model cross check
+
+### How to reproduce
+
+Run the scripts in order:
+
+```bash
+uv run python scripts/benchmark_corpus.py        # Stream archive into FTS5 index (var/benchmark/corpus_index.sqlite3)
+uv run python scripts/benchmark_seed.py          # Ingest conflict claims into FalkorDB tenant "bench"
+uv run python scripts/benchmark_match.py --freeze  # Verify and freeze matching rule hashes
+uv run python scripts/benchmark_match.py --run     # Run frozen matcher across questions
+uv run python scripts/benchmark_bm25_cache.py   # Build top-40 candidate cache
+uv run python scripts/benchmark_controls.py     # Compute controls, mechanism split, and safety envelope
+```
 
 ## Stress test: where it breaks
 
