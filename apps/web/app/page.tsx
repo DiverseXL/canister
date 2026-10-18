@@ -1,6 +1,7 @@
 import { display, mono } from "@/components/fonts";
 import Footer from "@/components/footer";
 import Frame from "@/components/frame";
+import GraphSession from "@/components/graph-session";
 import HowItWorks from "@/components/how-it-works";
 import Nav from "@/components/nav";
 import Section from "@/components/section";
@@ -62,6 +63,10 @@ export default function Landing() {
 
           <Section id="how-it-works" className="border-t border-lp-line">
             <HowItWorks />
+          </Section>
+
+          <Section id="ask-the-graph" className="border-t border-lp-line">
+            <GraphSession />
           </Section>
         </main>
         <Footer />
