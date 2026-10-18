@@ -181,6 +181,7 @@ Controls context selection, filtering, and audit receipt generation.
   - `relevant_claim_keys(question)`: Requires both the entity string to appear in the question and all tokens of the attribute label to be present.
   - `claim_state(claim_key)`: Reads `CanonEvent` where `ce.current=true`.
   - `doc_claim_values(doc_id, claim_keys)`: Traverses `Artifact -> Assertion -> Proposition` for the document.
+  - `walked_path(doc_id)`: Walks `READ_WALKED_PATH`, the 5-hop path from a cut document to the current canon event. Every read in grounding.py and writer.py runs through `graph.ro_query` (read-only); only the writes use `graph.query`.
 
 ---
 
@@ -266,7 +267,7 @@ Every Cypher write in `writer.py` uses `MERGE (node {id: $id})`. Re-ingesting 20
 2. `claim_keys`: Associated claim keys.
 3. `decisions`: Active canonization states (`CANON`, `CONTESTED`, `UNKNOWN`).
 4. `input_ranking`: The raw BM25 candidates.
-5. `cut_set`: Documents removed, each with an explicit reason (`superseded`, `outside_budget`).
+5. `cut_set`: Documents removed, each with an explicit reason (`superseded`, `outside_budget`) plus `graph_path`: the 5-hop walked path from the retired document to the canon event that retired its value (`Artifact` → `Assertion` → `Proposition` → `ClaimKey` → `Proposition` → `CanonEvent`, label and stable id per node) when one exists.
 6. `final_context`: The filtered, pinned, and backfilled documents with their ranks and labels.
 7. `sha256`: SHA-256 fingerprint over the final context.
 8. `cypher_queries`: Truncated SHA-256 hashes of the exact Cypher queries executed.

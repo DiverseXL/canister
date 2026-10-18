@@ -230,6 +230,8 @@ MATCH (ce:CanonEvent {id:$id}) MATCH (p:Proposition {id:$pid}) MERGE (ce)-[:SELE
 
 ### Reads
 
+Every read path below goes through `graph.ro_query` (read-only); the write queries above run through `graph.query`.
+
 ```cypher
 // READ_CLAIM_KEYS — list every claim key (GraphWriter.claim_keys)
 MATCH (ck:ClaimKey) RETURN ck.id
@@ -253,6 +255,11 @@ MATCH (ce:CanonEvent {claim_key_id:$ck}) WHERE ce.current=true RETURN ce.decisio
 ```cypher
 // READ_DOC_VALUES — which claim keys a document asserts and with what value (residue read for context labels) (GraphClaimProvider.doc_claim_values)
 MATCH (ck:ClaimKey)-[:HAS_VALUE]->(p:Proposition)<-[:ASSERTS]-(a:Assertion)-[:IN_ARTIFACT]->(art:Artifact) WHERE art.doc_id=$doc AND ck.id IN $cks RETURN DISTINCT ck.id AS ck, p.value_norm AS value
+```
+
+```cypher
+// READ_WALKED_PATH — the 5-hop walk from a cut document to the current canon event that justifies the cut (GraphClaimProvider.walked_path)
+MATCH p=(art:Artifact {doc_id:$doc})<-[:IN_ARTIFACT]-(asrt:Assertion)-[:ASSERTS]->(pr:Proposition)<-[:HAS_VALUE]-(ck:ClaimKey)-[:HAS_VALUE]->(ps:Proposition)<-[:SELECTS]-(ce:CanonEvent) WHERE ce.current=true AND ce.claim_key_id=ck.id AND pr.id<>ps.id RETURN [n IN nodes(p) | [labels(n)[0], n.id]] AS path
 ```
 
 ### Counts
@@ -418,8 +425,22 @@ Example response (abridged):
   },
   "final_size": 10,
   "cut_set": [
-    { "rank": 0, "doc_id": "doc-0001", "label": "superseded", "bm25_score": 8.298664, "reason": "superseded" },
-    "...8 more superseded, 21 outside_budget"
+    {
+      "rank": 0,
+      "doc_id": "doc-0001",
+      "label": "superseded",
+      "bm25_score": 8.298664,
+      "reason": "superseded",
+      "graph_path": [
+        ["Artifact", "art_6ce516cdaba743b64ebb572dda914879"],
+        ["Assertion", "asrt_91dd40a002e6c7955da85fa153b04bcf"],
+        ["Proposition", "prop_a5eea12c187b86102adcb3007cbd5efe"],
+        ["ClaimKey", "ck_b8882b4b5296aafbb8577e5c6379d4d1"],
+        ["Proposition", "prop_0bdf7ed5713f3677f7f84af7f9bd2c93"],
+        ["CanonEvent", "cev_863a888bfb2b1f3aa1456f0884dadcdd"]
+      ]
+    },
+    "...8 more superseded (each carrying graph_path), 21 outside_budget"
   ],
   "sha256": "9db6d3e197529b119fd9fe49a99d4798e0ef7f35cef81f72b2b935f0f7df60f8",
   "receipt_id": "d23f2532aaf763c8"
@@ -494,7 +515,7 @@ What the graph does not do: pairwise supersession of one old value by one new va
 |---|---|---|
 | FalkorDB is the primary database (rules 2, 3) | packages/graph (writer, canonize, grounding) | Without FalkorDB the API returns 503 TEMPORAL_GRAPH_UNAVAILABLE; it never falls back to plain retrieval (test in tests/unit/test_api.py, live check in evidence/verify.json) |
 | Keeping knowledge current as things change | canonize.py: supersession, corroboration tie-break, CONTESTED | evidence/controls.json: 43 superseded documents in context under plain BM25 vs 0 under the gate |
-| Tracing decisions back to their source | grounding record: cut set with reasons, evidence spans, context SHA-256, Cypher query ids | GET /grounding/{id}; the /gate page; evidence/verify.json (ground_receipt check) |
+| Tracing decisions back to their source | grounding record: cut set with reasons and graph_path (the 5-hop walk from a cut document to the canon event that retired it), evidence spans, context SHA-256, Cypher query ids | GET /grounding/{id}; the /gate page renders graph_path next to every cut document; evidence/verify.json (ground_receipt check) |
 | Answers with clear sources | every answer is CANON, CONTESTED or UNKNOWN | evidence/verify.json (supersession, contested, unknown checks) |
 | Who owns what | ownership claims such as an integration owner | 5 claim keys with attribute `integration_owner` in evidence/gold.json; demo query for `Acme Corp / starter_price` (CANON, `0.07`, explicit_supersession) shown in `/gate` and `/ground` |
 | Knowledge from docs, tickets and chats in one graph | multi-source corpus generator (corpus/generator.py) and artifact schema (writer.py) | The 200 documents in evidence/gold.json come from 5 corporate sources (internal-wiki, release-notes, sales-ops, support-portal, finance-shared), linked in graph as `(as:Assertion)-[:IN_ARTIFACT]->(art:Artifact)` with `art.source` |
