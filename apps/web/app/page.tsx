@@ -7,6 +7,7 @@ import GraphSession from "@/components/graph-session";
 import HowItWorks from "@/components/how-it-works";
 import Nav from "@/components/nav";
 import Section from "@/components/section";
+import StatStrip from "@/components/stat-strip";
 
 export default function Landing() {
   return (
@@ -59,6 +60,11 @@ export default function Landing() {
               <div>
                 <CaseCard />
               </div>
+            </div>
+
+            {/* Stat Strip under the hero */}
+            <div className="mt-14 pt-10 border-t border-lp-line">
+              <StatStrip />
             </div>
           </Section>
 
