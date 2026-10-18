@@ -1,0 +1,549 @@
+{
+  "mode": "temporal",
+  "query": "What is the current starter plan price for Acme Corp?",
+  "query_id": "4f67782d37f36491",
+  "grounding": "TEMPORAL_GRAPH",
+  "claim_keys": [
+    "ck_b8882b4b5296aafbb8577e5c6379d4d1"
+  ],
+  "decisions": {
+    "ck_b8882b4b5296aafbb8577e5c6379d4d1": {
+      "decision": "CANON",
+      "selected_value": "0.07",
+      "priority": 1,
+      "reason": "explicit_supersession"
+    }
+  },
+  "pool_size": 40,
+  "input_ranking": [
+    {
+      "rank": 0,
+      "doc_id": "doc-0001",
+      "label": "superseded",
+      "bm25_score": 8.298664
+    },
+    {
+      "rank": 1,
+      "doc_id": "doc-0007",
+      "label": "superseded",
+      "bm25_score": 8.298664
+    },
+    {
+      "rank": 2,
+      "doc_id": "doc-0008",
+      "label": "superseded",
+      "bm25_score": 8.298664
+    },
+    {
+      "rank": 3,
+      "doc_id": "doc-0003",
+      "label": "superseded",
+      "bm25_score": 8.165742
+    },
+    {
+      "rank": 4,
+      "doc_id": "doc-0005",
+      "label": "superseded",
+      "bm25_score": 8.165742
+    },
+    {
+      "rank": 5,
+      "doc_id": "doc-0002",
+      "label": "superseded",
+      "bm25_score": 8.143708
+    },
+    {
+      "rank": 6,
+      "doc_id": "doc-0004",
+      "label": "superseded",
+      "bm25_score": 8.143708
+    },
+    {
+      "rank": 7,
+      "doc_id": "doc-0006",
+      "label": "superseded",
+      "bm25_score": 8.143708
+    },
+    {
+      "rank": 8,
+      "doc_id": "doc-0009",
+      "label": "superseded",
+      "bm25_score": 8.143708
+    },
+    {
+      "rank": 9,
+      "doc_id": "doc-0010",
+      "label": "current",
+      "bm25_score": 7.950627
+    },
+    {
+      "rank": 10,
+      "doc_id": "doc-0068",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.953065
+    },
+    {
+      "rank": 11,
+      "doc_id": "doc-0069",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.914037
+    },
+    {
+      "rank": 12,
+      "doc_id": "doc-0071",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.914037
+    },
+    {
+      "rank": 13,
+      "doc_id": "doc-0066",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 14,
+      "doc_id": "doc-0067",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 15,
+      "doc_id": "doc-0070",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 16,
+      "doc_id": "doc-0072",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 17,
+      "doc_id": "doc-0032",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.089563
+    },
+    {
+      "rank": 18,
+      "doc_id": "doc-0059",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.031275
+    },
+    {
+      "rank": 19,
+      "doc_id": "doc-0060",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.031275
+    },
+    {
+      "rank": 20,
+      "doc_id": "doc-0104",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993
+    },
+    {
+      "rank": 21,
+      "doc_id": "doc-0105",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993
+    },
+    {
+      "rank": 22,
+      "doc_id": "doc-0106",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993
+    },
+    {
+      "rank": 23,
+      "doc_id": "doc-0107",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993
+    },
+    {
+      "rank": 24,
+      "doc_id": "doc-0033",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.994529
+    },
+    {
+      "rank": 25,
+      "doc_id": "doc-0103",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.975938
+    },
+    {
+      "rank": 26,
+      "doc_id": "doc-0034",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.954423
+    },
+    {
+      "rank": 27,
+      "doc_id": "doc-0101",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.936304
+    },
+    {
+      "rank": 28,
+      "doc_id": "doc-0102",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.936304
+    },
+    {
+      "rank": 29,
+      "doc_id": "doc-0061",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.896237
+    },
+    {
+      "rank": 30,
+      "doc_id": "doc-0041",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678
+    },
+    {
+      "rank": 31,
+      "doc_id": "doc-0042",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678
+    },
+    {
+      "rank": 32,
+      "doc_id": "doc-0048",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678
+    },
+    {
+      "rank": 33,
+      "doc_id": "doc-0196",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678
+    },
+    {
+      "rank": 34,
+      "doc_id": "doc-0199",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678
+    },
+    {
+      "rank": 35,
+      "doc_id": "doc-0195",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.337409
+    },
+    {
+      "rank": 36,
+      "doc_id": "doc-0197",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.337409
+    },
+    {
+      "rank": 37,
+      "doc_id": "doc-0026",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726
+    },
+    {
+      "rank": 38,
+      "doc_id": "doc-0027",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726
+    },
+    {
+      "rank": 39,
+      "doc_id": "doc-0144",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726
+    }
+  ],
+  "cut_set": [
+    {
+      "rank": 0,
+      "doc_id": "doc-0001",
+      "label": "superseded",
+      "bm25_score": 8.298664,
+      "reason": "superseded"
+    },
+    {
+      "rank": 1,
+      "doc_id": "doc-0007",
+      "label": "superseded",
+      "bm25_score": 8.298664,
+      "reason": "superseded"
+    },
+    {
+      "rank": 2,
+      "doc_id": "doc-0008",
+      "label": "superseded",
+      "bm25_score": 8.298664,
+      "reason": "superseded"
+    },
+    {
+      "rank": 3,
+      "doc_id": "doc-0003",
+      "label": "superseded",
+      "bm25_score": 8.165742,
+      "reason": "superseded"
+    },
+    {
+      "rank": 4,
+      "doc_id": "doc-0005",
+      "label": "superseded",
+      "bm25_score": 8.165742,
+      "reason": "superseded"
+    },
+    {
+      "rank": 5,
+      "doc_id": "doc-0002",
+      "label": "superseded",
+      "bm25_score": 8.143708,
+      "reason": "superseded"
+    },
+    {
+      "rank": 6,
+      "doc_id": "doc-0004",
+      "label": "superseded",
+      "bm25_score": 8.143708,
+      "reason": "superseded"
+    },
+    {
+      "rank": 7,
+      "doc_id": "doc-0006",
+      "label": "superseded",
+      "bm25_score": 8.143708,
+      "reason": "superseded"
+    },
+    {
+      "rank": 8,
+      "doc_id": "doc-0009",
+      "label": "superseded",
+      "bm25_score": 8.143708,
+      "reason": "superseded"
+    },
+    {
+      "rank": 19,
+      "doc_id": "doc-0060",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.031275,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 20,
+      "doc_id": "doc-0104",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 21,
+      "doc_id": "doc-0105",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 22,
+      "doc_id": "doc-0106",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 23,
+      "doc_id": "doc-0107",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.008993,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 24,
+      "doc_id": "doc-0033",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.994529,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 25,
+      "doc_id": "doc-0103",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.975938,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 26,
+      "doc_id": "doc-0034",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.954423,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 27,
+      "doc_id": "doc-0101",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.936304,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 28,
+      "doc_id": "doc-0102",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.936304,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 29,
+      "doc_id": "doc-0061",
+      "label": "not_in_claim_graph",
+      "bm25_score": 4.896237,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 30,
+      "doc_id": "doc-0041",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 31,
+      "doc_id": "doc-0042",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 32,
+      "doc_id": "doc-0048",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 33,
+      "doc_id": "doc-0196",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 34,
+      "doc_id": "doc-0199",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.359678,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 35,
+      "doc_id": "doc-0195",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.337409,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 36,
+      "doc_id": "doc-0197",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.337409,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 37,
+      "doc_id": "doc-0026",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 38,
+      "doc_id": "doc-0027",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726,
+      "reason": "outside_budget"
+    },
+    {
+      "rank": 39,
+      "doc_id": "doc-0144",
+      "label": "not_in_claim_graph",
+      "bm25_score": 3.322726,
+      "reason": "outside_budget"
+    }
+  ],
+  "final_context": [
+    {
+      "rank": 9,
+      "doc_id": "doc-0010",
+      "label": "current",
+      "bm25_score": 7.950627
+    },
+    {
+      "rank": 10,
+      "doc_id": "doc-0068",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.953065
+    },
+    {
+      "rank": 11,
+      "doc_id": "doc-0069",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.914037
+    },
+    {
+      "rank": 12,
+      "doc_id": "doc-0071",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.914037
+    },
+    {
+      "rank": 13,
+      "doc_id": "doc-0066",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 14,
+      "doc_id": "doc-0067",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 15,
+      "doc_id": "doc-0070",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 16,
+      "doc_id": "doc-0072",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.857712
+    },
+    {
+      "rank": 17,
+      "doc_id": "doc-0032",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.089563
+    },
+    {
+      "rank": 18,
+      "doc_id": "doc-0059",
+      "label": "not_in_claim_graph",
+      "bm25_score": 5.031275
+    }
+  ],
+  "pinned": [],
+  "final_size": 10,
+  "sha256": "9db6d3e197529b119fd9fe49a99d4798e0ef7f35cef81f72b2b935f0f7df60f8",
+  "cypher_queries": {
+    "READ_KEY_INFO": "4ec5cf88d08c0f4d",
+    "READ_STATE": "b0ef5521e9c788b4",
+    "READ_DOC_VALUES": "33eae031c6e1ab1b"
+  },
+  "tenant_id": "demo",
+  "mode_requested": "temporal",
+  "mode_internal": "temporal",
+  "receipt_id": "d23f2532aaf763c8",
+  "generated_at": "2026-10-18T04:29:18.490828+00:00",
+  "git_commit": "f3624af8b2b02c8c227d834a1e22930194ac2afc",
+  "note": "synthetic corpus, seeded, no model in the loop"
+}
