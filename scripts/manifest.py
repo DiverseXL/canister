@@ -85,15 +85,15 @@ def result_files(root: Path) -> dict[str, str]:
     targets: list[Path] = []
     for pattern in (
         # SQLite indexes are excluded: their bytes are not reproducible run to run.
-        "evidence/*.json",
+        "evidence/**/*.json",
         "corpus/out/gold.json",
         "corpus/out/stress.json",
         "corpus/out/documents/*.md",
         "corpus/out/stress/*.md",
     ):
-        targets.extend(sorted(root.glob(pattern)))
+        targets.extend(root.glob(pattern))
     hashes: dict[str, str] = {}
-    for path in targets:
+    for path in sorted(set(targets)):
         if path.is_file():
             hashes[str(path.relative_to(root)).replace("\\", "/")] = sha256_file(path)
     return hashes
