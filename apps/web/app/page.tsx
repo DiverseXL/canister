@@ -46,12 +46,13 @@ export default function Landing() {
                   >
                     Watch the gate cut
                   </Link>
-                  <Link
-                    href="#api"
+                  <a
+                    href="https://github.com/DiverseXL/canister#use-it-as-a-component"
+                    rel="noopener"
                     className="label inline-flex items-center justify-center rounded-full border border-lp-line px-5 py-3 text-lp-ink hover:border-lp-ink transition-colors"
                   >
                     See the API
-                  </Link>
+                  </a>
                 </div>
               </div>
 
