@@ -4,17 +4,16 @@
     "image": "falkordb/falkordb:latest",
     "image_id": "sha256:b0bdcac2cbaff989e77cb0610439b7a9289e86de033ccbbd4368b66fb680ae7a",
     "repo_digests": "[\"falkordb/falkordb@sha256:b0bdcac2cbaff989e77cb0610439b7a9289e86de033ccbbd4368b66fb680ae7a\"]",
-    "server_graph_module": "42201",
-    "server_redis_version": "8.10.2"
+    "server": "not_run: No module named 'canister_graph'"
   },
   "environment": {
     "platform": "Windows-11-10.0.26100-SP0",
     "python": "3.12.10"
   },
-  "generated_at_utc": "2026-10-18T05:01:00+00:00",
+  "generated_at_utc": "2026-10-18T05:15:12+00:00",
   "git": {
     "branch": "main",
-    "commit": "72861e510c3813a1d51071ab5bfed61334fad3c7",
+    "commit": "766ef82133107ee7bcc261ce49c2d0e670171e5f",
     "dirty": false
   },
   "missing": [],
