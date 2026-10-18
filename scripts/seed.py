@@ -8,7 +8,13 @@ import os
 from pathlib import Path
 
 from canister_evaluation import build_ingest_documents, load_gold
-from canister_graph import GraphWriter, build_client, drop_graph, select_graph
+from canister_graph import (
+    GraphWriter,
+    build_client,
+    drop_graph,
+    require_local_or_allow_remote,
+    select_graph,
+)
 
 DEFAULT_CORPUS = os.environ.get("CANISTER_CORPUS_DIR", "corpus/out")
 
@@ -21,7 +27,14 @@ def main() -> None:
         default=os.environ.get("CANISTER_DEFAULT_TENANT", "demo"),
     )
     parser.add_argument("--keep", action="store_true", help="do not drop existing graph")
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow dropping and writing the tenant graph on a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action=f"seed tenant {args.tenant!r}")
 
     gold = load_gold(args.corpus)
     documents = build_ingest_documents(args.corpus, gold)

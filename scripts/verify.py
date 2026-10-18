@@ -26,6 +26,8 @@ from canister_graph import (
     GraphWriter,
     build_client,
     drop_graph,
+    is_local_host,
+    require_local_or_allow_remote,
     select_graph,
 )
 from canister_graph import ground as run_ground
@@ -80,7 +82,14 @@ def main() -> int:
     parser.add_argument("--corpus", type=Path, default=Path(DEFAULT_CORPUS))
     parser.add_argument("--out", type=Path, default=Path("evidence/verify.json"))
     parser.add_argument("--skip-restart", action="store_true")
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow running against a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action="run verify")
 
     gold = load_gold(args.corpus)
     ingest_docs = build_ingest_documents(args.corpus, gold)
@@ -237,6 +246,12 @@ def main() -> int:
     # --- persistence across a real restart ---------------------------------
     if args.skip_restart:
         record("restart_persistence", "not_run", "skipped via --skip-restart")
+    elif not is_local_host():
+        record(
+            "restart_persistence",
+            "not_run",
+            "FALKORDB_HOST is not local; the restart check only drives the local container",
+        )
     else:
         try:
             _restart_falkordb()

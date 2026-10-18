@@ -31,6 +31,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from canister_graph import build_client, drop_graph, list_graphs, select_graph
+from canister_graph.safety import require_local_or_allow_remote
 from canister_graph.schema import ensure_schema
 
 ENTITIES = 200
@@ -267,7 +268,14 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=Path("evidence/perf.json"))
     parser.add_argument("--warmup", type=int, default=WARMUP_RUNS)
     parser.add_argument("--runs", type=int, default=TIMED_RUNS)
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow writing a throwaway graph on a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action="run the perf probe")
 
     db = build_client()
     graph_name = unique_name(db)

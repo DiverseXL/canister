@@ -33,6 +33,7 @@ from canister_graph import (
     build_client,
     drop_graph,
     ids,
+    require_local_or_allow_remote,
     select_graph,
 )
 
@@ -155,7 +156,14 @@ def main() -> int:
     parser.add_argument(
         "--reset", action="store_true", help="drop the bench graph first (bench tenant only)"
     )
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow dropping and writing the bench graph on a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action="seed the bench tenant")
 
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))
     needed = set()

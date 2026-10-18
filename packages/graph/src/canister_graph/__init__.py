@@ -19,6 +19,7 @@ from canister_graph.models import (
     IngestDocument,
     IngestStats,
 )
+from canister_graph.safety import is_local_host, require_local_or_allow_remote, resolve_host
 from canister_graph.writer import GraphWriter
 
 __all__ = [
@@ -40,4 +41,7 @@ __all__ = [
     "IngestDocument",
     "IngestStats",
     "GraphWriter",
+    "is_local_host",
+    "require_local_or_allow_remote",
+    "resolve_host",
 ]

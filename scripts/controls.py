@@ -39,6 +39,7 @@ from canister_graph import (
     classify,
     drop_graph,
     ground,
+    require_local_or_allow_remote,
     select_graph,
 )
 from canister_graph.models import ArtifactInput, AssertionInput
@@ -444,7 +445,14 @@ def main() -> None:
     parser.add_argument("--tenant-b", default="canister_controls_b")
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--out", type=Path, default=Path("evidence/controls.json"))
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow dropping and writing tenant graphs on a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action="run the controls")
 
     gold = load_gold(args.corpus)
     index = gold_index(gold)

@@ -35,6 +35,7 @@ from pathlib import Path
 
 from canister_evaluation.benchmark_matching import question_matches_claim
 from canister_graph import GraphClaimProvider, build_client, classify, ground, ids, select_graph
+from canister_graph.safety import require_local_or_allow_remote
 
 INDEX = Path("var/benchmark/corpus_index.sqlite3")
 QUESTIONS = Path("var/benchmark/questions.jsonl")
@@ -582,7 +583,14 @@ def main() -> int:
         help="0 = all questions (not the default)",
     )
     parser.add_argument("--seed", type=int, default=ENVELOPE_SEED)
+    parser.add_argument(
+        "--allow-remote",
+        action="store_true",
+        help="allow reading the bench graph on a non-local FALKORDB_HOST (dangerous)",
+    )
     args = parser.parse_args()
+
+    require_local_or_allow_remote(args.allow_remote, action="run the benchmark controls")
 
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))["questions"]
     questions = [
