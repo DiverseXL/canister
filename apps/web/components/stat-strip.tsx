@@ -107,7 +107,7 @@ export default async function StatStrip() {
         {/* Cell 4: Graph unreachable: HTTP 503 */}
         <div className="flex flex-col justify-between p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="label text-[10px] text-lp-mute uppercase">real benchmark</span>
+            <span className="label text-[10px] text-lp-mute uppercase">behaviour</span>
           </div>
           <div>
             <div className="font-mono text-xl sm:text-2xl font-bold tracking-tight text-lp-ink">
