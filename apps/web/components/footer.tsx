@@ -8,7 +8,6 @@ export default function Footer() {
         <p>
           A temporal claim graph on FalkorDB. Built for Graph Hacks, Track 03.
         </p>
-        <p>Design inspired by Canon (Enoch208/canon).</p>
       </div>
     </footer>
   );
