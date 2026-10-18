@@ -8,6 +8,7 @@ import os
 
 from canister_evaluation import build_context, ground_from_graph
 from canister_graph import GraphClaimProvider, GraphUnavailable, build_client, select_graph
+from canister_graph.client import redact
 from canister_graph.grounding import cypher_queries
 from canister_retrieval import FtsStore
 from fastapi import FastAPI, HTTPException
@@ -69,7 +70,7 @@ def health() -> dict:
         build_client().connection.ping()
     except Exception as exc:  # pragma: no cover - depends on environment
         reachable = False
-        detail = str(exc)
+        detail = redact(exc, os.environ.get("FALKORDB_PASSWORD"))
     return {
         "status": "ok" if reachable else "degraded",
         "graph_reachable": reachable,

@@ -43,6 +43,23 @@ def test_ground_rejects_unknown_mode() -> None:
     assert response.json()["detail"]["error"] == "BAD_REQUEST"
 
 
+def test_ground_503_detail_never_contains_password(monkeypatch) -> None:
+    secret = "api-super-secret-password"
+    monkeypatch.setenv("FALKORDB_PASSWORD", secret)
+
+    class Boom:
+        def __init__(self, **kwargs) -> None:
+            raise RuntimeError(f"connection failed while authenticating {secret}")
+
+    monkeypatch.setattr("canister_graph.client.FalkorDB", Boom)
+
+    response = client.post("/ground", json={"question": "hi", "mode": "current"})
+
+    assert response.status_code == 503
+    assert response.json()["detail"]["error"] == "TEMPORAL_GRAPH_UNAVAILABLE"
+    assert secret not in response.text
+
+
 def test_claims_fail_closed_when_graph_unreachable() -> None:
     response = client.get("/claims", params={"tenant_id": "demo"})
     assert response.status_code == 503
