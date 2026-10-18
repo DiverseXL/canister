@@ -7,27 +7,7 @@
 }
 
 body {
-  @apply bg-ink text-slate-200 antialiased;
-}
-
-.card {
-  @apply rounded-lg border border-edge bg-panel p-4;
-}
-
-.label-current {
-  @apply text-current;
-}
-.label-superseded {
-  @apply text-retired line-through;
-}
-.label-contested {
-  @apply text-contest;
-}
-.label-historical {
-  @apply text-slate-400;
-}
-.label-not_in_claim_graph {
-  @apply text-slate-500;
+  @apply bg-lp-bg text-slate-200 antialiased;
 }
 
 /* --- Landing page design tokens ------------------------------------------*/
@@ -92,9 +72,10 @@ body {
   }
 }
 
-/* Visible keyboard focus on every link and button. */
+/* Visible keyboard focus on every link, button and input. */
 .landing a:focus-visible,
-.landing button:focus-visible {
+.landing button:focus-visible,
+.landing input:focus-visible {
   outline: 2px solid var(--lp-ink);
   outline-offset: 3px;
 }

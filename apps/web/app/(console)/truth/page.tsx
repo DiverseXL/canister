@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react";
 
+import PageHeader from "@/components/page-header";
+import StateBadge from "@/components/state-badge";
 import { apiGet, type ClaimsResponse } from "@/lib/api";
+
+/** Claim keys are shortened for the table; the full value lives in title. */
+function shortenKey(key: string): string {
+  return key.length > 12 ? `${key.slice(0, 12)}…` : key;
+}
 
 export default function Truth() {
   const [claims, setClaims] = useState<ClaimsResponse | null>(null);
@@ -19,49 +26,70 @@ export default function Truth() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-white">Truth</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Every claim key with its current state, read from{" "}
-          <span className="font-mono">GET /claims</span>.
-        </p>
-      </section>
+    <div className="space-y-10">
+      <PageHeader
+        eyebrow="Truth"
+        title="Truth"
+        description={
+          <>
+            Every claim key with its current state, read from{" "}
+            <span className="font-mono">GET /claims</span>.
+          </>
+        }
+      />
 
       {error && (
-        <div className="card border-retired text-retired">{error}</div>
+        <div className="border border-lp-retired bg-lp-panel px-4 py-3 font-mono text-sm text-lp-retired">
+          {error}
+        </div>
       )}
 
-      <section className="card overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead className="text-xs uppercase tracking-wide text-slate-400">
-            <tr>
-              <th className="py-2 pr-4">Entity</th>
-              <th className="py-2 pr-4">Attribute</th>
-              <th className="py-2 pr-4">State</th>
-              <th className="py-2 pr-4">Value</th>
-              <th className="py-2 pr-4">Reason</th>
-              <th className="py-2">Claim key</th>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] border-collapse text-left">
+          <thead>
+            <tr className="border-b border-lp-line">
+              <th className="label py-2 pr-4 align-bottom text-lp-mute">
+                Entity
+              </th>
+              <th className="label py-2 pr-4 align-bottom text-lp-mute">
+                Attribute
+              </th>
+              <th className="label py-2 pr-4 align-bottom text-lp-mute">
+                State
+              </th>
+              <th className="label py-2 pr-4 align-bottom text-lp-mute">
+                Value
+              </th>
+              <th className="label py-2 pr-4 align-bottom text-lp-mute">
+                Reason
+              </th>
+              <th className="label py-2 align-bottom text-lp-mute">
+                Claim key
+              </th>
             </tr>
           </thead>
-          <tbody className="font-mono">
+          <tbody className="font-mono text-[13px]">
             {(claims?.claims ?? []).map((claim) => (
-              <tr key={claim.claim_key} className="border-t border-edge">
-                <td className="py-2 pr-4">{claim.entity}</td>
-                <td className="py-2 pr-4">{claim.attribute_label}</td>
-                <td className="py-2 pr-4">
-                  <span className={`label-${claim.decision.toLowerCase()}`}>
-                    {claim.decision}
-                  </span>
+              <tr key={claim.claim_key} className="border-b border-lp-line">
+                <td className="py-2 pr-4 text-lp-ink">{claim.entity}</td>
+                <td className="py-2 pr-4 text-lp-ink">
+                  {claim.attribute_label}
                 </td>
-                <td className="py-2 pr-4">{claim.selected_value ?? "—"}</td>
-                <td className="py-2 pr-4 text-slate-400">{claim.reason}</td>
-                <td className="py-2 text-slate-500">{claim.claim_key}</td>
+                <td className="py-2 pr-4">
+                  <StateBadge state={claim.decision} />
+                </td>
+                <td className="py-2 pr-4 text-lp-ink">
+                  {claim.selected_value ?? "—"}
+                </td>
+                <td className="py-2 pr-4 text-lp-ink">{claim.reason}</td>
+                <td className="py-2" title={claim.claim_key}>
+                  {shortenKey(claim.claim_key)}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </section>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,11 @@
+import PageHeader from "@/components/page-header";
+import StateBadge from "@/components/state-badge";
 import { readJson, repoRoot } from "@/lib/files";
 
 export const dynamic = "force-dynamic";
+
+const STATE_WORDS = new Set(["CANON", "CONTESTED", "UNKNOWN"]);
+const STATE_COLUMNS = new Set(["state", "decision"]);
 
 function Table({
   head,
@@ -9,24 +14,36 @@ function Table({
   head: string[];
   rows: (string | number | null)[][];
 }) {
+  const wide = head.length >= 4 ? " min-w-[640px]" : "";
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left text-sm">
-        <thead className="text-xs uppercase tracking-wide text-slate-400">
-          <tr>
+      <table className={`w-full${wide} border-collapse text-left`}>
+        <thead>
+          <tr className="border-b border-lp-line">
             {head.map((cell) => (
-              <th key={cell} className="py-2 pr-4">
+              <th
+                key={cell}
+                className="label py-2 pr-4 align-bottom text-lp-mute"
+              >
                 {cell}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="font-mono">
+        <tbody className="font-mono text-[13px]">
           {rows.map((row, index) => (
-            <tr key={index} className="border-t border-edge">
+            <tr key={index} className="border-b border-lp-line align-top">
               {row.map((cell, cellIndex) => (
-                <td key={cellIndex} className="py-2 pr-4">
-                  {cell === null ? "—" : String(cell)}
+                <td key={cellIndex} className="py-2 pr-4 text-lp-ink">
+                  {cell === null ? (
+                    "—"
+                  ) : STATE_COLUMNS.has(head[cellIndex]) &&
+                    typeof cell === "string" &&
+                    STATE_WORDS.has(cell) ? (
+                    <StateBadge state={cell} />
+                  ) : (
+                    String(cell)
+                  )}
                 </td>
               ))}
             </tr>
@@ -45,8 +62,10 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="card space-y-3">
-      <h2 className="font-semibold text-white">{title}</h2>
+    <section className="space-y-4 border border-lp-line bg-lp-panel px-5 py-6">
+      <h2 className="font-mono text-[13px] font-medium uppercase tracking-[0.12em] text-lp-ink">
+        {title}
+      </h2>
       {children}
     </section>
   );
@@ -59,17 +78,20 @@ export default async function Results() {
 
   return (
     <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-white">Results</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Rendered directly from <span className="font-mono">evidence/*.json</span> and{" "}
-          <span className="font-mono">corpus/out/stress.json</span> under{" "}
-          <span className="font-mono">{repoRoot()}</span>.
-        </p>
-      </section>
+      <PageHeader
+        eyebrow="Results"
+        title="Results"
+        description={
+          <>
+            Rendered directly from <span className="font-mono">evidence/*.json</span> and{" "}
+            <span className="font-mono">corpus/out/stress.json</span> under{" "}
+            <span className="font-mono">{repoRoot()}</span>.
+          </>
+        }
+      />
 
       {!controls && (
-        <div className="card text-contest">
+        <div className="border border-dashed border-lp-mute bg-lp-panel px-4 py-3 font-mono text-[13px] text-lp-mute">
           evidence/controls.json is <span className="font-mono">not_run</span>. Run{" "}
           <span className="font-mono">make controls</span>.
         </div>

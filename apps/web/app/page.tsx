@@ -1,26 +1,9 @@
-import { JetBrains_Mono, Syne } from "next/font/google";
-
+import { display, mono } from "@/components/fonts";
 import Footer from "@/components/footer";
 import Frame from "@/components/frame";
 import HowItWorks from "@/components/how-it-works";
 import Nav from "@/components/nav";
 import Section from "@/components/section";
-
-const display = Syne({
-  weight: "800",
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Segoe UI", "Arial", "sans-serif"],
-  variable: "--font-landing-syne",
-});
-
-const mono = JetBrains_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-  variable: "--font-landing-mono",
-});
 
 export default function Landing() {
   return (
