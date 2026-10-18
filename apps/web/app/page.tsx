@@ -1,3 +1,5 @@
+﻿import Link from "next/link";
+import CaseCard from "@/components/case-card";
 import { display, mono } from "@/components/fonts";
 import Footer from "@/components/footer";
 import Frame from "@/components/frame";
@@ -17,13 +19,47 @@ export default function Landing() {
       <Frame>
         <Nav />
         <main id="main">
-          <Section>
-            <h1 className="display text-[clamp(2.75rem,8vw,6.75rem)] leading-[0.95] tracking-[-0.01em] text-lp-ink">
-              Retired facts still rank.{" "}
-              <span className="block">
-                We keep them <span className="outline-word">out.</span>
-              </span>
-            </h1>
+          {/* Hero Section */}
+          <Section className="pt-12 pb-16 md:pt-16 md:pb-24">
+            <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+              {/* Left: Headline & Actions */}
+              <div className="space-y-6">
+                <p className="label text-lp-mute">
+                  Temporal claim graph on FalkorDB
+                </p>
+                <h1 className="display text-3xl sm:text-4xl lg:text-[2.65rem] lg:leading-[1.1] tracking-[-0.015em] text-lp-ink">
+                  Retired facts still rank.{" "}
+                  <span className="block">
+                    We keep them <span className="outline-word">out.</span>
+                  </span>
+                </h1>
+                <p className="max-w-[52ch] text-[15px] sm:text-base leading-[1.8] text-lp-mute">
+                  Canister sits between your retriever and your model. FalkorDB
+                  decides which of the top ten documents may still ground a
+                  current answer, and every decision ships with a record you can
+                  replay.
+                </p>
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <Link
+                    href="#how-it-works"
+                    className="label inline-flex items-center justify-center rounded-full bg-lp-ink px-5 py-3 text-lp-bg hover:opacity-90 transition-opacity"
+                  >
+                    Watch the gate cut
+                  </Link>
+                  <Link
+                    href="#api"
+                    className="label inline-flex items-center justify-center rounded-full border border-lp-line px-5 py-3 text-lp-ink hover:border-lp-ink transition-colors"
+                  >
+                    See the API
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right: Case Card */}
+              <div>
+                <CaseCard />
+              </div>
+            </div>
           </Section>
 
           <Section id="the-problem" className="border-t border-lp-line">
