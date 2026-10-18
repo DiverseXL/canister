@@ -154,7 +154,7 @@ class GraphWriter:
         return IngestStats(documents=doc_count, assertions=assertion_count)
 
     def assertions_for(self, claim_key: str) -> list[AssertionView]:
-        result = self.graph.query(READ_ASSERTIONS, {"ckid": claim_key})
+        result = self.graph.ro_query(READ_ASSERTIONS, {"ckid": claim_key})
         views = []
         for row in result.result_set:
             (
@@ -182,7 +182,7 @@ class GraphWriter:
         return views
 
     def claim_keys(self) -> list[str]:
-        result = self.graph.query(READ_CLAIM_KEYS)
+        result = self.graph.ro_query(READ_CLAIM_KEYS)
         return sorted(row[0] for row in result.result_set)
 
     def write_canon_event(self, decision: ClaimDecision) -> str:
@@ -220,7 +220,7 @@ class GraphWriter:
         return decisions
 
     def count_nodes(self) -> int:
-        return int(self.graph.query(COUNT_NODES).result_set[0][0])
+        return int(self.graph.ro_query(COUNT_NODES).result_set[0][0])
 
     def count_relationships(self) -> int:
-        return int(self.graph.query(COUNT_RELS).result_set[0][0])
+        return int(self.graph.ro_query(COUNT_RELS).result_set[0][0])

@@ -234,7 +234,7 @@ class GraphClaimProvider:
 
     def _all_keys(self) -> list[tuple[str, str, str, str]]:
         if self._keys is None:
-            result = self.graph.query(READ_KEY_INFO)
+            result = self.graph.ro_query(READ_KEY_INFO)
             self._keys = [(row[0], row[1], row[2], row[3] or "") for row in result.result_set]
         return self._keys
 
@@ -266,7 +266,7 @@ class GraphClaimProvider:
         return sorted(key_id for score, key_id in scored if score == best)
 
     def claim_state(self, claim_key: str) -> ClaimState:
-        result = self.graph.query(READ_STATE, {"ck": claim_key})
+        result = self.graph.ro_query(READ_STATE, {"ck": claim_key})
         if not result.result_set:
             return ClaimState(
                 claim_key=claim_key,
@@ -287,5 +287,5 @@ class GraphClaimProvider:
     def doc_claim_values(self, doc_id: str, claim_keys: Sequence[str]) -> list[tuple[str, str]]:
         if not claim_keys:
             return []
-        result = self.graph.query(READ_DOC_VALUES, {"doc": doc_id, "cks": list(claim_keys)})
+        result = self.graph.ro_query(READ_DOC_VALUES, {"doc": doc_id, "cks": list(claim_keys)})
         return [(row[0], row[1]) for row in result.result_set]
