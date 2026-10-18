@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 
+import PageHeader from "@/components/page-header";
 import { apiPost, type Receipt } from "@/lib/api";
+
+/** Retired documents are shown struck through and labelled RETIRED. */
+function labelWord(label: string): string {
+  return label === "superseded" ? "RETIRED" : label;
+}
 
 function RankingRow({
   rank,
@@ -20,18 +26,24 @@ function RankingRow({
   return (
     <li>
       <div className="flex items-center gap-2 font-mono text-xs">
-        <span className="w-6 text-right text-slate-500">{rank}</span>
-        <span className={`label-${label}`}>{docId}</span>
-        <span className="text-slate-500">{label}</span>
-        {reason && <span className="text-slate-600">· {reason}</span>}
+        <span className="w-6 text-right text-lp-mute">{rank}</span>
+        <span
+          className={label === "superseded" ? "value-retired" : "text-lp-ink"}
+        >
+          {docId}
+        </span>
+        <span className="text-lp-mute">{labelWord(label)}</span>
+        {reason && <span className="text-lp-mute">· {reason}</span>}
       </div>
       {graphPath && graphPath.length > 0 && (
-        <div className="mt-1 pl-8 font-mono text-[10px] leading-relaxed text-slate-500">
+        <div className="mt-1 pl-8 font-mono text-[11px] leading-relaxed text-lp-mute">
           {graphPath.map(([nodeLabel, nodeId], index) => (
-            <span key={`${nodeLabel}:${nodeId}`}>
-              {index > 0 && <span className="text-slate-600"> → </span>}
-              <span className="text-slate-400">{nodeLabel}</span>
-              <span className="text-slate-600"> ({nodeId.slice(0, 8)}…)</span>
+            <span key={`${nodeLabel}:${nodeId}`} className="whitespace-nowrap">
+              {index > 0 && <span className="px-1">→</span>}
+              <span className="rounded-sm border border-lp-line px-1.5 py-0.5 text-lp-ink">
+                {nodeLabel}
+              </span>
+              <span> {nodeId.slice(0, 8)}…</span>
             </span>
           ))}
         </div>
@@ -69,66 +81,77 @@ export default function Cut() {
       : null;
 
   return (
-    <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-white">Temporal Gate</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          The same BM25 ranking, shown twice. The graph decides which ranked
-          evidence may still ground a present-tense answer.
-        </p>
-      </section>
+    <div className="space-y-10">
+      <PageHeader
+        eyebrow="Gate"
+        title="Temporal Gate"
+        description={
+          <>
+            The same BM25 ranking, shown twice. The graph decides which ranked
+            evidence may still ground a present-tense answer.
+          </>
+        }
+      />
 
-      <section className="card flex flex-col gap-3 sm:flex-row">
+      <section className="flex flex-col gap-3 border border-lp-line bg-lp-panel p-5 sm:flex-row">
         <input
           value={question}
           onChange={(event) => setQuestion(event.target.value)}
           placeholder="What is the current starter plan price for Acme Corp?"
-          className="flex-1 rounded border border-edge bg-ink px-3 py-2 font-mono text-sm outline-none focus:border-current"
+          className="flex-1 border border-lp-line bg-lp-bg px-4 py-3 font-mono text-sm text-lp-ink placeholder:text-lp-mute"
         />
         <button
           onClick={run}
           disabled={loading || question.trim().length === 0}
-          className="rounded bg-current px-4 py-2 text-sm font-semibold text-ink disabled:opacity-40"
+          className="label rounded-full bg-lp-ink px-4 py-2 text-lp-bg disabled:opacity-40"
         >
           {loading ? "Grounding…" : "Cut"}
         </button>
       </section>
 
-      {error && <div className="card border-retired text-retired">{error}</div>}
+      {error && (
+        <div className="border border-lp-retired bg-lp-panel px-4 py-3 font-mono text-sm text-lp-retired">
+          {error}
+        </div>
+      )}
 
       {receipt && (
         <>
           <section className="grid gap-4 md:grid-cols-2">
-            <div className="card">
-              <div className="text-xs uppercase tracking-wide text-slate-400">
-                Baseline answer (BM25 only)
-              </div>
-              <div className="mt-1 font-mono text-lg text-retired">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <div className="label text-lp-mute">Baseline answer (BM25 only)</div>
+              <div
+                className={`mt-2 font-mono text-lg ${
+                  baseline[0]?.label === "superseded"
+                    ? "value-retired"
+                    : "text-lp-ink"
+                }`}
+              >
                 {baseline[0]?.doc_id ?? "—"}{" "}
-                <span className="text-sm text-slate-500">
-                  [{baseline[0]?.label ?? "—"}]
+                <span className="text-sm text-lp-mute">
+                  [{labelWord(baseline[0]?.label ?? "—")}]
                 </span>
               </div>
-              <div className="mt-1 text-xs text-slate-500">
+              <div className="mt-1 font-mono text-xs text-lp-mute">
                 retired docs in context: {baselineLeak}
               </div>
             </div>
-            <div className="card">
-              <div className="text-xs uppercase tracking-wide text-slate-400">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <div className="label text-lp-mute">
                 Temporal answer (graph-constrained)
               </div>
-              <div className="mt-1 font-mono text-lg text-current">
+              <div className="mt-2 font-mono text-lg text-lp-ink">
                 {decision?.selected_value ?? decision?.decision ?? "UNKNOWN"}
               </div>
-              <div className="mt-1 text-xs text-slate-500">
+              <div className="mt-1 font-mono text-xs text-lp-mute">
                 retired docs in context: {temporalLeak}
               </div>
             </div>
           </section>
 
           <section className="grid gap-4 md:grid-cols-2">
-            <div className="card">
-              <h2 className="mb-2 font-semibold text-white">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <h2 className="mb-3 font-mono text-[13px] font-medium uppercase tracking-[0.12em] text-lp-ink">
                 Baseline context (flat top-{k})
               </h2>
               <ol className="space-y-1">
@@ -142,8 +165,8 @@ export default function Cut() {
                 ))}
               </ol>
             </div>
-            <div className="card">
-              <h2 className="mb-2 font-semibold text-white">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <h2 className="mb-3 font-mono text-[13px] font-medium uppercase tracking-[0.12em] text-lp-ink">
                 Temporal context ({k} docs)
               </h2>
               <ol className="space-y-1">
@@ -160,9 +183,11 @@ export default function Cut() {
           </section>
 
           <section className="grid gap-4 md:grid-cols-2">
-            <div className="card">
-              <h2 className="mb-2 font-semibold text-white">Cut from the ranking</h2>
-              <ol className="space-y-1">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <h2 className="mb-3 font-mono text-[13px] font-medium uppercase tracking-[0.12em] text-lp-ink">
+                Cut from the ranking
+              </h2>
+              <ol className="space-y-2">
                 {receipt.cut_set.map((entry) => (
                   <RankingRow
                     key={entry.doc_id}
@@ -175,15 +200,15 @@ export default function Cut() {
                 ))}
               </ol>
             </div>
-            <div className="card">
-              <h2 className="mb-2 font-semibold text-white">
+            <div className="border border-lp-line bg-lp-panel px-5 py-6">
+              <h2 className="mb-3 font-mono text-[13px] font-medium uppercase tracking-[0.12em] text-lp-ink">
                 Graph path justifying the cut
               </h2>
               <ul className="space-y-2 font-mono text-xs">
                 {Object.entries(receipt.decisions).map(([key, value]) => (
                   <li key={key}>
-                    <div className="text-slate-400">{key}</div>
-                    <div>
+                    <div className="text-lp-mute">{key}</div>
+                    <div className="text-lp-ink">
                       CanonEvent → {value.decision}
                       {value.selected_value ? ` = ${value.selected_value}` : ""} (
                       {value.reason}, priority {value.priority ?? "—"})
@@ -191,7 +216,7 @@ export default function Cut() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-3 text-[11px] text-slate-500">
+              <div className="mt-3 font-mono text-[11px] text-lp-mute">
                 queries: {Object.keys(receipt.cypher_queries).join(", ")}
               </div>
             </div>
