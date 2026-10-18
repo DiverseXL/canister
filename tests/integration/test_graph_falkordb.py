@@ -458,3 +458,49 @@ def test_walked_path_has_five_hops(graph) -> None:
     # The document asserting the currently selected value has no walked path.
     assert provider.walked_path("walk-new") == []
 
+
+def test_ground_cut_set_carries_graph_path(
+    graph, corpus_dir: Path, gold: dict, tmp_path: Path
+) -> None:
+    """Every cut entry keeps its keys and gains graph_path; cuts stay identical."""
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    writer.ingest(build_ingest_documents(corpus_dir, gold))
+    writer.canonize_all()
+
+    index_path = tmp_path / "index.sqlite3"
+    store = FtsStore(index_path)
+    store.reset()
+    store.add_documents(build_fts_documents(corpus_dir, gold))
+
+    provider = GraphClaimProvider(graph)
+    # Conflicts are planted on claim keys, not expressed as a question kind,
+    # so ground answerable questions until one actually cuts a retired doc.
+    receipt = None
+    for candidate_q in (q for q in gold["questions"] if q["kind"] == "answerable"):
+        candidate = run_ground(
+            candidate_q["question"], "temporal", provider=provider, retrieve=store.bm25
+        )
+        if any(entry["reason"] == "superseded" for entry in candidate["cut_set"]):
+            receipt = candidate
+            break
+    assert receipt is not None, "some question must cut at least one superseded document"
+
+    assert receipt["cut_set"], "a conflict question must cut something"
+    cut_ids = [entry["doc_id"] for entry in receipt["cut_set"]]
+    assert len(cut_ids) == len(set(cut_ids)), "each document appears in the cut list once"
+    for entry in receipt["cut_set"]:
+        assert {"rank", "doc_id", "label", "bm25_score", "reason", "graph_path"} <= set(entry)
+
+    superseded = [entry for entry in receipt["cut_set"] if entry["reason"] == "superseded"]
+    assert superseded, "the conflict question must cut at least one superseded document"
+    for entry in superseded:
+        path = entry["graph_path"]
+        assert path, "a cut superseded document must carry its walked path"
+        assert len(path) - 1 == 5, "the walked path has exactly 5 hops"
+        assert path[2][1] != path[4][1], "retired and selected propositions must differ"
+
+    # Selection itself is untouched: the gated context never serves a retired doc.
+    assert receipt["final_size"] == 10
+    assert all(entry["label"] != "superseded" for entry in receipt["final_context"])
+

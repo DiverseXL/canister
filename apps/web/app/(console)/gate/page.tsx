@@ -9,18 +9,33 @@ function RankingRow({
   docId,
   label,
   reason,
+  graphPath,
 }: {
   rank: number;
   docId: string;
   label: string;
   reason?: string;
+  graphPath?: [string, string][];
 }) {
   return (
-    <li className="flex items-center gap-2 font-mono text-xs">
-      <span className="w-6 text-right text-slate-500">{rank}</span>
-      <span className={`label-${label}`}>{docId}</span>
-      <span className="text-slate-500">{label}</span>
-      {reason && <span className="text-slate-600">· {reason}</span>}
+    <li>
+      <div className="flex items-center gap-2 font-mono text-xs">
+        <span className="w-6 text-right text-slate-500">{rank}</span>
+        <span className={`label-${label}`}>{docId}</span>
+        <span className="text-slate-500">{label}</span>
+        {reason && <span className="text-slate-600">· {reason}</span>}
+      </div>
+      {graphPath && graphPath.length > 0 && (
+        <div className="mt-1 pl-8 font-mono text-[10px] leading-relaxed text-slate-500">
+          {graphPath.map(([nodeLabel, nodeId], index) => (
+            <span key={`${nodeLabel}:${nodeId}`}>
+              {index > 0 && <span className="text-slate-600"> → </span>}
+              <span className="text-slate-400">{nodeLabel}</span>
+              <span className="text-slate-600"> ({nodeId.slice(0, 8)}…)</span>
+            </span>
+          ))}
+        </div>
+      )}
     </li>
   );
 }
@@ -155,6 +170,7 @@ export default function Cut() {
                     docId={entry.doc_id}
                     label={entry.label}
                     reason={entry.reason}
+                    graphPath={entry.graph_path}
                   />
                 ))}
               </ol>

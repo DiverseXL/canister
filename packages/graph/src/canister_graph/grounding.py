@@ -162,6 +162,7 @@ def ground(
     else:  # temporal
         final, pinned, selected_ids = _select_temporal(ranking, labels, k)
 
+    walker = getattr(provider, "walked_path", None)
     cut_set = []
     for candidate in ranking:
         if candidate.doc_id in selected_ids:
@@ -172,7 +173,13 @@ def ground(
             reason = "superseded"
         else:
             reason = "outside_budget"
-        cut_set.append({**_entry(candidate, labels[candidate.doc_id]), "reason": reason})
+        cut_set.append(
+            {
+                **_entry(candidate, labels[candidate.doc_id]),
+                "reason": reason,
+                "graph_path": walker(candidate.doc_id) if walker is not None else [],
+            }
+        )
 
     final.sort(key=lambda candidate: candidate.rank)
     final_context = [_entry(candidate, labels[candidate.doc_id]) for candidate in final]

@@ -7,6 +7,7 @@ export type RankedEntry = {
   label: string;
   bm25_score?: number;
   reason?: string;
+  graph_path?: [string, string][];
 };
 
 export type Decision = {
