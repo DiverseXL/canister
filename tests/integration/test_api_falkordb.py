@@ -45,7 +45,12 @@ def test_ground_then_replay_grounding_record(api_env) -> None:
     body = response.json()
     assert len(body["sha256"]) == 64
     assert body["final_size"] == 10
-    assert set(body["cypher_queries"]) == {"READ_KEY_INFO", "READ_STATE", "READ_DOC_VALUES"}
+    assert set(body["cypher_queries"]) == {
+        "READ_KEY_INFO",
+        "READ_STATE",
+        "READ_DOC_VALUES",
+        "READ_WALKED_PATH",
+    }
     assert body["mode_requested"] == "current"
 
     replay = client.get(f"/grounding/{body['receipt_id']}")

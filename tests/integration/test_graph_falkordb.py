@@ -396,3 +396,65 @@ def test_three_step_supersession_lineage(db) -> None:
         except Exception:
             pass
 
+
+def test_walked_path_has_five_hops(graph) -> None:
+    """The walked-path arrows, verified end to end on this test's own tenant.
+
+    Reversed arrows would return zero rows silently, so non-empty plus the
+    exact node sequence and hop count is the actual assertion.
+    """
+    writer = GraphWriter(graph)
+    writer.ensure_schema()
+    writer.ingest(
+        [
+            make_doc(
+                "walk-old",
+                "Acme",
+                "starter_price",
+                "starter plan price",
+                "money",
+                "$0.08",
+                "0.08",
+                date="2025-01-01",
+            )
+        ]
+    )
+    writer.canonize_all()
+    writer.ingest(
+        [
+            make_doc(
+                "walk-new",
+                "Acme",
+                "starter_price",
+                "starter plan price",
+                "money",
+                "$0.06",
+                "0.06",
+                stance="supersede",
+                explicit=True,
+                prior="0.08",
+                date="2025-06-01",
+            )
+        ]
+    )
+    writer.canonize_all()
+
+    provider = GraphClaimProvider(graph)
+    path = provider.walked_path("walk-old")
+
+    assert path, "reversed arrows would return zero rows; the path must be non-empty"
+    assert len(path) - 1 == 5, f"expected exactly 5 hops, got {len(path)} nodes"
+    assert [node[0] for node in path] == [
+        "Artifact",
+        "Assertion",
+        "Proposition",
+        "ClaimKey",
+        "Proposition",
+        "CanonEvent",
+    ]
+    assert path[2][1] != path[4][1], "retired and selected propositions must differ"
+    assert all(node[1] for node in path), "every node needs its stable id"
+
+    # The document asserting the currently selected value has no walked path.
+    assert provider.walked_path("walk-new") == []
+

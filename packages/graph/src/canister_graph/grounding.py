@@ -48,11 +48,19 @@ READ_DOC_VALUES = (
     "WHERE art.doc_id=$doc AND ck.id IN $cks "
     "RETURN DISTINCT ck.id AS ck, p.value_norm AS value"
 )
+READ_WALKED_PATH = (
+    "MATCH p=(art:Artifact {doc_id:$doc})<-[:IN_ARTIFACT]-(asrt:Assertion)-[:ASSERTS]->"
+    "(pr:Proposition)<-[:HAS_VALUE]-(ck:ClaimKey)-[:HAS_VALUE]->(ps:Proposition)"
+    "<-[:SELECTS]-(ce:CanonEvent) "
+    "WHERE ce.current=true AND ce.claim_key_id=ck.id AND pr.id<>ps.id "
+    "RETURN [n IN nodes(p) | [labels(n)[0], n.id]] AS path"
+)
 
 _CYPHER: dict[str, str] = {
     "READ_KEY_INFO": READ_KEY_INFO,
     "READ_STATE": READ_STATE,
     "READ_DOC_VALUES": READ_DOC_VALUES,
+    "READ_WALKED_PATH": READ_WALKED_PATH,
 }
 
 
@@ -289,3 +297,16 @@ class GraphClaimProvider:
             return []
         result = self.graph.ro_query(READ_DOC_VALUES, {"doc": doc_id, "cks": list(claim_keys)})
         return [(row[0], row[1]) for row in result.result_set]
+
+    def walked_path(self, doc_id: str) -> list[list[str]]:
+        """Walked justification path for one cut document (read-only).
+
+        Returns one path as label/id pairs, chosen deterministically when the
+        document asserts several retired values. Empty when there is no path:
+        the document only asserts the currently selected value, or asserts
+        nothing for a claim with a current canon event.
+        """
+        result = self.graph.ro_query(READ_WALKED_PATH, {"doc": doc_id})
+        if not result.result_set:
+            return []
+        return min((row[0] for row in result.result_set), key=json.dumps)
