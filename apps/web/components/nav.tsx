@@ -3,7 +3,6 @@ import Link from "next/link";
 const LINKS: [string, string][] = [
   ["#the-problem", "The problem"],
   ["#how-it-works", "How it works"],
-  ["#ask-the-graph", "Ask the graph"],
 ];
 
 /**
