@@ -2,6 +2,7 @@ import { JetBrains_Mono, Syne } from "next/font/google";
 
 import Footer from "@/components/footer";
 import Frame from "@/components/frame";
+import HowItWorks from "@/components/how-it-works";
 import Nav from "@/components/nav";
 import Section from "@/components/section";
 
@@ -74,6 +75,10 @@ export default function Landing() {
                 </p>
               </div>
             </div>
+          </Section>
+
+          <Section id="how-it-works" className="border-t border-lp-line">
+            <HowItWorks />
           </Section>
         </main>
         <Footer />
