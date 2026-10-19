@@ -1,5 +1,22 @@
 export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://127.0.0.1:8000";
+  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+
+/**
+ * True when the API base is not pointing at localhost / 127.x / ::1.
+ * Used by pages to show the "remote demo" wake-up banner.
+ */
+export const API_IS_REMOTE: boolean = (() => {
+  try {
+    const { hostname } = new URL(API_BASE);
+    return (
+      hostname !== "localhost" &&
+      !hostname.startsWith("127.") &&
+      hostname !== "::1"
+    );
+  } catch {
+    return false;
+  }
+})();
 
 export type RankedEntry = {
   rank: number;
