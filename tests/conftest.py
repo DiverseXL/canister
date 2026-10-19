@@ -3,9 +3,17 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import pytest
+
+
+@pytest.fixture(autouse=True)
+def clean_falkordb_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    for key in list(os.environ):
+        if key.startswith("FALKORDB_"):
+            monkeypatch.delenv(key, raising=False)
 
 
 @pytest.fixture(scope="session")
