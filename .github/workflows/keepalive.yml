@@ -1,0 +1,58 @@
+name: Keepalive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip when DEPLOY_API_URL is unset
+        if: ${{ vars.DEPLOY_API_URL == '' }}
+        run: echo "DEPLOY_API_URL repository variable is not set; nothing to keep alive."
+
+      - name: Check out the repository
+        if: ${{ vars.DEPLOY_API_URL != '' }}
+        uses: actions/checkout@v4
+
+      # Wake the free-tier API: GET /health, then POST /ground with the saved
+      # demo body. The job fails only when BOTH endpoints return a non-2xx
+      # status on two consecutive attempts; a partial failure is a success so
+      # a single flaky endpoint never pages anyone.
+      - name: Wake the API
+        if: ${{ vars.DEPLOY_API_URL != '' }}
+        env:
+          BASE: ${{ vars.DEPLOY_API_URL }}
+        run: |
+          set -u
+          base="${BASE%/}"
+
+          run_probe() {
+            HEALTH=$(curl -s -o /tmp/health.json -w "%{http_code}" --max-time 300 "$base/health" || true)
+            GROUND=$(curl -s -o /tmp/ground.json -w "%{http_code}" --max-time 300 -X POST \
+              -H "content-type: application/json" --data @docs/demo-body.json "$base/ground" || true)
+            HEALTH=${HEALTH:-000}
+            GROUND=${GROUND:-000}
+            echo "attempt $1: GET /health -> $HEALTH; POST /ground -> $GROUND"
+          }
+
+          both_non_2xx() {
+            [ "${HEALTH:0:1}" != "2" ] && [ "${GROUND:0:1}" != "2" ]
+          }
+
+          run_probe 1
+          if ! both_non_2xx; then
+            echo "at least one endpoint answered 2xx; done"
+            exit 0
+          fi
+          echo "both endpoints returned non-2xx; waiting 30s for the instance to wake, then one retry"
+          sleep 30
+          run_probe 2
+          if ! both_non_2xx; then
+            echo "at least one endpoint answered 2xx on retry; done"
+            exit 0
+          fi
+          echo "both /health and /ground returned non-2xx twice; failing"
+          exit 1
