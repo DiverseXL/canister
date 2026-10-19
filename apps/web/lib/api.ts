@@ -1,5 +1,8 @@
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://127.0.0.1:8000";
+/**
+ * The API base comes only from NEXT_PUBLIC_API_BASE (inlined at build time);
+ * there is no other hard-coded host anywhere in the console.
+ */
+export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
 export type RankedEntry = {
   rank: number;
