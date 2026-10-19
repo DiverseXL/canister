@@ -1,4 +1,4 @@
-import { readJson, repoRoot } from "@/lib/files";
+import { evidenceDir, readEvidence, readJson, repoRoot } from "@/lib/files";
 
 export const dynamic = "force-dynamic";
 
@@ -53,16 +53,18 @@ function Section({
 }
 
 export default async function Results() {
-  const controls = await readJson("evidence/controls.json");
-  const benchmark = await readJson("evidence/benchmark.json");
+  const controls = await readEvidence("controls.json");
+  const benchmark = await readEvidence("benchmark.json");
   const stress = await readJson("corpus/out/stress.json");
+  const evidence = (await evidenceDir()) ?? "evidence (not found)";
 
   return (
     <div className="space-y-6">
       <section>
         <h1 className="text-2xl font-semibold text-white">Results</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Rendered directly from <span className="font-mono">evidence/*.json</span> and{" "}
+          Rendered directly from the evidence files in{" "}
+          <span className="font-mono">{evidence}</span> and{" "}
           <span className="font-mono">corpus/out/stress.json</span> under{" "}
           <span className="font-mono">{repoRoot()}</span>.
         </p>
