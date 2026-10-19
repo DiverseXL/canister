@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "export npm_config_cache=\"${npm_config_cache:-${NPM_CONFIG_CACHE:-${npm_config_cache_dir:-${NPM_CONFIG_CACHE_DIR:-$HOME/.npm}}}}\"; unset npm_config_cache_dir NPM_CONFIG_CACHE_DIR; npm install"
+}
