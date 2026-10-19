@@ -4,6 +4,21 @@
  */
 export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
+/** True when the API base points at this machine (no live-demo banner then). */
+export function isLocalApi(base: string = API_BASE): boolean {
+  try {
+    const host = new URL(base).hostname;
+    return (
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host === "0.0.0.0" ||
+      host === "[::1]"
+    );
+  } catch {
+    return false;
+  }
+}
+
 export type RankedEntry = {
   rank: number;
   doc_id: string;

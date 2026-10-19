@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { API_BASE, apiGet, type ClaimsResponse } from "@/lib/api";
+import { ApiBanner, ApiError } from "@/components/api-status";
 
 export default function Overview() {
   const [health, setHealth] = useState<Record<string, unknown> | null>(null);
@@ -27,6 +28,7 @@ export default function Overview() {
 
   return (
     <div className="space-y-8">
+      <ApiBanner />
       <section>
         <h1 className="text-2xl font-semibold text-white">Overview</h1>
         <p className="mt-1 text-sm text-slate-400">
@@ -35,11 +37,7 @@ export default function Overview() {
         </p>
       </section>
 
-      {error && (
-        <div className="card border-retired text-retired">
-          Could not reach the API: {error}
-        </div>
-      )}
+      {error && <ApiError error={error} />}
 
       <section className="grid gap-4 sm:grid-cols-3">
         <div className="card">

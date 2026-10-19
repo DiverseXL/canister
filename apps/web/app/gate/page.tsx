@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { apiPost, type Receipt } from "@/lib/api";
+import { ApiBanner, ApiError } from "@/components/api-status";
 
 function RankingRow({
   rank,
@@ -55,6 +56,7 @@ export default function Cut() {
 
   return (
     <div className="space-y-6">
+      <ApiBanner />
       <section>
         <h1 className="text-2xl font-semibold text-white">Temporal Gate</h1>
         <p className="mt-1 text-sm text-slate-400">
@@ -79,7 +81,7 @@ export default function Cut() {
         </button>
       </section>
 
-      {error && <div className="card border-retired text-retired">{error}</div>}
+      {error && <ApiError error={error} />}
 
       {receipt && (
         <>

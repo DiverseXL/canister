@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { apiPost, type Receipt } from "@/lib/api";
+import { ApiBanner, ApiError } from "@/components/api-status";
 
 function ReceiptPanel({ title, receipt }: { title: string; receipt: Receipt }) {
   const decision =
@@ -68,6 +69,7 @@ export default function Ask() {
 
   return (
     <div className="space-y-6">
+      <ApiBanner />
       <section>
         <h1 className="text-2xl font-semibold text-white">Ask</h1>
         <p className="mt-1 text-sm text-slate-400">
@@ -92,7 +94,7 @@ export default function Ask() {
         </button>
       </section>
 
-      {error && <div className="card border-retired text-retired">{error}</div>}
+      {error && <ApiError error={error} />}
 
       {current && historical && (
         <section className="grid gap-4 md:grid-cols-2">
